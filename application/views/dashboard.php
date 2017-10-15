@@ -2,7 +2,7 @@
 <div id="content">
 <!--breadcrumbs-->
   <div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
+    <div id="breadcrumb"> <a href="<?php echo base_url();?>index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
   </div>
 <!--End-breadcrumbs-->
 
@@ -10,16 +10,16 @@
   <div class="container-fluid">
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
-        <li class="bg_lb"> <a href="index.html"> <i class="icon-dashboard"></i> <span class="label label-important">20</span> My Dashboard </a> </li>
-        <li class="bg_lg span3"> <a href="charts.html"> <i class="icon-signal"></i> Charts</a> </li>
-        <li class="bg_ly"> <a href="widgets.html"> <i class="icon-inbox"></i><span class="label label-success">101</span> Widgets </a> </li>
-        <li class="bg_lo"> <a href="tables.html"> <i class="icon-th"></i> Tables</a> </li>
-        <li class="bg_ls"> <a href="grid.html"> <i class="icon-fullscreen"></i> Full width</a> </li>
-        <li class="bg_lo span3"> <a href="form-common.html"> <i class="icon-th-list"></i> Forms</a> </li>
-        <li class="bg_ls"> <a href="buttons.html"> <i class="icon-tint"></i> Buttons</a> </li>
-        <li class="bg_lb"> <a href="interface.html"> <i class="icon-pencil"></i>Elements</a> </li>
-        <li class="bg_lg"> <a href="calendar.html"> <i class="icon-calendar"></i> Calendar</a> </li>
-        <li class="bg_lr"> <a href="error404.html"> <i class="icon-info-sign"></i> Error</a> </li>
+        <li class="bg_lb"> <a href="<?php echo base_url();?>dashboard"> <i class="icon-dashboard"></i> <span class="label label-important">20</span> My Dashboard </a> </li>
+        <li class="bg_lg span3"> <a href="<?php echo base_url();?>lost"> <i class="icon-signal"></i> Charts</a> </li>
+        <li class="bg_ly"> <a href="<?php echo base_url();?>lost"> <i class="icon-inbox"></i><span class="label label-success">101</span> Widgets </a> </li>
+        <li class="bg_lo"> <a href="<?php echo base_url();?>lost"> <i class="icon-th"></i> Tables</a> </li>
+        <li class="bg_ls"> <a href="<?php echo base_url();?>lost"> <i class="icon-fullscreen"></i> Full width</a> </li>
+        <li class="bg_lo span3"> <a href="<?php echo base_url();?>lost"> <i class="icon-th-list"></i> Forms</a> </li>
+        <li class="bg_ls"> <a href="<?php echo base_url();?>lost"> <i class="icon-tint"></i> Buttons</a> </li>
+        <li class="bg_lb"> <a href="<?php echo base_url();?>lost"> <i class="icon-pencil"></i>Elements</a> </li>
+        <li class="bg_lg"> <a href="<?php echo base_url();?>lost"> <i class="icon-calendar"></i> Calendar</a> </li>
+        <li class="bg_lr"> <a href="<?php echo base_url();?>lost"> <i class="icon-info-sign"></i> Error</a> </li>
 
       </ul>
     </div>
@@ -61,19 +61,19 @@
           <div class="widget-content nopadding collapse in" id="collapseG2">
             <ul class="recent-posts">
               <li>
-                <div class="user-thumb"> <img width="40" height="40" alt="User" src="img/demo/av1.jpg"> </div>
+                <div class="user-thumb"> <img width="40" height="40" alt="User" src="<?php echo asset_url();?>img/demo/av1.jpg"> </div>
                 <div class="article-post"> <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
                   <p><a href="#">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
                 </div>
               </li>
               <li>
-                <div class="user-thumb"> <img width="40" height="40" alt="User" src="img/demo/av2.jpg"> </div>
+                <div class="user-thumb"> <img width="40" height="40" alt="User" src="<?php echo asset_url();?>img/demo/av2.jpg"> </div>
                 <div class="article-post"> <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
                   <p><a href="#">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
                 </div>
               </li>
               <li>
-                <div class="user-thumb"> <img width="40" height="40" alt="User" src="img/demo/av4.jpg"> </div>
+                <div class="user-thumb"> <img width="40" height="40" alt="User" src="<?php echo asset_url();?>img/demo/av4.jpg"> </div>
                 <div class="article-post"> <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
                   <p><a href="#">This is a much longer one that will go on for a few lines.Itaffle to pad out the comment.</a> </p>
                 </div>
@@ -172,11 +172,11 @@
               </div>
               <div class="panel-content nopadding">
                 <ul class="contact-list">
-                  <li id="user-Alex" class="online"><a href=""><img alt="" src="img/demo/av1.jpg" /> <span>Alex</span></a></li>
-                  <li id="user-Linda"><a href=""><img alt="" src="img/demo/av2.jpg" /> <span>Linda</span></a></li>
-                  <li id="user-John" class="online new"><a href=""><img alt="" src="img/demo/av3.jpg" /> <span>John</span></a><span class="msg-count badge badge-info">3</span></li>
-                  <li id="user-Mark" class="online"><a href=""><img alt="" src="img/demo/av4.jpg" /> <span>Mark</span></a></li>
-                  <li id="user-Maxi" class="online"><a href=""><img alt="" src="img/demo/av5.jpg" /> <span>Maxi</span></a></li>
+                  <li id="user-Alex" class="online"><a href=""><img alt="" src="<?php echo asset_url();?>img/demo/av1.jpg" /> <span>Alex</span></a></li>
+                  <li id="user-Linda"><a href=""><img alt="" src="<?php echo asset_url();?>img/demo/av2.jpg" /> <span>Linda</span></a></li>
+                  <li id="user-John" class="online new"><a href=""><img alt="" src="<?php echo asset_url();?>img/demo/av3.jpg" /> <span>John</span></a><span class="msg-count badge badge-info">3</span></li>
+                  <li id="user-Mark" class="online"><a href=""><img alt="" src="<?php echo asset_url();?>img/demo/av4.jpg" /> <span>Mark</span></a></li>
+                  <li id="user-Maxi" class="online"><a href=""><img alt="" src="<?php echo asset_url();?>img/demo/av5.jpg" /> <span>Maxi</span></a></li>
                 </ul>
               </div>
             </div>
@@ -199,19 +199,19 @@
           <div class="widget-content nopadding fix_hgt">
             <ul class="recent-posts">
               <li>
-                <div class="user-thumb"> <img width="40" height="40" alt="User" src="img/demo/av1.jpg"> </div>
+                <div class="user-thumb"> <img width="40" height="40" alt="User" src="<?php echo asset_url();?>img/demo/av1.jpg"> </div>
                 <div class="article-post"> <span class="user-info">John Deo</span>
                   <p>Web Desginer &amp; creative Front end developer</p>
                 </div>
               </li>
               <li>
-                <div class="user-thumb"> <img width="40" height="40" alt="User" src="img/demo/av2.jpg"> </div>
+                <div class="user-thumb"> <img width="40" height="40" alt="User" src="<?php echo asset_url();?>img/demo/av2.jpg"> </div>
                 <div class="article-post"> <span class="user-info">John Deo</span>
                   <p>Web Desginer &amp; creative Front end developer</p>
                 </div>
               </li>
               <li>
-                <div class="user-thumb"> <img width="40" height="40" alt="User" src="img/demo/av4.jpg"> </div>
+                <div class="user-thumb"> <img width="40" height="40" alt="User" src="<?php echo asset_url();?>img/demo/av4.jpg"> </div>
                 <div class="article-post"> <span class="user-info">John Deo</span>
                   <p>Web Desginer &amp; creative Front end developer</p>
                 </div>
@@ -281,13 +281,13 @@
           <div class="widget-content tab-content">
             <div id="tab1" class="tab-pane active">
               <p>And is full of waffle to It has multiple paragraphs and is full of waffle to pad out the comment. Usually, you just wish these sorts of comments would come to an end.multiple paragraphs and is full of waffle to pad out the comment.</p>
-              <img src="img/demo/demo-image1.jpg" alt="demo-image"/></div>
-            <div id="tab2" class="tab-pane"> <img src="img/demo/demo-image2.jpg" alt="demo-image"/>
+              <img src="<?php echo asset_url();?>img/demo/demo-image1.jpg" alt="demo-image"/></div>
+            <div id="tab2" class="tab-pane"> <img src="<?php echo asset_url();?>img/demo/demo-image2.jpg" alt="demo-image"/>
               <p>And is full of waffle to It has multiple paragraphs and is full of waffle to pad out the comment. Usually, you just wish these sorts of comments would come to an end.multiple paragraphs and is full of waffle to pad out the comment.</p>
             </div>
             <div id="tab3" class="tab-pane">
               <p>And is full of waffle to It has multiple paragraphs and is full of waffle to pad out the comment. Usually, you just wish these sorts of comments would come to an end.multiple paragraphs and is full of waffle to pad out the comment. </p>
-              <img src="img/demo/demo-image3.jpg" alt="demo-image"/></div>
+              <img src="<?php echo asset_url();?>img/demo/demo-image3.jpg" alt="demo-image"/></div>
           </div>
         </div>
       </div>
