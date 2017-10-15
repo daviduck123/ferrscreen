@@ -7,3 +7,5 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond $1 !^(index\.php|css|js|images|robots\.txt)
 
 RewriteRule ^(.*)$ index.php?$1 [L]
+
+Header set Access-Control-Allow-Origin "*"
