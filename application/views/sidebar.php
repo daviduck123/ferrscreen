@@ -4,9 +4,11 @@
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Master Data</span> <!-- <span class="label label-important">3</span> --></a>
       <ul>
         <li><a href="<?php echo base_url();?>general">General</a></li>
+        <li><a href="<?php echo base_url();?>jabatan">Jabatan</a></li>
         <li><a href="<?php echo base_url();?>karyawan">Karyawan</a></li>
         <li><a href="<?php echo base_url();?>supplier">Supplier</a></li>
         <li><a href="<?php echo base_url();?>toko">Toko</a></li>
+        <li><a href="<?php echo base_url();?>merk">Merk</a></li>
         <li><a href="<?php echo base_url();?>barang">Barang</a></li>
       </ul>
     </li>
