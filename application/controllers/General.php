@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Penjualan extends CI_Controller {
+class General extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -22,7 +22,7 @@ class Penjualan extends CI_Controller {
 	{
 		$this->load->view('header');
 		$this->load->view('sidebar');
-		//$this->load->view('penjualan');
+		//$this->load->view('barang');
 		$this->load->view('error404');
 		$this->load->view('footer');
 	}

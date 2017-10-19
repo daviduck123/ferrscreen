@@ -6,48 +6,7 @@
   <div class="container-fluid">
     <hr>
     <div class="row-fluid">
-      <div class="span12">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>Tambah Barang</h5>
-          </div>
-          <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="#" name="basic_validate" id="basic_validate" novalidate="novalidate">
-              <div class="control-group">
-              <label class="control-label">Nama Barang</label>
-              <div class="controls">
-              <input type="text" name="nama" id="nama">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label">Pilih Supplier</label>
-              <div class="controls">
-              	<select style class="form-control col-xs-3" id="sel1">
-			        <option>PT. Angkasa Pura</option>
-			        <option>PT. Pertamina</option>
-			        <option>PT. JayaBaya</option>
-			        <option>PT. Anugerah</option>
-			      </select>
-              </div>
-             </div>
-            <div class="control-group">
-              <label class="control-label">Jumlah Stok</label>
-              <div class="controls">
-              	<input type="number" name="julmahStok" id="jumlahStok">
-              </div>
-              <div class="control-group">
-              <label class="control-label">Harga Satuan</label>
-              <div class="controls">
-              	<input type="number" name="hargaSatuan" id="hargaSatuan">
-              </div>
-             </div>
-              <div class="form-actions">
-                <input type="submit" value="Simpan" class="btn btn-success">
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+     <button class="btn btn-info">Tambah Barang</button>
     </div>
     <div class="row-fluid">
       <div class="span12">
