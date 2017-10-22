@@ -6,7 +6,68 @@
   <div class="container-fluid">
     <hr>
     <div class="row-fluid">
-     <button class="btn btn-info">Tambah Barang</button>
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+            <h5>Tambah Barang</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <form class="form-horizontal" method="post" action="#" name="basic_validate" id="basic_validate" novalidate="novalidate">
+            <div class="control-group">
+            <label class="control-label">Kode</label>
+              <div class="controls">
+                <input type="text" name="kodeBarang" id="kodeBarang">
+              </div>
+              <label class="control-label">Nama Barang</label>
+              <div class="controls">
+                <input type="text" name="namaBarang" id="namaBarang">
+              </div>
+              <label class="control-label">Min Stok</label>
+              <div class="controls">
+                <input type="number" name="minStok" id="minStok">
+              </div>
+              <label class="control-label"> </label>
+              <div class="controls">
+                <div class="buttons"> 
+                  <a id="add-event" data-toggle="modal" href="#modalSimilar" class="btn btn-inverse btn-mini"><i class="icon-plus icon-white"></i> Similar</a>
+                </div>
+              </div>
+              <label class="control-label">Harga Normal</label>
+              <div class="controls">
+                <input type="number" name="hargaNormal" id="hargaNormal">
+              </div>
+              <label class="control-label">Pilih Merk Barang</label>
+              <div class="controls">
+                <select style class="form-control col-xs-3" id="pilihMerkBarang">
+                  <option>Vagrant</option>
+                  <option>Vary</option>
+                  <option>Jean</option>
+                  <option>Cell</option>
+                </select>
+              </div>
+              <label class="control-label">Harga Normal</label>
+              <div class="controls">
+                <input type="number" name="hargaNormal" id="hargaNormal">
+              </div>
+              <label class="control-label">Deskripsi Barang</label>
+              <div class="controls">
+                <textarea rows="4" cols="50"></textarea>
+              </div>
+              <label class="control-label"> </label>
+              <div class="checkbox controls">
+                <label><input type="checkbox" value="" id="checkLow">Low?</label>
+              </div>
+              <div id="tempatLow"></div>
+            </div>
+            
+              <div class="form-actions">
+                <input type="submit" value="Batal" class="btn btn-info">
+                <input type="submit" value="Simpan" class="btn btn-success">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="row-fluid">
       <div class="span12">
@@ -256,6 +317,37 @@
     </div>
   </div>
 </div>
+
+<!-- Modal Tambah Similar-->
+<div class="modal hide" id="modalSimilar">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Tambah Similar Merk</h3>
+    </div>
+    <div class="modal-body">
+        <div class="control-group">
+              <label class="control-label">Pilih Merk</label>
+              <div class="controls">
+                <select multiple >
+                  <option>First option</option>
+                  <option selected>Second option</option>
+                  <option>Third option</option>
+                  <option>Fourth option</option>
+                  <option>Fifth option</option>
+                  <option>Sixth option</option>
+                  <option>Seventh option</option>
+                  <option>Eighth option</option>
+                </select>
+              </div>
+        </div>
+    </div>
+    <div class="modal-footer"> 
+      <a href="#" class="btn" data-dismiss="modal">Tutup</a>
+    </div>
+  </div>
+</div>
+<!-- Tutup Modal Similar -->
+
 <!--Footer-part-->
 <div class="row-fluid">
   <div id="footer" class="span12"> 2017 &copy; Ferrscreen Admin</div>
@@ -269,5 +361,8 @@
 <script src="<?php echo asset_url();?>js/jquery.dataTables.min.js"></script> 
 <script src="<?php echo asset_url();?>js/matrix.js"></script> 
 <script src="<?php echo asset_url();?>js/matrix.tables.js"></script>
+<script src="<?php echo asset_url();?>js/barangJs.js"></script>
+<script>
+</script>
 </body>
 </html>

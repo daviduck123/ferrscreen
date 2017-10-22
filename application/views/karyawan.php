@@ -229,8 +229,11 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
 
-      <!-- Modal Tambah Karyawan-->
+<!-- Modal Tambah Karyawan-->
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
       
@@ -273,11 +276,8 @@
         
       </div>
     </div>
-    <!-- Tutup Modal Tambah Karyawan -->
+<!-- Tutup Modal Tambah Karyawan -->
 
-    </div>
-  </div>
-</div>
 <!--Footer-part-->
 <div class="row-fluid">
   <div id="footer" class="span12"> 2017 &copy; Ferrscreen Admin</div>
