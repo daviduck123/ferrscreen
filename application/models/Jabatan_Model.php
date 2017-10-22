@@ -25,7 +25,19 @@ class Jabatan_Model extends CI_Model {
                 FROM jabatan j
                 ORDER BY j.id ASC";
         $result = $this->db->query($sql);
-        return $result->result_array();
+
+        $jabatans = $result->result_array();
+
+        foreach($jabatans as $jabatan){
+            $hak_akses = $this->HakAkses_Model->get_hakAksesByIdJabatan($jabatan['id']);
+            if(count($hak_akses) > 0){
+                $jabatan["hak_akses"] = $hak_akses;
+            }else{
+                $jabatan["hak_akses"] = [];
+            }
+        }
+
+        return $jabatans;
     }
 
     public function get_jabatanByIdUser($id_user){
@@ -34,6 +46,17 @@ class Jabatan_Model extends CI_Model {
                 WHERE uj.id_user = ? AND uj.id_jabatan = j.id
                 ORDER BY j.id ASC";
         $result = $this->db->query($sql, array($id_user));
-        return $result->result_array();
+
+        $jabatans = $result->result_array();
+
+        foreach($jabatans as $jabatan){
+            $hak_akses = $this->HakAkses_Model->get_hakAksesByIdJabatan($jabatan['id']);
+            if(count($hak_akses) > 0){
+                $jabatan["hak_akses"] = $hak_akses;
+            }else{
+                $jabatan["hak_akses"] = [];
+            }
+        }
+        return $jabatans;
     }
 }
