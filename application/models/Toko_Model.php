@@ -54,5 +54,5 @@ class Toko_Model extends CI_Model {
         return $result->result_array();
     }
 
-
+//Teet
 }
