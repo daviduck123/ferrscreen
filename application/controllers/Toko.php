@@ -18,6 +18,11 @@ class Toko extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+	public function __construct(){
+        header('Access-Control-Allow-Origin: *');
+        parent::__construct();
+	 	$this->load->model('Toko_Model');
+    }
 	public function index()
 	{
 		$dataMenu = array(

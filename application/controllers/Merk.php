@@ -24,11 +24,7 @@ class Merk extends CI_Controller {
 	 	$this->load->model('Merk_Model');
     }
 
-	function _remap($param) {
-        $this->index($param);
-    }
-
-	public function index($param)
+	public function index()
 	{
 		$dataMenu = array(
 	        'menuAktif' => "merk"
