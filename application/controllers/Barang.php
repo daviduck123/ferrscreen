@@ -30,9 +30,15 @@ class Barang extends CI_Controller {
 		$dataMenu = array(
 	        'menuAktif' => "barang"
 		);
+
+		$dataBarang = $this->Barang_Model->get_allBarang();
+		$data = array(
+	        'dataBarang' => $dataBarang,
+		);
+
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
-		$this->load->view('barang');
+		$this->load->view('barang',$data);
 		//$this->load->view('footer');
 	}
 
@@ -60,7 +66,7 @@ class Barang extends CI_Controller {
 
 		//isi data diisi array post
 		$isiData = $this->input->post();
-		print_r($isiData);
+		//print_r($isiData);
 		$isLow=FALSE;
 
 		if($this->input->post('btnTambah'))
@@ -81,7 +87,7 @@ class Barang extends CI_Controller {
 			
 			if ($this->form_validation->run() == FALSE)
 			{
-				echo "salah";
+				echo "Ada yang belum anda isi";
            	}
            	else
            	{
@@ -101,25 +107,55 @@ class Barang extends CI_Controller {
 				$pilihMerkBarangLow	= $this->input->post('pilihMerkBarangLow');
 				$hargaLow	= $this->input->post('hargaLow');
 				$deskripsiLow	= $this->input->post('deskripsiLow');
-				$barang = $this->Barang_Model->insert_barang($namaBarang, $minStok, $pilihMerkBarang, $similarMerk, $kodeBarang, $hargaNormal, $deskripsiNormal, $isLow, $pilihMerkBarangLow, $kodeBarangLow, $hargaLow, $deskripsiLow);
+				$result = $this->Barang_Model->insert_barang($namaBarang, $minStok, $pilihMerkBarang, $similarMerk, $kodeBarang, $hargaNormal, $deskripsiNormal, $isLow, $pilihMerkBarangLow, $kodeBarangLow, $hargaLow, $deskripsiLow);
 
+				/*
 				if(count($result) > 0)
 				{
-                	$this->set_response([
-                		'status' => TRUE,
-              			'message' => 'Successfully Tambah Barang'
-          			], REST_Controller::HTTP_OK);
+                	$dataMenu = array(
+				        'menuAktif' => "barang"
+					);
+
+					$dataBarang = $this->Barang_Model->get_allBarang();
+
+					$dataInfo = array(
+						//status 1 berarti success
+				        'status' => "1",
+				        'keterangan' => "Barang baru berhasil ditambahkan",
+					);
+					$data = array(
+				        'dataBarang' => $dataBarang,
+				        'dataInfo' => $dataInfo
+					);
+                	$this->load->view('header');
+					$this->load->view('sidebar',$dataMenu);
+					$this->load->view('barang',$data);
 				} else {
-					 $this->set_response([
-	  					'status' => FALSE,
-        				'message' => 'Failed Tambah Barang'
-         			], REST_Controller::HTTP_BAD_REQUEST);
+					$dataMenu = array(
+				        'menuAktif' => "barang"
+					);
+
+					$dataBarang = $this->Barang_Model->get_allBarang();
+
+					$dataInfo = array(
+						//status 0 berarti gagal
+				        'status' => "0",
+				        'keterangan' => "Tidak berhasil dalam menambahkan barang baru",
+					);
+					$data = array(
+				        'dataBarang' => $dataBarang,
+				        'dataInfo' => $dataInfo
+					);
+                	$this->load->view('header');
+					$this->load->view('sidebar',$dataMenu);
+					$this->load->view('barang',$data);
 				}
+				*/
          	}
 		}
 		else
 		{
-			echo "sini";
+			echo "jangan lakukan refresh saat pengiriman data";
 		}
 	}
 }

@@ -8,8 +8,8 @@ class Merk_Model extends CI_Model {
 
     public function insert_merk($nama, $keterangan){
         $sql="INSERT INTO merk (nama, keterangan, created_at) VALUES (?,?,NOW())";
-        $this->db->query($sql, array($nama, $keterangan));
-
+        $hasil=$this->db->query($sql, array($nama, $keterangan));
+        return $hasil->row()->id;
     }
 
     public function get_allMerk(){

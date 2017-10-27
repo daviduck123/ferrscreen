@@ -9,10 +9,10 @@
         Master Data
       </a>
       <a href="#" class="current">
-        Barang
+        Merk
       </a>
     </div>
-    <h1>Barang</h1>
+    <h1>Merk</h1>
   </div>
   <div class="container-fluid">
   <?php 
@@ -46,10 +46,10 @@
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
         <li class="bg_lb"> 
-          <a href="<?php echo base_url();?>barang/tambahBarang"> 
+          <a href="<?php echo base_url();?>merk/tambahMerk"> 
             <i class="icon-plus-sign"></i> 
             <!--<span class="label label-important">20</span>-->
-            Tambah Barang
+            Tambah Merk
           </a>
         </li>
       </ul>
@@ -59,32 +59,32 @@
       <div class="widget-box">
           <div class="widget-title"> 
             <span class="icon"><i class="icon-th"></i></span>
-            <span class="icon"><b>List Barang</b></span>
+            <span class="icon"><b>List Merk</b></span>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
                   <th>Nomor</th>
-                  <th>Nama Barang</th>
-                  <th>Minimal Stok</th>
+                  <th>List Merk</th>
+                  <th>Keterangan</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
               <?php 
-                if(isset($dataBarang))
+                if(isset($dataMerk))
                 {
                     $number=1;
-                    foreach ($dataBarang as $barang) 
+                    foreach ($dataMerk as $merk) 
                     {
                       echo ' <tr class="gradeX">
                                 <td>'.$number.'</td>
-                                <td>'.$barang["nama"].'</td>
-                                <td>'.$barang["min_stok"].'</td>
+                                <td>'.$merk["nama"].'</td>
+                                <td>'.$merk["keterangan"].'</td>
                                 <td class="center">
-                                    <button value="'.$barang["id"].'" class="btn btn-success btn-mini">Edit</button>
-                                    <button value="'.$barang["id"].'" class="btn btn-warning btn-mini">Hapus</button>
+                                    <button value="'.$merk["id"].'" class="btn btn-success btn-mini">Edit</button>
+                                    <button value="'.$merk["id"].'" class="btn btn-warning btn-mini">Hapus</button>
                                 </td>
                               </tr>';
                       $number++;
