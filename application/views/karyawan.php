@@ -8,10 +8,6 @@
     <div class="row-fluid">
       <div class="span12">
       <div class="widget-box">
-          <div class="widget-title"> 
-            <span class="icon"><i class="icon-th"></i></span>
-            <span class="icon"><b>List Karyawan</b><button style="position: absolute; right:20px;" class="btn btn-success btn-mini" data-toggle="modal" data-target="#myModal">+ Tambah Karyawan</button></span>
-          </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
               <thead>
@@ -232,51 +228,6 @@
     </div>
   </div>
 </div>
-
-<!-- Modal Tambah Karyawan-->
-    <div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-dialog">
-      
-        <!-- Modal content-->
-    
-        <form class="form-horizontal" method="post" action="#" name="basic_validate" id="basic_validate" novalidate="novalidate">
-      <div class="modal-content">
-        <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Tambah Karyawan</h4>
-        </div>
-        <div class="modal-body">
-          <div class="widget-content nopadding">
-            <div class="control-group">
-              <label class="control-label">Nama Karyawan</label>
-              <div class="controls">
-              <input type="text" name="nama" id="nama">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label">Alamat Karyawan</label>
-              <div class="controls">
-              <input type="text" name="alamat" id="alamat">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label">Nomor HP</label>
-              <div class="controls">
-              <input type="number" name="nomorHp" id="nomorHp">
-              </div>
-             </div>
-          </div>
-        </div>
-        <div class="modal-footer form-actions">
-          <input type="submit" value="Validate" class="btn btn-success">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </form>
-        
-      </div>
-    </div>
-<!-- Tutup Modal Tambah Karyawan -->
 
 <!--Footer-part-->
 <div class="row-fluid">

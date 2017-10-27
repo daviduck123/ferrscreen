@@ -1,6 +1,17 @@
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="">Master Data</a> <a href="#" class="current">Toko</a> </div>
+    <div id="breadcrumb"> 
+      <a href="<?php echo base_url();?>dashboard" title="Go to Home" class="tip-bottom">
+        <i class="icon-dashbard"></i> 
+        Dashboard
+      </a>
+      <a href="#" class="">
+        Master Data
+      </a>
+      <a href="#" class="current">
+        Toko
+      </a>
+    </div>
     <h1>Toko</h1>
   </div>
   <div class="container-fluid">

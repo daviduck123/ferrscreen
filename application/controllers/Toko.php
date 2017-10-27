@@ -108,44 +108,44 @@ class Toko extends CI_Controller {
 				if(count($result) > 0)
 				{
 					$dataMenu = array(
-				        'menuAktif' => "merk"
+				        'menuAktif' => "toko"
 					);
 
-					$dataMerk = $this->Merk_Model->get_allMerk();
+					$dataToko = $this->Toko_Model->get_allToko();
 
 					$dataInfo = array(
 						//status 1 berarti success
 				        'status' => "1",
-				        'keterangan' => "Merk baru berhasil ditambahkan",
+				        'keterangan' => "Toko baru berhasil ditambahkan",
 					);
 					$data = array(
-				        'dataMerk' => $dataMerk,
+				        'dataToko' => $dataToko,
 				        'dataInfo' => $dataInfo
 					);
                 	$this->load->view('header');
 					$this->load->view('sidebar',$dataMenu);
-					$this->load->view('merk',$data);
+					$this->load->view('toko',$data);
 				} 
 				else 
 				{
 					 $dataMenu = array(
-				        'menuAktif' => "merk"
+				        'menuAktif' => "toko"
 					);
 
-					$dataMerk = $this->Merk_Model->get_allMerk();
+					$dataToko = $this->Toko_Model->get_allToko();
 
 					$dataInfo = array(
 						//status 0 berarti gagal
 				        'status' => "0",
-				        'keterangan' => "Tidak berhasil dalam menambahkan merk baru",
+				        'keterangan' => "Tidak berhasil dalam menambahkan toko baru",
 					);
 					$data = array(
-				        'dataMerk' => $dataMerk,
+				        'dataToko' => $dataToko,
 				        'dataInfo' => $dataInfo
 					);
                 	$this->load->view('header');
 					$this->load->view('sidebar',$dataMenu);
-					$this->load->view('merk',$data);
+					$this->load->view('toko',$data);
 				}
 				*/
          	}
