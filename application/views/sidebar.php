@@ -12,9 +12,9 @@
         <li><a href="<?php echo base_url();?>barang">Barang</a></li>
       </ul>
     </li>
-    <li> <a href="<?php echo base_url();?>penjualan"><i class="icon icon-tag"></i> <span>Penjualan</span></a> </li>
-    <li><a href="<?php echo base_url();?>pembelian"><i class="icon  icon-shopping-cart"></i> <span>Pembelian</span></a></li>
-    <li class="submenu"> <a href="#"><i class="icon icon-book"></i> <span>Laporan</span><!--  <span class="label label-important">3</span> --></a>
+    <li class="<?php if($menuAktif=="penjualan") echo "active";?>"> <a href="<?php echo base_url();?>penjualan"><i class="icon icon-tag"></i> <span>Penjualan</span></a> </li>
+    <li class="<?php if($menuAktif=="pembelian") echo "active";?>"><a href="<?php echo base_url();?>pembelian"><i class="icon  icon-shopping-cart"></i> <span>Pembelian</span></a></li>
+    <li class="submenu <?php if($menuAktif=="laporanLabaRugi" || $menuAktif=="laporanKaryawan" || $menuAktif=="laporanToko" || $menuAktif=="laporanPengeluaran" || $menuAktif=="laporanPemasukkan") echo "active";?>"> <a href="#"><i class="icon icon-book"></i> <span>Laporan</span><!--  <span class="label label-important">3</span> --></a>
       <ul>
         <li><a href="<?php echo base_url();?>laporanLabaRugi">Laba Rugi</a></li>
         <li><a href="<?php echo base_url();?>laporanKaryawan">Karyawan</a></li>
@@ -29,7 +29,7 @@
         <li><a href="<?php /*echo base_url()*/;?>ucKaryawan">Karyawan</a></li>
       </ul>
     </li> -->
-    <li><a href="<?php echo base_url();?>ePajak"><i class="icon icon-pencil"></i> <span>E-faktur Pajak</span></a></li>
-    <li><a href="<?php echo base_url();?>programCashback"><i class="icon icon-pencil"></i> <span>Program Cashback</span></a></li>
+    <li  class="<?php if($menuAktif=="ePajak") echo "active";?>"><a href="<?php echo base_url();?>ePajak"><i class="icon icon-pencil"></i> <span>E-faktur Pajak</span></a></li>
+    <li class="<?php if($menuAktif=="programCashback") echo "active";?>"><a href="<?php echo base_url();?>programCashback"><i class="icon icon-pencil"></i> <span>Program Cashback</span></a></li>
   </ul>
 </div>
