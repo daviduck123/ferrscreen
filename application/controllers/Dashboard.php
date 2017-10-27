@@ -20,8 +20,11 @@ class DashBoard extends CI_Controller {
 	 */
 	public function index()
 	{
+		$dataMenu = array(
+	        'menuAktif' => "dashboard"
+		);
 		$this->load->view('header');
-		$this->load->view('sidebar');
+		$this->load->view('sidebar',$dataMenu);
 		$this->load->view('dashboard');
 		$this->load->view('footer');
 	}

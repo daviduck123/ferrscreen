@@ -1,7 +1,7 @@
-<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
+<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-dashboard"></i> Dashboard</a>
   <ul>
-    <li class="active"><a href="<?php echo base_url();?>dashboard"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
-    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Master Data</span> <!-- <span class="label label-important">3</span> --></a>
+    <li class="<?php if($menuAktif=="dashboard") echo "active";?>"><a href="<?php echo base_url();?>dashboard"><i class="icon icon-dashboard"></i> <span>Dashboard</span></a> </li>
+    <li class="submenu <?php if($menuAktif=="general" || $menuAktif=="jabatan" || $menuAktif=="karyawan" || $menuAktif=="supplier" || $menuAktif=="toko" || $menuAktif=="merk" || $menuAktif=="barang") echo "active";?>"> <a href="#"><i class="icon icon-th-list"></i> <span>Master Data</span> <!-- <span class="label label-important">3</span> --></a>
       <ul>
         <li><a href="<?php echo base_url();?>general">General</a></li>
         <li><a href="<?php echo base_url();?>jabatan">Jabatan</a></li>

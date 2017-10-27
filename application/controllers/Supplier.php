@@ -20,8 +20,11 @@ class Supplier extends CI_Controller {
 	 */
 	public function index()
 	{
+		$dataMenu = array(
+	        'menuAktif' => "supplier"
+		);
 		$this->load->view('header');
-		$this->load->view('sidebar');
+		$this->load->view('sidebar',$dataMenu);
 		$this->load->view('supplier');
 		//$this->load->view('footer');
 	}

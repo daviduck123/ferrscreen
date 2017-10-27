@@ -20,8 +20,11 @@ class LaporanToko extends CI_Controller {
 	 */
 	public function index()
 	{
+		$dataMenu = array(
+	        'menuAktif' => "laporanToko"
+		);
 		$this->load->view('header');
-		$this->load->view('sidebar');
+		$this->load->view('sidebar',$dataMenu);
 		//$this->load->view('laporanToko');
 		$this->load->view('error404');
 		$this->load->view('footer');

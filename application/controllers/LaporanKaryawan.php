@@ -20,8 +20,11 @@ class LaporanKaryawan extends CI_Controller {
 	 */
 	public function index()
 	{
+		$dataMenu = array(
+	        'menuAktif' => "laporanKaryawan"
+		);
 		$this->load->view('header');
-		$this->load->view('sidebar');
+		$this->load->view('sidebar',$dataMenu);
 		//$this->load->view('laporanKaryawan');
 		$this->load->view('error404');
 		$this->load->view('footer');

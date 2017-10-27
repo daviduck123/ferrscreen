@@ -20,8 +20,11 @@ class Karyawan extends CI_Controller {
 	 */
 	public function index()
 	{
+		$dataMenu = array(
+	        'menuAktif' => "karyawan"
+		);
 		$this->load->view('header');
-		$this->load->view('sidebar');
+		$this->load->view('sidebar',$dataMenu);
 		$this->load->view('karyawan');
 		//$this->load->view('footer');
 	}

@@ -20,8 +20,11 @@ class Toko extends CI_Controller {
 	 */
 	public function index()
 	{
+		$dataMenu = array(
+	        'menuAktif' => "toko"
+		);
 		$this->load->view('header');
-		$this->load->view('sidebar');
+		$this->load->view('sidebar',$dataMenu);
 		$this->load->view('toko');
 		//$this->load->view('footer');
 	}

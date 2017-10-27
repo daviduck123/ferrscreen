@@ -27,14 +27,20 @@ class Barang extends CI_Controller {
 
 	public function index()
 	{
+		$dataMenu = array(
+	        'menuAktif' => "barang"
+		);
 		$this->load->view('header');
-		$this->load->view('sidebar');
+		$this->load->view('sidebar',$dataMenu);
 		$this->load->view('barang');
 		//$this->load->view('footer');
 	}
 
 	public function tambahBarang()
 	{
+		$dataMenu = array(
+	        'menuAktif' => "barang"
+		);
 		$dataBarang = $this->Barang_Model->get_allBarang();
 		$dataMerk = $this->Merk_Model->get_allMerk();
 		$data = array(
@@ -42,7 +48,7 @@ class Barang extends CI_Controller {
 	        'dataMerk' => $dataMerk
 		);
 		$this->load->view('header');
-		$this->load->view('sidebar');
+		$this->load->view('sidebar',$dataMenu);
 		$this->load->view('tambahBarang',$data);
 		//$this->load->view('footer');
 	}

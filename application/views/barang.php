@@ -1,73 +1,31 @@
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="">Master Data</a> <a href="#" class="current">Barang</a> </div>
+    <div id="breadcrumb"> 
+      <a href="<?php echo base_url();?>dashboard" title="Go to Home" class="tip-bottom">
+        <i class="icon-dashboard"></i> 
+        Dashboard
+      </a>
+      <a href="#" class="">
+        Master Data
+      </a>
+      <a href="#" class="current">
+        Barang
+      </a>
+    </div>
     <h1>Barang</h1>
   </div>
   <div class="container-fluid">
     <hr>
-    <div class="row-fluid">
-      <div class="span12">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>Tambah Barang</h5>
-          </div>
-          <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="#" name="basic_validate" id="basic_validate" novalidate="novalidate">
-            <div class="control-group">
-            <label class="control-label">Kode</label>
-              <div class="controls">
-                <input type="text" name="kodeBarang" id="kodeBarang">
-              </div>
-              <label class="control-label">Nama Barang</label>
-              <div class="controls">
-                <input type="text" name="namaBarang" id="namaBarang">
-              </div>
-              <label class="control-label">Min Stok</label>
-              <div class="controls">
-                <input type="number" name="minStok" id="minStok">
-              </div>
-              <label class="control-label"> </label>
-              <div class="controls">
-                <div class="buttons"> 
-                  <a id="add-event" data-toggle="modal" href="#modalSimilar" class="btn btn-inverse btn-mini"><i class="icon-plus icon-white"></i> Similar</a>
-                </div>
-              </div>
-              <label class="control-label">Harga Normal</label>
-              <div class="controls">
-                <input type="number" name="hargaNormal" id="hargaNormal">
-              </div>
-              <label class="control-label">Pilih Merk Barang</label>
-              <div class="controls">
-                <select style class="form-control col-xs-3" id="pilihMerkBarang">
-                  <option>Vagrant</option>
-                  <option>Vary</option>
-                  <option>Jean</option>
-                  <option>Cell</option>
-                </select>
-              </div>
-              <label class="control-label">Harga Normal</label>
-              <div class="controls">
-                <input type="number" name="hargaNormal" id="hargaNormal">
-              </div>
-              <label class="control-label">Deskripsi Barang</label>
-              <div class="controls">
-                <textarea rows="4" cols="50"></textarea>
-              </div>
-              <label class="control-label"> </label>
-              <div class="checkbox controls">
-                <label><input type="checkbox" value="" id="checkLow">Low?</label>
-              </div>
-              <div id="tempatLow"></div>
-            </div>
-            
-              <div class="form-actions">
-                <input type="submit" value="Batal" class="btn btn-info">
-                <input type="submit" value="Simpan" class="btn btn-success">
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+    <div class="quick-actions_homepage">
+      <ul class="quick-actions">
+        <li class="bg_lb"> 
+          <a href="<?php echo base_url();?>barang/tambahBarang"> 
+            <i class="icon-plus-sign"></i> 
+            <span class="label label-important">20</span>
+            Tambah Barang
+          </a>
+        </li>
+      </ul>
     </div>
     <div class="row-fluid">
       <div class="span12">
