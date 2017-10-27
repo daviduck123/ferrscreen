@@ -61,10 +61,13 @@
               <div class="controls">
                 <select style class="form-control col-xs-3" name="pilihMerkBarang" id="pilihMerkBarang">
                   <?php 
+                  if(isset($dataMerk))
+                  {
                     foreach ($dataMerk as $merk) 
                     {
                       echo "<option value='".$merk[id]."'>".$merk[nama]."</option>";
                     }
+                  }
                   ?>
                 </select>
               </div>
@@ -106,10 +109,13 @@
               <div class="controls">
                 <select multiple="multiple" name="similarBarang[]">
                   <?php 
+                  if(isset($dataBarang))
+                  {
                     foreach ($dataBarang as $barang) 
                     {
-                      echo "<option value='".$barang[id]."'>".$barang[nama]."</option>";
+                      echo "<option value='".$barang["id"]."'>".$barang["nama"]."</option>";
                     }
+                  }
                   ?>
                   </select>
               </div>
@@ -151,10 +157,13 @@
                   '<div class="controls">'+
                     '<select style class="form-control col-xs-3" name="pilihMerkBarangLow" id="pilihMerkBarangLow">'+
                     <?php 
-                      foreach ($dataBarang as $a) 
+                    if(isset($dataMerk))
+                    {
+                      foreach ($dataMerk as $merk) 
                       {
-                        echo "'<option value=".'"'.$a["id"].'"'.">".$a["nama"]."</option>'+";
+                        echo "'<option value=".'"'.$merk["id"].'"'.">".$merk["nama"]."</option>'+";
                       }
+                    }
                     ?>
                     '</select>'+
                   '</div>'+

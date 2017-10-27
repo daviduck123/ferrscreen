@@ -22,15 +22,39 @@ class Toko extends CI_Controller {
         header('Access-Control-Allow-Origin: *');
         parent::__construct();
 	 	$this->load->model('Toko_Model');
+	 	$this->load->model('Kota_Model');
     }
+
 	public function index()
 	{
 		$dataMenu = array(
 	        'menuAktif' => "toko"
 		);
+
+		$dataToko = $this->Toko_Model->get_allToko();
+		$data = array(
+	        'dataToko' => $dataToko
+		);
+
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
-		$this->load->view('toko');
+		$this->load->view('toko',$data);
+		//$this->load->view('footer');
+	}
+
+	public function tambahToko()
+	{
+		$dataMenu = array(
+	        'menuAktif' => "toko"
+		);
+
+		$dataKota = $this->Kota_Model->get_allKota();
+		$data = array(
+	        'dataKota' => $dataKota
+		);
+		$this->load->view('header');
+		$this->load->view('sidebar',$dataMenu);
+		$this->load->view('tambahToko',$data);
 		//$this->load->view('footer');
 	}
 }

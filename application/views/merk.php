@@ -100,36 +100,6 @@
   </div>
 </div>
 
-<!-- Modal Tambah Similar-->
-<div class="modal hide" id="modalSimilar">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h3>Tambah Similar Merk</h3>
-    </div>
-    <div class="modal-body">
-        <div class="control-group">
-              <label class="control-label">Pilih Merk</label>
-              <div class="controls">
-                <select multiple >
-                  <option>First option</option>
-                  <option selected>Second option</option>
-                  <option>Third option</option>
-                  <option>Fourth option</option>
-                  <option>Fifth option</option>
-                  <option>Sixth option</option>
-                  <option>Seventh option</option>
-                  <option>Eighth option</option>
-                </select>
-              </div>
-        </div>
-    </div>
-    <div class="modal-footer"> 
-      <a href="#" class="btn" data-dismiss="modal">Tutup</a>
-    </div>
-  </div>
-</div>
-<!-- Tutup Modal Similar -->
-
 <!--Footer-part-->
 <div class="row-fluid">
   <div id="footer" class="span12"> 2017 &copy; Ferrscreen Admin</div>
