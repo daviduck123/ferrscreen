@@ -1,4 +1,4 @@
-T<div id="content">
+<div id="content">
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<?php echo base_url();?>dashboard" title="Go to Home" class="tip-bottom">
@@ -8,14 +8,14 @@ T<div id="content">
       <a href="#" class="">
         Master Data
       </a>
-      <a href="<?php echo base_url();?>supplier" class="">
-        Supplier
+      <a href="<?php echo base_url();?>jabatan" class="">
+        Jabatan
       </a>
       <a href="#" class="current">
-        Tambah Karyawan
+        Tambah Jabatan
       </a>
     </div>
-    <h1>Tambah Karyawan</h1>
+    <h1>Tambah Jabatan</h1>
   </div>
   <div class="container-fluid">
      <?php
@@ -40,11 +40,11 @@ T<div id="content">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>Tambah Supplier</h5>
+            <h5>Tambah Jabatan</h5>
           </div>
           <div class="widget-content nopadding">
              <?php 
-            echo form_open("karyawan/prosesTambahKaryawan",  
+            echo form_open("jabatan/prosesTambahJabatan",  
               array(
                 'name' => 'basic_validate', 
                 'id' => 'basic_validate',
@@ -54,72 +54,34 @@ T<div id="content">
             ); 
             ?>
             <div class="control-group">
-              <label class="control-label">Nama Karyawan</label>
+              <label class="control-label">Nama Jabatan</label>
               <div class="controls">
-                <input type="text" name="namaKaryawan" id="namaKaryawan">
+                <input type="text" name="namaJabatan" id="namaJabatan">
               </div>
-              <label class="control-label">Email</label>
+              <label class="control-label">Keterangan</label>
               <div class="controls">
-                <input type="text" name="alamatEmailKaryawan" id="alamatEmailKaryawan">
+                <textarea class='span9' name="deskripsi"></textarea>
               </div>
-              <label class="control-label">Alamat</label>
+              <label class="control-label">Hak Akses</label>
               <div class="controls">
-                <textarea class='span9' name="alamatKaryawan" id="alamatKaryawan"></textarea>
-              </div>
-              <label class="control-label">Pilih Kota</label>
-              <div class="controls">
-                <select style class="form-control col-xs-3" name="pilihKotaKaryawan" id="pilihKotaKaryawan">
+                <select name="hak_akses[]" id='hak_akses' multiple>
                   <?php 
-                  if(isset($dataKota))
-                  {
-                    foreach ($dataKota as $kota) 
-                    {
-                      echo "<option value='".$kota["id"]."'>".$kota["nama"]."</option>";
+                    if(count($dataHakAkses) > 0){
+                      foreach($dataHakAkses as $hak_akses){
+                        ?>
+                          <option value="<?php echo $hak_akses['id']; ?>"><?php echo $hak_akses['nama']; ?></option>
+                        <?php
+                      }
                     }
-                  }
                   ?>
                 </select>
               </div>
-              <label class="control-label">Telepon</label>
-              <div class="controls">
-                <input type="text" name="teleponKaryawan" id="teleponKaryawan">
-              </div>
-              <label class="control-label">HP</label>
-              <div class="controls">
-                <input type="text" name="hpKaryawan" id="hpKaryawan">
-              </div>
-              <label class="control-label">Tanggal Masuk</label>
-              <div class="controls">
-                <div class="input-append date datepicker">
-                  <input type="text" data-date-format="mm-dd-yyyy" class="" nama='tglMasuk' id='tglMasuk'>
-                  <span class="add-on"><i class="icon-th"></i></span> </div>
-                </div>
-              </div>
-              <label class="control-label">Deskripsi</label>
-              <div class="controls">
-                <textarea name="deskripsiKaryawan" id="deskripsiKaryawan" class="span9"></textarea>
-              </div>
-              <div class="control-group">
-                <label class="control-label">Jabatan</label>
-                <div class="controls">
-                  <select name="jabatan" id='jabatan'>
-                    <?php 
-                      foreach($dataJabatan as $jabatan){
-                        ?>
-                          <option value="<?php echo $jabatan['id'];?>"><?php echo $jabatan['nama']; ?></option>
-                        <?php
-                      }
-
-                    ?>
-                  </select>
-                </div>
-            </div>
             </div>
               <div class="form-actions">
                 <input type="submit" name="btnBatal" value="Batal" class="btn btn-info"/>
                 <input type="submit" name="btnTambah" value="Tambah" class="btn btn-success"/>
               </div>
-            <?php echo form_close();?>
+            <?php  echo form_close(); ?>
           </div>
         </div>
       </div>

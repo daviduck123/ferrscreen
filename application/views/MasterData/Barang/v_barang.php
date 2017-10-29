@@ -79,7 +79,11 @@
                           <td style = "vertical-align: middle;"><?php echo $number ?></td>
                           <td style = "vertical-align: middle;"><?php echo $barang['nama'] ?></td>
                           <td style = "vertical-align: middle;"><?php echo $barang['min_stok'] ?></td>
-                          <td style = "vertical-align: middle;"><?php echo $barang['total_stok']; ?></td>
+                          <td style = "vertical-align: middle;">
+                            <?php echo $barang['total_stok']; ?>
+                            <button style='float:right; margin-left: 3px;' value="<?php echo $barang["id"]; ?>" class="btn btn-info btn-mini">Detail Stok</button>
+                            <button style='float:right; margin-left: 3px;' value="<?php echo $barang["id"]; ?>" class="btn btn-success btn-mini">Update Stok</button>
+                          </td>
                           <td style = "vertical-align: middle;">
                              <?php foreach($barang["detail_barang"] as $detail){ ?>
                                 <?php echo $detail['kode'] ;?></br>

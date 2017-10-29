@@ -8,15 +8,19 @@ class User_Model extends CI_Model {
         $this->load->model("UserJabatan_Model");
     }
 
-    public function insert_user($email, $nama, $alamat, $telp, $hp, $deskripsi, $tgl_masuk, $tgl_keluar, $id_kota){
+    public function insert_user($email, $nama, $alamat, $telp, $hp, $deskripsi, $tgl_masuk, $tgl_keluar, $id_kota, $id_jabatan){
         $this->db->trans_start();
 
-        $sql="INSERT INTO `user`(`email`, `nama`, `alamat`, `telp`, `hp`, `deskripsi`, `tgl_masuk`, `tgl_keluar`, `is_aktif`, `id_kota`, `created_at`) VALUES (?,?,?,?,?,?,?,?,1,?,NOW())";
-        $this->db->query($sql, array($email, $nama, $alamat, $telp, $hp, $deskripsi, $tgl_masuk, $tgl_keluar, $id_kota));
-
-        $this->db->trans_complete();
+        $sql="INSERT INTO `user`(`email`, `nama`, `alamat`, `telp`, `hp`, `deskripsi`, `tgl_masuk`, `tgl_keluar`, `is_aktif`, `id_kota`, `created_at`) VALUES (?,?,?,?,?,?,?,?,?,?,NOW())";
+        $this->db->query($sql, array($email, $nama, $alamat, $telp, $hp, $deskripsi, $tgl_masuk, $tgl_keluar, "1", $id_kota));
 
         $id = $this->db->insert_id();
+
+        if(count($id_jabatan)){
+            $this->UserJabatan_Model->insert_userJabatan($id, $id_jabatan);
+        }
+
+        $this->db->trans_complete();
 
         return $id;
     }
@@ -45,13 +49,14 @@ class User_Model extends CI_Model {
     }
 
     public function get_allUser(){
-        $sql = "SELECT u.*
-                FROM user u
+        $sql = "SELECT u.*, k.nama as nama_kota
+                FROM user u, kota k
+                WHERE u.id_kota = k.id
                 ORDER BY u.nama ASC";
         $result = $this->db->query($sql);
 
         $users = $result->result_array();
-
+        $users2 = [];
         foreach($users as $user){
             $jabatans = $this->Jabatan_Model->get_jabatanByIdUser($user['id']);
             if(count($jabatans) > 0){
@@ -59,18 +64,19 @@ class User_Model extends CI_Model {
             }else{
                 $user["jabatan"] = [];
             }
+            array_push($users2, $user);
         }
-        return $users;
+        return $users2;
     }
 
     public function get_userById($id){
-        $sql = "SELECT u.*
-                FROM user u
-                WHERE u.id = ?
+        $sql = "SELECT u.*, k.nama as nama_kota
+                FROM user u, kota k
+                WHERE u.id = ? AND u.id_kota = k.id
                 ORDER BY u.nama ASC";
-        $result = $this->db->query($sql, array($id)));
+        $result = $this->db->query($sql, array($id));
         $users = $result->result_array();
-
+        $users2 = [];
         foreach($users as $user){
             $jabatans = $this->Jabatan_Model->get_jabatanByIdUser($user['id']);
             if(count($jabatans) > 0){
@@ -78,7 +84,8 @@ class User_Model extends CI_Model {
             }else{
                 $user["jabatan"] = [];
             }
+            array_push($users2, $user);
         }
-        return $users;
+        return $users2;
     }
 }

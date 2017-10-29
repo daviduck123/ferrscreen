@@ -9,13 +9,13 @@
         Master Data
       </a>
       <a href="#" class="current">
-        Karyawan
+        Jabatan
       </a>
     </div>
-    <h1>Karyawan</h1>
+    <h1>Jabatan</h1>
   </div>
   <div class="container-fluid">
-       <?php
+   <?php
     if ($this->session->flashdata('error')) {
         ?>
         <div class="alert alert-danger alert-dismissable">
@@ -36,10 +36,10 @@
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
         <li class="bg_lb"> 
-          <a href="<?php echo base_url();?>karyawan/tambahKaryawan"> 
+          <a href="<?php echo base_url();?>jabatan/tambahJabatan"> 
             <i class="icon-plus-sign"></i> 
             <!--<span class="label label-important">20</span>-->
-            Tambah Karyawan
+            Tambah Jabatan
           </a>
         </li>
       </ul>
@@ -54,47 +54,38 @@
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
               <thead>
-                 <tr>
+                <tr>
                   <th>Nomor</th>
                   <th>Nama</th>
-                  <th>Email</th>
-                  <th>Alamat Supplier</th>
-                  <th>Kota</th>
-                  <th>Telepon</th>
-                  <th>HP</th>
-                  <th>Tanggal Masuk</th>
-                  <th>Tanggal Keluar</th>
-                  <th>Jabatan</th>
-                  <th>Status</th>
+                  <th>Deskripsi</th>
+                  <th>Hak Akses</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
-               <?php 
-                if(isset($dataKaryawan))
+              <?php 
+                if(isset($dataJabatan))
                 {
                     $number=1;
-                    foreach ($dataKaryawan as $karyawan) 
+                    foreach ($dataJabatan as $jabatan) 
                     {
                       ?>
                       <tr class="gradeX">
-                        <td><?php echo $number; ?></td>
-                        <td><?php echo $karyawan["nama"]; ?></td>
-                        <td><?php echo $karyawan["email"]; ?></td>
-                        <td><?php echo $karyawan["alamat"]; ?></td>
-                        <td><?php echo $karyawan["nama_kota"]; ?></td>
-                        <td><?php echo $karyawan["telp"]; ?></td>
-                        <td><?php echo $karyawan["hp"]; ?></td>
-                        <td><?php echo $karyawan["tgl_masuk"]; ?></td>
-                        <td><?php echo $karyawan["tgl_keluar"]; ?></td>
-                        <td><?php echo $karyawan['jabatan'][0]['nama']; ?></td>
-                        <td><?php echo ($karyawan["is_aktif"] == "1" ? "Aktif":"Keluar"); ?></td>
-                        <td class="center">
-                          <button value="<?php echo $karyawan["id"]; ?>" class="btn btn-success btn-mini">Edit</button>
-                          <button value="<?php echo $karyawan["id"]; ?>" class="btn btn-warning btn-mini">Hapus</button>
-                        </td>
-                      </tr>
-                      <?php 
+                                <td><?php echo $number; ?></td>
+                                <td><?php echo $jabatan["nama"]; ?></td>
+                                <td><?php echo $jabatan["deskripsi"]; ?></td>
+                                <td>
+                                <?php foreach($jabatan['hak_akses'] as $hak_akses){ 
+                                  echo $hak_akses['nama']."<br>";
+                                }
+                                ?>
+                               </td>
+                                <td class="center">
+                                    <button value="<?php echo $jabatan["id"] ?>" class="btn btn-success btn-mini">Edit</button>
+                                    <button value="<?php echo $jabatan["id"] ?>" class="btn btn-warning btn-mini">Hapus</button>
+                                </td>
+                              </tr>
+                              <?php 
                       $number++;
                     }
                   }
@@ -121,5 +112,7 @@
 <script src="<?php echo asset_url();?>js/jquery.dataTables.min.js"></script> 
 <script src="<?php echo asset_url();?>js/matrix.js"></script> 
 <script src="<?php echo asset_url();?>js/matrix.tables.js"></script>
+<script>
+</script>
 </body>
 </html>

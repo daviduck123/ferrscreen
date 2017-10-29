@@ -26,7 +26,7 @@ class HakAkses_Model extends CI_Model {
     public function get_hakAksesByIdJabatan($id_jabatan){
          $sql = "SELECT h.*
                 FROM hak_akses h, jabatan_hak_akses jh
-                WHERE jh.id_jabatan = ? AND uj.id_hak_akses = h.id
+                WHERE jh.id_jabatan = ? AND jh.id_hak_akses = h.id
                 ORDER BY h.id ASC";
         $result = $this->db->query($sql, array($id_jabatan));
         return $result->result_array();

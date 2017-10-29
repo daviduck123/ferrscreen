@@ -15,33 +15,6 @@
     <h1>Merk</h1>
   </div>
   <div class="container-fluid">
-  <?php 
-      if(isset($dataInfo))
-      {
-        $text= '<div class="alert ';
-
-        if($dataInfo["status"]=="0")
-          $text.="alert-error";
-        else if ($dataInfo["status"]=="1") 
-          $text.="alert-success";
-        else
-          $text.="alert-info";
-
-        $text.=' alert-block"> 
-                  <a class="close" data-dismiss="alert" href="#">×</a>
-                  <h4 class="alert-heading">';
-        
-        if($dataInfo["status"]=="0")
-          $text.="Gagal!";
-        else if ($dataInfo["status"]=="1") 
-          $text.="Berhasil!";
-        else
-          $text.="Pemberitahuan";
-
-        $text.='</h4>'.$dataInfo["keterangan"].'</div>';
-        echo $text;
-      }
-  ?>
    <?php
     if ($this->session->flashdata('error')) {
         ?>

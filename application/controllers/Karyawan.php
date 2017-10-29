@@ -3,11 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Karyawan extends CI_Controller {
 
+	//Karyawan = User Model
 
 	public function __construct(){
         header('Access-Control-Allow-Origin: *');
         parent::__construct();
 	 	$this->load->model('Kota_Model');
+	 	$this->load->model('User_Model');
+	 	$this->load->model('Jabatan_Model');
     }
 
 	public function index()
@@ -16,9 +19,13 @@ class Karyawan extends CI_Controller {
 	        'menuAktif' => "masterdata",
 	        'subMenu' => "karyawan"
 		);
+		$dataKaryawan = $this->User_Model->get_allUser();
+		$data = array(
+			"dataKaryawan" => $dataKaryawan
+		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
-		$this->load->view('MasterData/Karyawan/v_karyawan');
+		$this->load->view('MasterData/Karyawan/v_karyawan', $data);
 		//$this->load->view('footer');
 	}
 
@@ -30,8 +37,10 @@ class Karyawan extends CI_Controller {
 		);
 
 		$dataKota = $this->Kota_Model->get_allKota();
+		$dataJabatan = $this->Jabatan_Model->get_allJabatan();
 		$data = array(
-	        'dataKota' => $dataKota
+	        'dataKota' => $dataKota,
+	        'dataJabatan' => $dataJabatan 
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
@@ -39,11 +48,8 @@ class Karyawan extends CI_Controller {
 		//$this->load->view('footer');
 	}
 
-	public function prosesTambahToko()
+	public function prosesTambahKaryawan()
 	{
-		$this->load->helper(array('form', 'url'));
-		$this->load->library('form_validation');
-
 		//isi data diisi array post
 		$isiData = $this->input->post();
 		//print_r($isiData);
@@ -51,44 +57,41 @@ class Karyawan extends CI_Controller {
 
 		if($this->input->post('btnTambah'))
 		{
-			$this->form_validation->set_rules('kodeToko', 'Kode toko', 'required');
-			$this->form_validation->set_rules('namaToko', 'Nama toko', 'required');
-			$this->form_validation->set_rules('alamatToko', 'Alamat Toko', 'required');
-			$this->form_validation->set_rules('pilihKotaToko', 'Kota Toko', 'required');
+			$this->form_validation->set_rules('namaKaryawan', 'Nama Karyawan', 'required');
+			$this->form_validation->set_rules('alamatKaryawan', 'Alamat Karyawan', 'required');
+			$this->form_validation->set_rules('pilihKotaKaryawan', 'Kota Karyawan', 'required');
+			/*$this->form_validation->set_rules('tglMasuk', 'Tanggal Masuk', 'required');*/
+			$this->form_validation->set_rules('jabatan', 'Jabatan', 'required');
 			
 			if ($this->form_validation->run() == FALSE)
 			{
 				$this->session->set_flashdata('error', 'Data tidak lengkap');
-				redirect('toko/tambahToko');
+				$this->tambahKaryawan();
+				/*redirect('karyawan/tambahKaryawan');*/
            	}
            	else
            	{
-				$kodeToko	= $this->input->post('kodeToko');
-				$namaToko	= $this->input->post('namaToko');
-				$alamatToko	= $this->input->post('alamatToko');
-				$contactPersonToko	= $this->input->post('contactPersonToko');
-				$alamatEmailToko	= $this->input->post('alamatEmailToko');
-				$pilihKotaToko	= $this->input->post('pilihKotaToko');
-				$kodePosToko	= $this->input->post('kodePosToko');
-				$teleponToko	= $this->input->post('teleponToko');
-				$hpToko	= $this->input->post('hpToko');
-				$faximileToko	= $this->input->post('faximileToko');
-				$limitPiutangToko	= $this->input->post('limitPiutangToko');
-				$jatuhTempoToko	= $this->input->post('jatuhTempoToko');
+				$namaKaryawan	= $this->input->post('namaKaryawan');
+				$alamatKaryawan	= $this->input->post('alamatKaryawan');
+				$alamatEmailKaryawan	= $this->input->post('alamatEmailKaryawan');
+				$pilihKotaKaryawan	= $this->input->post('pilihKotaKaryawan');
+				$deskripsiKaryawan	= $this->input->post('deskripsiKaryawan');
+				$teleponKaryawan	= $this->input->post('teleponKaryawan');
+				$hpKaryawan	= $this->input->post('hpKaryawan');
+				$tglMasuk	= date();
+				$jabatan	= $this->input->post('jabatan');
 
-				$result = $this->Toko_Model->insert_toko($kodeToko, $alamatEmailToko, $namaToko, $contactPersonToko, $alamatToko, $kodePosToko, $teleponToko, $hpToko, $faximileToko, $limitPiutangToko, $jatuhTempoToko, $pilihKotaToko);
-
-
+				$result = $this->User_Model->insert_user($alamatEmailKaryawan, $namaKaryawan, $alamatKaryawan, $teleponKaryawan, $hpKaryawan, $deskripsiKaryawan, $tglMasuk, null, $pilihKotaKaryawan, $jabatan);
 				if(count($result) > 0)
 				{
 
-					$this->session->set_flashdata('sukses', 'Berhasil simpan toko');
-					redirect('toko');
+					$this->session->set_flashdata('sukses', 'Berhasil simpan karyawan');
+					redirect('karyawan');
 				} 
 				else 
 				{
-					$this->session->set_flashdata('error', 'Gagal simpan toko');
-					redirect('toko');
+					$this->session->set_flashdata('error', 'Gagal simpan karyawan');
+					redirect('karyawan');
 				}
          	}
 		}

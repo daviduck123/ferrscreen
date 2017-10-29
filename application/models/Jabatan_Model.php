@@ -17,8 +17,11 @@ class Jabatan_Model extends CI_Model {
         $hasil = $this->db->query($sql2);
         $id = $hasil->row()->id;
 
-        foreach($hak_akses as $id_hakAkses){
-            $this->HakAkses_Model->insert_hakAkses($id, $id_hakAkses);
+        if(count($hak_akses) > 0){
+            //$hakAkses = [0,1,2,3,]
+            foreach($hak_akses as $id_hakAkses){
+                $this->HakAkses_Model->insert_hakAkses($id, $id_hakAkses);
+            }
         }
 
         $this->db->trans_complete();
@@ -33,7 +36,7 @@ class Jabatan_Model extends CI_Model {
         $result = $this->db->query($sql);
 
         $jabatans = $result->result_array();
-
+        $jabatans2 = [];
         foreach($jabatans as $jabatan){
             $hak_akses = $this->HakAkses_Model->get_hakAksesByIdJabatan($jabatan['id']);
             if(count($hak_akses) > 0){
@@ -41,9 +44,11 @@ class Jabatan_Model extends CI_Model {
             }else{
                 $jabatan["hak_akses"] = [];
             }
+
+            array_push($jabatans2, $jabatan);
         }
 
-        return $jabatans;
+        return $jabatans2;
     }
 
     public function get_jabatanByIdUser($id_user){
@@ -52,9 +57,9 @@ class Jabatan_Model extends CI_Model {
                 WHERE uj.id_user = ? AND uj.id_jabatan = j.id
                 ORDER BY j.id ASC";
         $result = $this->db->query($sql, array($id_user));
-
         $jabatans = $result->result_array();
 
+        $jabatans2 = [];
         foreach($jabatans as $jabatan){
             $hak_akses = $this->HakAkses_Model->get_hakAksesByIdJabatan($jabatan['id']);
             if(count($hak_akses) > 0){
@@ -62,7 +67,10 @@ class Jabatan_Model extends CI_Model {
             }else{
                 $jabatan["hak_akses"] = [];
             }
+
+            array_push($jabatans2, $jabatan);
         }
-        return $jabatans;
+
+        return $jabatans2;
     }
 }
