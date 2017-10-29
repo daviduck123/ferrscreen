@@ -7,9 +7,12 @@ class HakAkses_Model extends CI_Model {
     }
 
     public function insert_hakAkses($id_jabatan, $id_hakAkses){
+        $this->db->trans_start();
+
         $sql="INSERT INTO jabatan_hak_akses (id_jabatan, id_hak_akses, created_at) VALUES (?,?,NOW())";
         $this->db->query($sql, array($id_jabatan, $id_hakAkses));
 
+        $this->db->trans_complete();
     }
 
     public function get_allHakAkses(){

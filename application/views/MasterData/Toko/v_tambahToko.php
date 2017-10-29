@@ -1,4 +1,4 @@
-T<div id="content">
+<div id="content">
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<?php echo base_url();?>dashboard" title="Go to Home" class="tip-bottom">
@@ -8,49 +8,76 @@ T<div id="content">
       <a href="#" class="">
         Master Data
       </a>
-      <a href="<?php echo base_url();?>supplier" class="">
-        Supplier
+      <a href="<?php echo base_url();?>toko" class="">
+        Toko
       </a>
       <a href="#" class="current">
-        Tambah Supplier
+        Tambah Toko
       </a>
     </div>
-    <h1>Tambah Supplier</h1>
+    <h1>Tambah Toko</h1>
   </div>
   <div class="container-fluid">
+     <?php
+    if ($this->session->flashdata('error')) {
+        ?>
+        <div class="alert alert-danger alert-dismissable">
+            <?php echo $this->session->flashdata('error'); ?>
+            <button type="button" class="close" data-dismiss="alert" area-hidden="true">x</button>
+        </div>
+        <?php
+    } else if ($this->session->flashdata('sukses')) {
+        ?>
+        <div class="alert alert-success alert-dismissable">
+            <?php echo $this->session->flashdata('sukses'); ?>
+            <button type="button" class="close" data-dismiss="alert" area-hidden="true">x</button>
+        </div>
+    <?php }
+    ?>
+    <?php echo validation_errors(); ?>
     <hr>
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>Tambah Supplier</h5>
+            <h5>Tambah Toko</h5>
           </div>
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="<?php echo base_url();?>supplier/prosesTambahSupplier" name="basic_validate" id="basic_validate" novalidate="novalidate">
+            <?php 
+            echo form_open("toko/prosesTambahToko",  
+              array(
+                'name' => 'basic_validate', 
+                'id' => 'basic_validate',
+                'novalidate' => 'novalidate',
+                'class' => "form-horizontal"
+              )
+            ); 
+            ?>
+            <!-- <form class="form-horizontal" method="post" action="<?php echo base_url();?>toko/prosesTambahToko" name="basic_validate" id="basic_validate" novalidate="novalidate"> -->
             <div class="control-group">
-              <label class="control-label">Kode Supplier</label>
+              <label class="control-label">Kode Toko</label>
               <div class="controls">
-                <input type="text" name="kodeSupplier" id="kodeSupplier">
+                <input type="text" name="kodeToko" id="kodeToko">
               </div>
-              <label class="control-label">Nama Supplier</label>
+              <label class="control-label">Nama Toko</label>
               <div class="controls">
-                <input type="text" name="namaSupplier" id="namaSupplier">
+                <input type="text" name="namaToko" id="namaToko">
               </div>
               <label class="control-label">Contact Person</label>
               <div class="controls">
-                <input type="text" name="contactPersonSupplier" id="contactPersonSupplier">
+                <input type="text" name="contactPersonToko" id="contactPersonToko">
               </div>
               <label class="control-label">Email</label>
               <div class="controls">
-                <input type="text" name="alamatEmailSupplier" id="alamatEmailSupplier">
+                <input type="text" name="alamatEmailToko" id="alamatEmailToko">
               </div>
-              <label class="control-label">Alamat Supplier</label>
+              <label class="control-label">Alamat Toko</label>
               <div class="controls">
-                <textarea rows="4" cols="50" name="alamatSupplier" id="alamatSupplier"></textarea>
+                <textarea rows="4" cols="50" name="alamatToko" id="alamatToko"></textarea>
               </div>
               <label class="control-label">Pilih Kota</label>
               <div class="controls">
-                <select style class="form-control col-xs-3" name="pilihKotaSupplier" id="pilihKotaSupplier">
+                <select style class="form-control col-xs-3" name="pilihKotaToko" id="pilihKotaToko">
                   <?php 
                   if(isset($dataKota))
                   {
@@ -64,34 +91,34 @@ T<div id="content">
               </div>
               <label class="control-label">Kode Pos</label>
               <div class="controls">
-                <input type="text" name="kodePosSupplier" id="kodePosSupplier">
+                <input type="text" name="kodePosToko" id="kodePosToko">
               </div>
               <label class="control-label">Telepon</label>
               <div class="controls">
-                <input type="text" name="teleponSupplier" id="teleponSupplier">
+                <input type="text" name="teleponToko" id="teleponToko">
               </div>
               <label class="control-label">HP</label>
               <div class="controls">
-                <input type="text" name="hpSupplier" id="hpSupplier">
+                <input type="text" name="hpToko" id="hpToko">
               </div>
               <label class="control-label">Faximile</label>
               <div class="controls">
-                <input type="text" name="faximileSupplier" id="faximileSupplier">
+                <input type="text" name="faximileToko" id="faximileToko">
               </div>
               <label class="control-label">Limit Piutang</label>
               <div class="controls">
-                <input type="number" name="limitPiutangSupplier" id="limitPiutangSupplier">
+                <input type="number" name="limitPiutangToko" id="limitPiutangToko">
               </div>
               <label class="control-label">Jatuh Tempo</label>
               <div class="controls">
-                <input type="number" name="jatuhTempoSupplier" id="jatuhTempoSupplier">
+                <input type="number" name="jatuhTempoToko" id="jatuhTempoToko">
               </div>
             </div>
               <div class="form-actions">
                 <input type="submit" name="btnBatal" value="Batal" class="btn btn-info"/>
                 <input type="submit" name="btnTambah" value="Tambah" class="btn btn-success"/>
               </div>
-            </form>
+            <?php echo form_close(); ?>
           </div>
         </div>
       </div>

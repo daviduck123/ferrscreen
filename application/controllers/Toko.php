@@ -28,7 +28,8 @@ class Toko extends CI_Controller {
 	public function index()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "toko"
+	        'menuAktif' => "masterdata",
+	        'subMenu' => "toko"
 		);
 
 		$dataToko = $this->Toko_Model->get_allToko();
@@ -38,14 +39,15 @@ class Toko extends CI_Controller {
 
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
-		$this->load->view('toko',$data);
+		$this->load->view('MasterData/Toko/v_toko',$data);
 		//$this->load->view('footer');
 	}
 
 	public function tambahToko()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "toko"
+	        'menuAktif' => "masterdata",
+	        'subMenu' => "toko"
 		);
 
 		$dataKota = $this->Kota_Model->get_allKota();
@@ -54,7 +56,7 @@ class Toko extends CI_Controller {
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
-		$this->load->view('tambahToko',$data);
+		$this->load->view('MasterData/Toko/v_tambahToko',$data);
 		//$this->load->view('footer');
 	}
 
@@ -72,25 +74,19 @@ class Toko extends CI_Controller {
 		{
 			$this->form_validation->set_rules('kodeToko', 'Kode toko', 'required');
 			$this->form_validation->set_rules('namaToko', 'Nama toko', 'required');
-			$this->form_validation->set_rules('contactPersonToko', 'Contact person', 'required');
-			$this->form_validation->set_rules('alamatEmailToko', 'Email Toko', 'required');
-			$this->form_validation->set_rules('alamatToko', 'Nama Toko', 'required');
-			$this->form_validation->set_rules('pilihKotaToko', 'Pilih kota', 'required');
-			$this->form_validation->set_rules('kodePosToko', 'Kode Pos', 'required');
-			$this->form_validation->set_rules('teleponToko', 'Telepon', 'required');
-			$this->form_validation->set_rules('hpToko', 'Hp', 'required');
-			$this->form_validation->set_rules('faximileToko', 'Faximile', 'required');
-			$this->form_validation->set_rules('limitPiutangToko', 'Limit piutang', 'required');
-			$this->form_validation->set_rules('jatuhTempoToko', 'Jatuh tempo', 'required');
+			$this->form_validation->set_rules('alamatToko', 'Alamat Toko', 'required');
+			$this->form_validation->set_rules('pilihKotaToko', 'Kota Toko', 'required');
 			
 			if ($this->form_validation->run() == FALSE)
 			{
-				echo "Ada yang belum anda isi";
+				$this->session->set_flashdata('error', 'Data tidak lengkap');
+				redirect('toko/tambahToko');
            	}
            	else
            	{
 				$kodeToko	= $this->input->post('kodeToko');
 				$namaToko	= $this->input->post('namaToko');
+				$alamatToko	= $this->input->post('alamatToko');
 				$contactPersonToko	= $this->input->post('contactPersonToko');
 				$alamatEmailToko	= $this->input->post('alamatEmailToko');
 				$pilihKotaToko	= $this->input->post('pilihKotaToko');
@@ -102,6 +98,19 @@ class Toko extends CI_Controller {
 				$jatuhTempoToko	= $this->input->post('jatuhTempoToko');
 
 				$result = $this->Toko_Model->insert_toko($kodeToko, $alamatEmailToko, $namaToko, $contactPersonToko, $alamatToko, $kodePosToko, $teleponToko, $hpToko, $faximileToko, $limitPiutangToko, $jatuhTempoToko, $pilihKotaToko);
+
+
+				if(count($result) > 0)
+				{
+
+					$this->session->set_flashdata('sukses', 'Berhasil simpan toko');
+					redirect('toko');
+				} 
+				else 
+				{
+					$this->session->set_flashdata('error', 'Gagal simpan toko');
+					redirect('toko');
+				}
 
 				/*
 

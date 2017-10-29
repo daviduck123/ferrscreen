@@ -18,6 +18,23 @@
     <h1>Tambah Barang</h1>
   </div>
   <div class="container-fluid">
+     <?php
+    if ($this->session->flashdata('error')) {
+        ?>
+        <div class="alert alert-danger alert-dismissable">
+            <?php echo $this->session->flashdata('error'); ?>
+            <button type="button" class="close" data-dismiss="alert" area-hidden="true">x</button>
+        </div>
+        <?php
+    } else if ($this->session->flashdata('sukses')) {
+        ?>
+        <div class="alert alert-success alert-dismissable">
+            <?php echo $this->session->flashdata('sukses'); ?>
+            <button type="button" class="close" data-dismiss="alert" area-hidden="true">x</button>
+        </div>
+    <?php }
+    ?>
+    <?php echo validation_errors(); ?>
     <hr>
     <div class="row-fluid">
       <div class="span12">
@@ -26,7 +43,17 @@
             <h5>Tambah Barang</h5>
           </div>
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="<?php echo base_url();?>barang/prosesTambahBarang" name="basic_validate" id="basic_validate" novalidate="novalidate">
+            <?php 
+            echo form_open("barang/prosesTambahBarang",  
+              array(
+                'name' => 'basic_validate', 
+                'id' => 'basic_validate',
+                'novalidate' => 'novalidate',
+                'class' => "form-horizontal"
+              )
+            ); 
+            ?>
+           <!--  <form class="form-horizontal" method="post" action="<?php echo base_url();?>barang/prosesTambahBarang" name="basic_validate" id="basic_validate" novalidate="novalidate"> -->
             <div class="control-group">
             <label class="control-label">Kode</label>
               <div class="controls">
@@ -40,9 +67,9 @@
               <div class="controls">
                 <input type="number" name="minStok" id="minStok">
               </div>
-              <label class="control-label">Merk Sama</label>
+              <label class="control-label">Barang Sama</label>
               <div class="controls">
-                <select multiple="multiple" name="similarMerk[]">
+                <select multiple="multiple" name="similarBarang[]">
                   <?php 
                     foreach ($dataMerk as $merk) 
                     {
@@ -89,7 +116,7 @@
                 <input type="submit" name="btnBatal" value="Batal" class="btn btn-info"/>
                 <input type="submit" name="btnTambah" value="Tambah" class="btn btn-success"/>
               </div>
-            </form>
+            <?php echo form_close(); ?>
           </div>
         </div>
       </div>

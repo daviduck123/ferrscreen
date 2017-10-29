@@ -21,7 +21,8 @@ class Penjualan extends CI_Controller {
 	public function index()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "penjualan"
+	        'menuAktif' => "penjualan",
+	        'subMenu' =>  ''
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);

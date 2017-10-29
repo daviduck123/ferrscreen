@@ -6,9 +6,12 @@ class Barang_Model extends CI_Model {
         $this->load->database();
         $this->load->model("DetailBarang_Model");
         $this->load->model("BarangKembar_Model");
+        $this->load->model("SupplierBarang_Model");
     }
 
     public function insert_barang($nama, $min_stok, $id_merk, $kembars, $kode, $harga, $deskripsi, $is_low, $id_merk2, $kode2, $harga2, $deskripsi2){
+        $this->db->trans_start();
+
     	$sql = "INSERT INTO `barang`(`nama`, `min_stok`, `created_at`) VALUES (?,?,NOW())";
     	$this->db->query($sql, array($nama, $min_stok));
 
@@ -29,9 +32,14 @@ class Barang_Model extends CI_Model {
         if($is_low == TRUE){
         	$this->DetailBarang_Model->insert_detailBarang($id, $id_merk2, "L", $kode2, $harga2, $deskripsi2);
         }
+
+        $this->db->trans_complete();
+        return $id;
     }
 
     public function update_barang($id, $nama, $min_stok, $id_merk, $kembars, $kode, $harga, $deskripsi, $is_low, $id_merk2, $kode2, $harga2, $deskripsi2){
+        $this->db->trans_start();
+
     	$sql = "UPDATE `barang` 
     			SET `nama`=?, `min_stok`=? 
     			WHERE id= ?";
@@ -50,6 +58,9 @@ class Barang_Model extends CI_Model {
     	if($is_low == TRUE){
     		$this->DetailBarang_Model->update_detailBarang($id, $id_merk2, "L", $kode2, $harga2, $deskripsi2);
     	}
+
+        $this->db->trans_complete();
+        return $id;
     }
 
     public function get_allBarang(){
@@ -60,15 +71,7 @@ class Barang_Model extends CI_Model {
         
         $barangs = $result->result_array();
 
-        foreach($barangs as $barang){
-            $detailBarangs = $this->DetailBarang_Model->get_allDetailBarangByIdBarang($barang['id']);
-            if(count($detailBarangs) > 0){
-                $barang["detail_barang"] = $detailBarangs;
-            }else{
-                $barang["detail_barang"] = [];
-            }
-        }
-        return $barangs;
+        return $this->get_detailDataOfBarang($barangs);
     }
 
     public function get_barangById($id_barang){
@@ -80,15 +83,7 @@ class Barang_Model extends CI_Model {
         
         $barangs = $result->result_array();
 
-        foreach($barangs as $barang){
-            $detailBarangs = $this->DetailBarang_Model->get_allDetailBarangByIdBarang($barang['id']);
-            if(count($detailBarangs) > 0){
-                $barang["detail_barang"] = $detailBarangs;
-            }else{
-                $barang["detail_barang"] = [];
-            }
-        }
-        return $barangs;
+        return $this->get_detailDataOfBarang($barangs);
     }
 
     public function get_barangByNama($nama){
@@ -102,14 +97,38 @@ class Barang_Model extends CI_Model {
         
         $barangs = $result->result_array();
 
+        return $this->get_detailDataOfBarang($barangs);
+    }
+
+    //For get Detail Barang and Supplier Barang information
+    public function get_detailDataOfBarang($barangs){
+        $barangs2 = [];
         foreach($barangs as $barang){
             $detailBarangs = $this->DetailBarang_Model->get_allDetailBarangByIdBarang($barang['id']);
+            $supplierBarangs = $this->SupplierBarang_Model->get_allSupplierBarangByIdBarang($barang['id']);
+            
+            $totalStok = 0;
+            $barang["total_stok"] = 0;
+
             if(count($detailBarangs) > 0){
                 $barang["detail_barang"] = $detailBarangs;
             }else{
                 $barang["detail_barang"] = [];
             }
+
+            
+            if(count($supplierBarangs) > 0){
+                foreach($supplierBarangs as $supBar){
+                    $totalStok = $totalStok + $supBar["stok"];
+                }
+                $barang['supplier_barang'] = $supplierBarangs;
+            }else{
+                $barang['supplier_barang'] = [];
+            }
+            
+            $barang["total_stok"] = $totalStok;
+            array_push($barangs2, $barang);
         }
-        return $barangs;
+        return $barangs2;
     }
 }

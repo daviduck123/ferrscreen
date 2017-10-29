@@ -7,15 +7,27 @@ class Supplier_Model extends CI_Model {
     }
 
     public function insert_supplier($email, $nama, $cp, $alamat, $kode_pos, $telp, $hp, $fax, $limit, $jatuh_tempo, $id_kota){
+        $this->db->trans_start();
+
         $sql="INSERT INTO `supplier`(`email`, `nama`, `contact_person`, `alamat`, `kode_pos`, `telp`, `hp`, `fax`, `limit_hutang`, `jatuh_tempo`, `is_aktif`, `id_kota`, `created_at`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,NOW())";
-        $this->db->query($sql, array($email, $nama, $cp, $alamat, $kode_pos, $telp, $hp, $fax, $limit, $jatuh_tempo, 1, $id_kota));
+        $this->db->query($sql, array($email, $nama, $cp, $alamat, $kode_pos, $telp, $hp, $fax, $limit, $jatuh_tempo, "1", $id_kota));
+        $id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+        return $id;
     }
 
     public function update_supplier($email, $nama, $cp, $alamat, $kode_pos, $telp, $hp, $fax, $limit, $jatuh_tempo, $is_aktif, $id_kota, $id){
+        $this->db->trans_start();
+
         $sql="UPDATE `supplier` 
             SET `email`=?,`nama`=?,`contact_person`=?,`alamat`=?,`kode_pos`=?,`telp`=?,`hp`=?,`fax`=?,`limit_hutang`=?,`jatuh_tempo`=?,`is_aktif`=?,`id_kota`=?
             WHERE id = ?";
         $this->db->query($sql, array($email, $nama, $cp, $alamat, $kode_pos, $telp, $hp, $fax, $limit, $jatuh_tempo, $is_aktif, $id_kota, $id));
+
+        $this->db->trans_complete();
+
+        return $id;
     }
 
     public function get_allSupplier(){

@@ -21,7 +21,8 @@ class ProgramCashback extends CI_Controller {
 	public function index()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "programCashback"
+	        'menuAktif' => "programCashback",
+	        'subMenu' =>  ''
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);

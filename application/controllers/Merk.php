@@ -27,7 +27,8 @@ class Merk extends CI_Controller {
 	public function index()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "merk"
+	        'menuAktif' => "masterdata",
+	        'subMenu' => "merk"
 		);
 
 		$dataMerk = $this->Merk_Model->get_allMerk();
@@ -36,18 +37,19 @@ class Merk extends CI_Controller {
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
-		$this->load->view('merk',$data);
+		$this->load->view('MasterData/Merk/v_merk',$data);
 		//$this->load->view('footer');
 	}
 
 	public function tambahMerk()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "merk"
+	        'menuAktif' => "masterdata",
+	        'subMenu' => "merk"
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
-		$this->load->view('tambahMerk');
+		$this->load->view('MasterData/Merk/v_tambahMerk');
 		//$this->load->view('footer');
 	}
 
@@ -64,11 +66,11 @@ class Merk extends CI_Controller {
 		if($this->input->post('btnTambah'))
 		{
 			$this->form_validation->set_rules('namaMerk', 'Nama merk', 'required');
-			$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
 			
 			if ($this->form_validation->run() == FALSE)
 			{
-				echo "Ada yang belum anda isi";
+				$this->session->set_flashdata('error', 'Data tidak lengkap');
+				redirect("merk/tambahMerk");
            	}
            	else
            	{
@@ -77,57 +79,24 @@ class Merk extends CI_Controller {
 
 				$result = $this->Merk_Model->insert_merk($namaMerk,$keterangan);
 
-				/*
-
 				if(count($result) > 0)
 				{
-					$dataMenu = array(
-				        'menuAktif' => "merk"
-					);
 
-					$dataMerk = $this->Merk_Model->get_allMerk();
-
-					$dataInfo = array(
-						//status 1 berarti success
-				        'status' => "1",
-				        'keterangan' => "Merk baru berhasil ditambahkan",
-					);
-					$data = array(
-				        'dataMerk' => $dataMerk,
-				        'dataInfo' => $dataInfo
-					);
-                	$this->load->view('header');
-					$this->load->view('sidebar',$dataMenu);
-					$this->load->view('merk',$data);
+					$this->session->set_flashdata('sukses', 'Berhasil simpan merk');
+					redirect('merk');
 				} 
 				else 
 				{
-					 $dataMenu = array(
-				        'menuAktif' => "merk"
-					);
-
-					$dataMerk = $this->Merk_Model->get_allMerk();
-
-					$dataInfo = array(
-						//status 0 berarti gagal
-				        'status' => "0",
-				        'keterangan' => "Tidak berhasil dalam menambahkan merk baru",
-					);
-					$data = array(
-				        'dataMerk' => $dataMerk,
-				        'dataInfo' => $dataInfo
-					);
-                	$this->load->view('header');
-					$this->load->view('sidebar',$dataMenu);
-					$this->load->view('merk',$data);
+					$this->session->set_flashdata('error', 'Gagal simpan merk');
+					redirect('merk');
 				}
-				*/
          	}
 		}
 		else
 		{
 			echo "jangan lakukan refresh saat pengiriman data";
-			redirect(base_url()."merk", 'refresh');
+			redirect("merk", 'refresh');
 		}
 	}
+
 }

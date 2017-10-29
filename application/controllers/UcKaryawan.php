@@ -21,7 +21,8 @@ class UcKaryawan extends CI_Controller {
 	public function index()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "ucKaryawan"
+	        'menuAktif' => "ucKaryawan",
+	        'subMenu' =>  ''
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);

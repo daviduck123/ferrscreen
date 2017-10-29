@@ -28,7 +28,8 @@ class Supplier extends CI_Controller {
 	public function index()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "supplier"
+	        'menuAktif' => "masterdata",
+	        'subMenu' => "supplier"
 		);
 
 		$dataSupplier = $this->Supplier_Model->get_allSupplier();
@@ -38,14 +39,15 @@ class Supplier extends CI_Controller {
 
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
-		$this->load->view('supplier',$data);
+		$this->load->view('MasterData/Supplier/v_supplier',$data);
 		//$this->load->view('footer');
 	}
 
 	public function tambahSupplier()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "supplier"
+	        'menuAktif' => "masterdata",
+	        'subMenu' => "supplier"
 		);
 
 		$dataKota = $this->Kota_Model->get_allKota();
@@ -54,15 +56,12 @@ class Supplier extends CI_Controller {
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
-		$this->load->view('tambahSupplier',$data);
+		$this->load->view('MasterData/Supplier/v_tambahSupplier',$data);
 		//$this->load->view('footer');
 	}
 
 	public function prosesTambahSupplier()
 	{
-		$this->load->helper(array('form', 'url'));
-		$this->load->library('form_validation');
-
 		//isi data diisi array post
 		$isiData = $this->input->post();
 		//print_r($isiData);
@@ -70,27 +69,19 @@ class Supplier extends CI_Controller {
 
 		if($this->input->post('btnTambah'))
 		{
-			$this->form_validation->set_rules('kodeSupplier', 'Kode Supplier', 'required');
 			$this->form_validation->set_rules('namaSupplier', 'Nama Supplier', 'required');
-			$this->form_validation->set_rules('contactPersonSupplier', 'Contact person', 'required');
-			$this->form_validation->set_rules('alamatEmailSupplier', 'Email Supplier', 'required');
 			$this->form_validation->set_rules('alamatSupplier', 'Nama Supplier', 'required');
-			$this->form_validation->set_rules('pilihKotaSupplier', 'Pilih kota', 'required');
-			$this->form_validation->set_rules('kodePosSupplier', 'Kode Pos', 'required');
-			$this->form_validation->set_rules('teleponSupplier', 'Telepon', 'required');
-			$this->form_validation->set_rules('hpSupplier', 'Hp', 'required');
-			$this->form_validation->set_rules('faximileSupplier', 'Faximile', 'required');
-			$this->form_validation->set_rules('limitPiutangSupplier', 'Limit piutang', 'required');
-			$this->form_validation->set_rules('jatuhTempoSupplier', 'Jatuh tempo', 'required');
+			$this->form_validation->set_rules('pilihKotaSupplier', 'Kota Supplier', 'required');
 			
 			if ($this->form_validation->run() == FALSE)
 			{
-				echo "Ada yang belum anda isi";
+				$this->session->set_flashdata('error', 'Data tidak lengkap');
+				redirect('supplier/tambahSupplier');
            	}
            	else
            	{
-				$kodeSupplier	= $this->input->post('kodeSupplier');
 				$namaSupplier	= $this->input->post('namaSupplier');
+				$alamatSupplier	= $this->input->post('alamatSupplier');
 				$contactPersonSupplier	= $this->input->post('contactPersonSupplier');
 				$alamatEmailSupplier	= $this->input->post('alamatEmailSupplier');
 				$pilihKotaSupplier	= $this->input->post('pilihKotaSupplier');
@@ -101,8 +92,20 @@ class Supplier extends CI_Controller {
 				$limitPiutangSupplier	= $this->input->post('limitPiutangSupplier');
 				$jatuhTempoSupplier	= $this->input->post('jatuhTempoSupplier');
 
-				$result = $this->Supplier_Model->insert_supplier($kodeSupplier, $alamatEmailSupplier, $namaSupplier, $contactPersonSupplier, $alamatSupplier, $kodePosSupplier, $teleponSupplier, $hpSupplier, $faximileSupplier, $limitPiutangSupplier, $jatuhTempoSupplier, $pilihKotaSupplier);
+				$result = $this->Supplier_Model->insert_supplier($alamatEmailSupplier, $namaSupplier, $contactPersonSupplier, $alamatSupplier, $kodePosSupplier, $teleponSupplier, $hpSupplier, $faximileSupplier, $limitPiutangSupplier, $jatuhTempoSupplier, $pilihKotaSupplier);
 
+
+				if(count($result) > 0)
+				{
+
+					$this->session->set_flashdata('sukses', 'Berhasil simpan Supplier');
+					redirect('supplier');
+				} 
+				else 
+				{
+					$this->session->set_flashdata('error', 'Gagal simpan Supplier');
+					redirect('supplier');
+				}
 				/*
 
 				if(count($result) > 0)

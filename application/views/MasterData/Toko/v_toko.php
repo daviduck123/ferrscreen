@@ -2,17 +2,17 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<?php echo base_url();?>dashboard" title="Go to Home" class="tip-bottom">
-        <i class="icon-dashboard"></i> 
+        <i class="icon-dashbard"></i> 
         Dashboard
       </a>
       <a href="#" class="">
         Master Data
       </a>
       <a href="#" class="current">
-        Barang
+        Toko
       </a>
     </div>
-    <h1>Barang</h1>
+    <h1>Toko</h1>
   </div>
   <div class="container-fluid">
   <?php 
@@ -42,14 +42,31 @@
         echo $text;
       }
   ?>
+   <?php
+    if ($this->session->flashdata('error')) {
+        ?>
+        <div class="alert alert-danger alert-dismissable">
+            <?php echo $this->session->flashdata('error'); ?>
+            <button type="button" class="close" data-dismiss="alert" area-hidden="true">x</button>
+        </div>
+        <?php
+    } else if ($this->session->flashdata('sukses')) {
+        ?>
+        <div class="alert alert-success alert-dismissable">
+            <?php echo $this->session->flashdata('sukses'); ?>
+            <button type="button" class="close" data-dismiss="alert" area-hidden="true">x</button>
+        </div>
+    <?php }
+    ?>
+    <?php echo validation_errors(); ?>
     <hr>
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
         <li class="bg_lb"> 
-          <a href="<?php echo base_url();?>barang/tambahBarang"> 
+          <a href="<?php echo base_url();?>toko/tambahToko"> 
             <i class="icon-plus-sign"></i> 
             <!--<span class="label label-important">20</span>-->
-            Tambah Barang
+            Tambah Toko
           </a>
         </li>
       </ul>
@@ -59,32 +76,52 @@
       <div class="widget-box">
           <div class="widget-title"> 
             <span class="icon"><i class="icon-th"></i></span>
-            <span class="icon"><b>List Barang</b></span>
+            <span class="icon"><b>List Toko</b></span>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
                   <th>Nomor</th>
-                  <th>Nama Barang</th>
-                  <th>Minimal Stok</th>
+                  <th>Kode Toko</th>
+                  <th>Nama Toko</th>
+                  <th>Contact Person</th>
+                  <th>Email</th>
+                  <th>Alamat Toko</th>
+                  <th>Kota</th>
+                  <th>Kode Pos</th>
+                  <th>Telepon</th>
+                  <th>HP</th>
+                  <th>Faximile</th>
+                  <th>Limit Piutang</th>
+                  <th>Jatuh Tempo</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
               <?php 
-                if(isset($dataBarang))
+                if(isset($dataToko))
                 {
                     $number=1;
-                    foreach ($dataBarang as $barang) 
+                    foreach ($dataToko as $toko) 
                     {
                       echo ' <tr class="gradeX">
                                 <td>'.$number.'</td>
-                                <td>'.$barang["nama"].'</td>
-                                <td>'.$barang["min_stok"].'</td>
+                                <td>'.$toko["kode"].'</td>
+                                <td>'.$toko["nama"].'</td>
+                                <td>'.$toko["contact_person"].'</td>
+                                <td>'.$toko["email"].'</td>
+                                <td>'.$toko["alamat"].'</td>
+                                <td>'.$toko["nama_kota"].'</td>
+                                <td>'.$toko["kode_pos"].'</td>
+                                <td>'.$toko["telp"].'</td>
+                                <td>'.$toko["hp"].'</td>
+                                <td>'.$toko["fax"].'</td>
+                                <td>'.$toko["limit_piutang"].'</td>
+                                <td>'.$toko["jatuh_tempo"].'</td>
                                 <td class="center">
-                                    <button value="'.$barang["id"].'" class="btn btn-success btn-mini">Edit</button>
-                                    <button value="'.$barang["id"].'" class="btn btn-warning btn-mini">Hapus</button>
+                                    <button value="'.$toko["id"].'" class="btn btn-success btn-mini">Edit</button>
+                                    <button value="'.$toko["id"].'" class="btn btn-warning btn-mini">Hapus</button>
                                 </td>
                               </tr>';
                       $number++;
@@ -99,37 +136,6 @@
     </div>
   </div>
 </div>
-
-<!-- Modal Tambah Similar-->
-<div class="modal hide" id="modalSimilar">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h3>Tambah Similar Merk</h3>
-    </div>
-    <div class="modal-body">
-        <div class="control-group">
-              <label class="control-label">Pilih Merk</label>
-              <div class="controls">
-                <select multiple >
-                  <option>First option</option>
-                  <option selected>Second option</option>
-                  <option>Third option</option>
-                  <option>Fourth option</option>
-                  <option>Fifth option</option>
-                  <option>Sixth option</option>
-                  <option>Seventh option</option>
-                  <option>Eighth option</option>
-                </select>
-              </div>
-        </div>
-    </div>
-    <div class="modal-footer"> 
-      <a href="#" class="btn" data-dismiss="modal">Tutup</a>
-    </div>
-  </div>
-</div>
-<!-- Tutup Modal Similar -->
-
 <!--Footer-part-->
 <div class="row-fluid">
   <div id="footer" class="span12"> 2017 &copy; Ferrscreen Admin</div>
@@ -143,7 +149,5 @@
 <script src="<?php echo asset_url();?>js/jquery.dataTables.min.js"></script> 
 <script src="<?php echo asset_url();?>js/matrix.js"></script> 
 <script src="<?php echo asset_url();?>js/matrix.tables.js"></script>
-<script>
-</script>
 </body>
 </html>

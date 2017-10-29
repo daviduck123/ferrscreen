@@ -21,7 +21,8 @@ class UcAdmin extends CI_Controller {
 	public function index()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "ucAdmin"
+	        'menuAktif' => "ucAdmin",
+	        'subMenu' =>  ''
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);

@@ -18,6 +18,23 @@
     <h1>Tambah Merk</h1>
   </div>
   <div class="container-fluid">
+     <?php
+    if ($this->session->flashdata('error')) {
+        ?>
+        <div class="alert alert-danger alert-dismissable">
+            <?php echo $this->session->flashdata('error'); ?>
+            <button type="button" class="close" data-dismiss="alert" area-hidden="true">x</button>
+        </div>
+        <?php
+    } else if ($this->session->flashdata('sukses')) {
+        ?>
+        <div class="alert alert-success alert-dismissable">
+            <?php echo $this->session->flashdata('sukses'); ?>
+            <button type="button" class="close" data-dismiss="alert" area-hidden="true">x</button>
+        </div>
+    <?php }
+    ?>
+    <?php echo validation_errors(); ?>
     <hr>
     <div class="row-fluid">
       <div class="span12">
@@ -26,7 +43,16 @@
             <h5>Tambah Merk</h5>
           </div>
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="<?php echo base_url();?>merk/prosesTambahMerk" name="basic_validate" id="basic_validate" novalidate="novalidate">
+             <?php 
+            echo form_open("merk/prosesTambahMerk",  
+              array(
+                'name' => 'basic_validate', 
+                'id' => 'basic_validate',
+                'novalidate' => 'novalidate',
+                'class' => "form-horizontal"
+              )
+            ); 
+            ?>
             <div class="control-group">
               <label class="control-label">Nama Merk</label>
               <div class="controls">
@@ -41,7 +67,7 @@
                 <input type="submit" name="btnBatal" value="Batal" class="btn btn-info"/>
                 <input type="submit" name="btnTambah" value="Tambah" class="btn btn-success"/>
               </div>
-            </form>
+            <?php  echo form_close(); ?>
           </div>
         </div>
       </div>

@@ -28,7 +28,8 @@ class Barang extends CI_Controller {
 	public function index()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "barang"
+	        'menuAktif' => "masterdata",
+	        'subMenu' => "barang"
 		);
 
 		$dataBarang = $this->Barang_Model->get_allBarang();
@@ -38,14 +39,15 @@ class Barang extends CI_Controller {
 
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
-		$this->load->view('barang',$data);
+		$this->load->view('MasterData/Barang/v_barang',$data);
 		//$this->load->view('footer');
 	}
 
 	public function tambahBarang()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "barang"
+	        'menuAktif' => "masterdata",
+	        'subMenu' => "barang"
 		);
 		$dataBarang = $this->Barang_Model->get_allBarang();
 		$dataMerk = $this->Merk_Model->get_allMerk();
@@ -55,7 +57,7 @@ class Barang extends CI_Controller {
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
-		$this->load->view('tambahBarang',$data);
+		$this->load->view('MasterData/Barang/v_tambahBarang',$data);
 		//$this->load->view('footer');
 	}
 
@@ -76,18 +78,17 @@ class Barang extends CI_Controller {
 			$this->form_validation->set_rules('minStok', 'Minimal stok', 'required');
 			$this->form_validation->set_rules('pilihMerkBarang', 'Pilih merek barang', 'required');
 			$this->form_validation->set_rules('hargaNormal', 'Harga normal', 'required');
-			$this->form_validation->set_rules('deskripsiNormal', 'Deskripsi normal', 'required');
 
 			if($this->input->post('checkLow')!==null && $this->input->post('checkLow')=="low")
 			{
 				$this->form_validation->set_rules('pilihMerkBarangLow', 'Pilih merek barang low', 'required');
 				$this->form_validation->set_rules('hargaLow', 'Harga low', 'required');
-				$this->form_validation->set_rules('deskripsiLow', 'Deskripsi low', 'required');
 			}
 			
 			if ($this->form_validation->run() == FALSE)
 			{
-				echo "Ada yang belum anda isi";
+				$this->session->set_flashdata('error', 'Data tidak lengkap');
+				redirect('barang/tambahBarang');
            	}
            	else
            	{
@@ -109,48 +110,18 @@ class Barang extends CI_Controller {
 				$deskripsiLow	= $this->input->post('deskripsiLow');
 				$result = $this->Barang_Model->insert_barang($namaBarang, $minStok, $pilihMerkBarang, $similarMerk, $kodeBarang, $hargaNormal, $deskripsiNormal, $isLow, $pilihMerkBarangLow, $kodeBarangLow, $hargaLow, $deskripsiLow);
 
-				/*
+
 				if(count($result) > 0)
 				{
-                	$dataMenu = array(
-				        'menuAktif' => "barang"
-					);
 
-					$dataBarang = $this->Barang_Model->get_allBarang();
-
-					$dataInfo = array(
-						//status 1 berarti success
-				        'status' => "1",
-				        'keterangan' => "Barang baru berhasil ditambahkan",
-					);
-					$data = array(
-				        'dataBarang' => $dataBarang,
-				        'dataInfo' => $dataInfo
-					);
-                	$this->load->view('header');
-					$this->load->view('sidebar',$dataMenu);
-					$this->load->view('barang',$data);
-				} else {
-					$dataMenu = array(
-				        'menuAktif' => "barang"
-					);
-
-					$dataBarang = $this->Barang_Model->get_allBarang();
-
-					$dataInfo = array(
-						//status 0 berarti gagal
-				        'status' => "0",
-				        'keterangan' => "Tidak berhasil dalam menambahkan barang baru",
-					);
-					$data = array(
-				        'dataBarang' => $dataBarang,
-				        'dataInfo' => $dataInfo
-					);
-                	$this->load->view('header');
-					$this->load->view('sidebar',$dataMenu);
-					$this->load->view('barang',$data);
+					$this->session->set_flashdata('sukses', 'Berhasil simpan barang');
+					redirect('barang');
+				} 
+				else 
+				{
+					$this->session->set_flashdata('error', 'Gagal simpan barang');
+					redirect('barang');
 				}
-				*/
          	}
 		}
 		else

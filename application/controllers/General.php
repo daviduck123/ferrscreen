@@ -21,7 +21,8 @@ class General extends CI_Controller {
 	public function index()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "general"
+	        'menuAktif' => "masterdata",
+	        'subMenu' => "general"
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);

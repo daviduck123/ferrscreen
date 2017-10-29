@@ -8,6 +8,8 @@ class Jabatan_Model extends CI_Model {
     }
 
     public function insert_jabatan($nama, $deskripsi, $hak_akses){
+        $this->db->trans_start();
+
         $sql="INSERT INTO jabatan (nama, deskripsi, created_at) VALUES (?,?,NOW())";
         $this->db->query($sql, array($nama, $deskripsi));
 
@@ -18,6 +20,10 @@ class Jabatan_Model extends CI_Model {
         foreach($hak_akses as $id_hakAkses){
             $this->HakAkses_Model->insert_hakAkses($id, $id_hakAkses);
         }
+
+        $this->db->trans_complete();
+
+        return $id;
     }
 
     public function get_allJabatan(){

@@ -21,7 +21,8 @@ class Jabatan extends CI_Controller {
 	public function index()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "jabatan"
+	        'menuAktif' => "masterdata",
+	        'subMenu' => "jabatan"
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);

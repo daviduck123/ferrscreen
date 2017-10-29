@@ -7,15 +7,29 @@ class Toko_Model extends CI_Model {
     }
 
     public function insert_toko($kode, $email, $nama, $cp, $alamat, $kode_pos, $telp, $hp, $fax, $limit, $jatuh_tempo, $id_kota){
+        $this->db->trans_start();
+
         $sql="INSERT INTO `toko`(`kode`, `email`, `nama`, `contact_person`, `alamat`, `kode_pos`, `telp`, `hp`, `fax`, `limit_piutang`, `jatuh_tempo`, `is_aktif`, `id_kota`, `created_at`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())";
-        $this->db->query($sql, array($kode, $email, $nama, $cp, $alamat, $kode_pos, $telp, $hp, $fax, $limit, $jatuh_tempo, 1, $id_kota));
+        $this->db->query($sql, array($kode, $email, $nama, $cp, $alamat, $kode_pos, $telp, $hp, $fax, $limit, $jatuh_tempo, "1", $id_kota));
+
+        $this->db->trans_complete();
+
+        $id = $this->db->insert_id();
+
+        return $id;
     }
 
     public function update_toko($kode, $email, $nama, $cp, $alamat, $kode_pos, $telp, $hp, $fax, $limit, $jatuh_tempo, $is_aktif, $id_kota, $id){
+        $this->db->trans_start();
+
         $sql="UPDATE `toko` 
             SET `kode`=?,`email`=?,`nama`=?,`contact_person`=?,`alamat`=?,`kode_pos`=?,`telp`=?,`hp`=?,`fax`=?,`limit_piutang`=?,`jatuh_tempo`=?,`is_aktif`=?,`id_kota`=?
             WHERE id = ?";
         $this->db->query($sql, array($kode, $email, $nama, $cp, $alamat, $kode_pos, $telp, $hp, $fax, $limit, $jatuh_tempo, $is_aktif, $id_kota, $id));
+
+        $this->db->trans_complete();
+
+        return $id;
     }
 
     public function get_allToko(){

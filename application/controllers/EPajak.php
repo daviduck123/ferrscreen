@@ -21,7 +21,8 @@ class EPajak extends CI_Controller {
 	public function index()
 	{
 		$dataMenu = array(
-	        'menuAktif' => "ePajak"
+	        'menuAktif' => "ePajak",
+	        'subMenu' =>  ''
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
