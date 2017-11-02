@@ -105,7 +105,7 @@
                             <?php } ?>
                           </td>
                           <td style = "vertical-align: middle;">
-                            <button value="<?php echo $barang["id"]; ?>" class="btn btn-success btn-mini">Edit</button>
+                            <a href="<?php echo base_url();?>barang/editBarang/<?php echo $barang["id"] ?>" class="btn btn-success btn-mini" role="button">Edit</a>
                             <button value="<?php echo $barang["id"]; ?>" class="btn btn-warning btn-mini">Hapus</button>
                           </td>
                         </tr>

@@ -90,7 +90,7 @@
                         <td><?php echo $karyawan['jabatan'][0]['nama']; ?></td>
                         <td><?php echo ($karyawan["is_aktif"] == "1" ? "Aktif":"Keluar"); ?></td>
                         <td class="center">
-                          <button value="<?php echo $karyawan["id"]; ?>" class="btn btn-success btn-mini">Edit</button>
+                          <a href="<?php echo base_url();?>karyawan/editKaryawan/<?php echo $karyawan["id"] ?>" class="btn btn-success btn-mini" role="button">Edit</a>
                           <button value="<?php echo $karyawan["id"]; ?>" class="btn btn-warning btn-mini">Hapus</button>
                         </td>
                       </tr>

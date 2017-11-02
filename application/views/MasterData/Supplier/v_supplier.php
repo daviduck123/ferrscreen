@@ -91,7 +91,7 @@
                                 <td>'.$supplier["limit_hutang"].'</td>
                                 <td>'.$supplier["jatuh_tempo"].'</td>
                                 <td class="center">
-                                    <button value="'.$supplier["id"].'" class="btn btn-success btn-mini">Edit</button>
+                                    <a href="'.base_url().'supplier/editsupplier/'.$supplier["id"].'" class="btn btn-success btn-mini" role="button">Edit</a>
                                     <button value="'.$supplier["id"].'" class="btn btn-warning btn-mini">Hapus</button>
                                 </td>
                               </tr>';

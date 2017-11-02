@@ -120,7 +120,7 @@
                                 <td>'.$toko["limit_piutang"].'</td>
                                 <td>'.$toko["jatuh_tempo"].'</td>
                                 <td class="center">
-                                    <button value="'.$toko["id"].'" class="btn btn-success btn-mini">Edit</button>
+                                    <a href="'.base_url().'toko/editToko/'.$toko["id"].'" class="btn btn-success btn-mini" role="button">Edit</a>
                                     <button value="'.$toko["id"].'" class="btn btn-warning btn-mini">Hapus</button>
                                 </td>
                               </tr>';

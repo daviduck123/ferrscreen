@@ -73,7 +73,7 @@
                                 <td>'.$merk["nama"].'</td>
                                 <td>'.$merk["keterangan"].'</td>
                                 <td class="center">
-                                    <button value="'.$merk["id"].'" class="btn btn-success btn-mini">Edit</button>
+                                    <a href="'.base_url().'merk/editMerk/'.$merk["id"].'" class="btn btn-success btn-mini" role="button">Edit</a>
                                     <button value="'.$merk["id"].'" class="btn btn-warning btn-mini">Hapus</button>
                                 </td>
                               </tr>';
