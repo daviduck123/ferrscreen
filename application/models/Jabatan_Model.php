@@ -29,6 +29,27 @@ class Jabatan_Model extends CI_Model {
         return $id;
     }
 
+    public function update_jabatan($id, $nama, $deskripsi, $hak_akses){
+        $this->db->trans_start();
+
+        $sql="UPDATE jabatan SET nama=?, deskripsi=? WHERE id = ?";
+        $this->db->query($sql, array($nama, $deskripsi, $id));
+
+        if(count($hak_akses) > 0){
+            //delete first and then insert again
+            $this->HakAkses_Model->delete_hakAksesJabatan($id);
+
+            //$hakAkses = [0,1,2,3,]
+            foreach($hak_akses as $id_hakAkses){
+                $this->HakAkses_Model->insert_hakAkses($id, $id_hakAkses);
+            }
+        }
+
+        $this->db->trans_complete();
+
+        return $id;
+    }
+
     public function get_allJabatan(){
         $sql = "SELECT j.*
                 FROM jabatan j
@@ -47,7 +68,6 @@ class Jabatan_Model extends CI_Model {
 
             array_push($jabatans2, $jabatan);
         }
-
         return $jabatans2;
     }
 

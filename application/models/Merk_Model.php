@@ -17,6 +17,17 @@ class Merk_Model extends CI_Model {
         return $id;
     }
 
+
+    public function update_merk($id, $nama, $keterangan){
+        $this->db->trans_start();
+        
+        $sql="UPDATE merk SET nama=?, keterangan=? WHERE id = ?";
+        $hasil=$this->db->query($sql, array($nama, $keterangan, $id));
+
+        $this->db->trans_complete();
+        return $id;
+    }
+
     public function get_allMerk(){
         $sql = "SELECT m.*
                 FROM merk m
