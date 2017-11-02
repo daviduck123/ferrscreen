@@ -18,8 +18,8 @@ class HakAkses_Model extends CI_Model {
     public function delete_hakAksesJabatan($id_jabatan){
         $this->db->trans_start();
 
-        $sql = "DELETE FROM jabatan_hak_akses jh
-                WHERE jh.id_jabatan = ?";
+        $sql = "DELETE FROM jabatan_hak_akses
+                WHERE id_jabatan = ?";
         $this->db->query($sql, array($id_jabatan));
 
         $this->db->trans_complete();
