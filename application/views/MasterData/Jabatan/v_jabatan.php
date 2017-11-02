@@ -81,7 +81,7 @@
                                 ?>
                                </td>
                                 <td class="center">
-                                    <button value="<?php echo $jabatan["id"] ?>" class="btn btn-success btn-mini">Edit</button>
+                                    <a href="<?php echo base_url();?>jabatan/editJabatan/<?php echo $jabatan["id"] ?>" class="btn btn-success btn-mini" role="button">Edit</a>
                                     <button value="<?php echo $jabatan["id"] ?>" class="btn btn-warning btn-mini">Hapus</button>
                                 </td>
                               </tr>
@@ -98,21 +98,3 @@
     </div>
   </div>
 </div>
-
-<!--Footer-part-->
-<div class="row-fluid">
-  <div id="footer" class="span12"> 2017 &copy; Ferrscreen Admin</div>
-</div>
-<!--end-Footer-part-->
-<script src="<?php echo asset_url();?>js/jquery.min.js"></script> 
-<script src="<?php echo asset_url();?>js/jquery.ui.custom.js"></script> 
-<script src="<?php echo asset_url();?>js/bootstrap.min.js"></script> 
-<script src="<?php echo asset_url();?>js/jquery.uniform.js"></script> 
-<script src="<?php echo asset_url();?>js/select2.min.js"></script> 
-<script src="<?php echo asset_url();?>js/jquery.dataTables.min.js"></script> 
-<script src="<?php echo asset_url();?>js/matrix.js"></script> 
-<script src="<?php echo asset_url();?>js/matrix.tables.js"></script>
-<script>
-</script>
-</body>
-</html>

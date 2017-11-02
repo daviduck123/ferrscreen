@@ -90,4 +90,69 @@ class Jabatan extends CI_Controller {
 			redirect("jabatan", 'refresh');
 		}
 	}
+
+	public function editJabatan($id)
+	{
+		$dataMenu = array(
+	        'menuAktif' => "masterdata",
+	        'subMenu' => "jabatan"
+		);
+
+		$dataJabatanAll = $this->Jabatan_Model->get_allJabatan();
+		$dataJabatan = $this->Jabatan_Model->get_jabatanById($id);
+
+		$data = array(
+			"dataJabatan"=>$dataJabatan,
+			"dataJabatanAll"=>$dataJabatanAll
+		);
+		$this->load->view('header');
+		$this->load->view('sidebar',$dataMenu);
+		$this->load->view('MasterData/Jabatan/v_editJabatan', $data);
+		//$this->load->view('footer');
+	}
+
+	public function prosesEditJabatan($id)
+	{
+		//isi data diisi array post
+		$isiData = $this->input->post();
+		/*print_r($isiData);
+		exit();*/
+		$isLow=FALSE;
+
+		if($this->input->post('btnTambah'))
+		{
+			$this->form_validation->set_rules('namaJabatan', 'Nama Jabatan', 'required');
+			$this->form_validation->set_rules('hak_akses[]', 'Hak Akses', 'required');
+			if ($this->form_validation->run() == FALSE)
+			{
+				$this->session->set_flashdata('error', 'Data tidak lengkap');
+				redirect("jabatan/tambahJabatan");
+           	}
+           	else
+           	{
+				$namaJabatan	= $this->input->post('namaJabatan');
+				$deskripsi	= $this->input->post('deskripsi');
+				$hak_akses	= $this->input->post('hak_akses');
+
+				$result = $this->Jabatan_Model->update_jabatan($id,$namaJabatan,$keterangan, $hak_akses);
+
+				if(count($result) > 0)
+				{
+
+					$this->session->set_flashdata('sukses', 'Berhasil simpan jabatan');
+					redirect('jabatan');
+				} 
+				else 
+				{
+					$this->session->set_flashdata('error', 'Gagal simpan jabatan');
+					redirect('jabatan');
+				}
+         	}
+		}
+		else
+		{
+			echo "jangan lakukan refresh saat pengiriman data";
+			redirect("jabatan", 'refresh');
+		}
+	}
 }
