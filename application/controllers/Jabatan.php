@@ -69,7 +69,7 @@ class Jabatan extends CI_Controller {
 				$deskripsi	= $this->input->post('deskripsi');
 				$hak_akses	= $this->input->post('hak_akses');
 
-				$result = $this->Jabatan_Model->insert_jabatan($namaJabatan,$keterangan, $hak_akses);
+				$result = $this->Jabatan_Model->insert_jabatan($namaJabatan,$deskripsi, $hak_akses);
 
 				if(count($result) > 0)
 				{
@@ -102,6 +102,7 @@ class Jabatan extends CI_Controller {
 		$dataJabatan = $this->Jabatan_Model->get_jabatanById($id);
 
 		$data = array(
+			"idEditJabatan"=>$id,
 			"dataJabatan"=>$dataJabatan,
 			"dataJabatanAll"=>$dataJabatanAll
 		);
@@ -126,7 +127,7 @@ class Jabatan extends CI_Controller {
 			if ($this->form_validation->run() == FALSE)
 			{
 				$this->session->set_flashdata('error', 'Data tidak lengkap');
-				redirect("jabatan/tambahJabatan");
+				redirect("jabatan/editJabatan/1");
            	}
            	else
            	{
@@ -134,17 +135,17 @@ class Jabatan extends CI_Controller {
 				$deskripsi	= $this->input->post('deskripsi');
 				$hak_akses	= $this->input->post('hak_akses');
 
-				$result = $this->Jabatan_Model->update_jabatan($id,$namaJabatan,$keterangan, $hak_akses);
+				$result = $this->Jabatan_Model->update_jabatan($id,$namaJabatan,$deskripsi, $hak_akses);
 
 				if(count($result) > 0)
 				{
 
-					$this->session->set_flashdata('sukses', 'Berhasil simpan jabatan');
+					$this->session->set_flashdata('sukses', 'Berhasil edit jabatan');
 					redirect('jabatan');
 				} 
 				else 
 				{
-					$this->session->set_flashdata('error', 'Gagal simpan jabatan');
+					$this->session->set_flashdata('error', 'Gagal edit jabatan');
 					redirect('jabatan');
 				}
          	}

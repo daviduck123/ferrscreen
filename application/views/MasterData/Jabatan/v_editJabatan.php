@@ -75,7 +75,7 @@
           </div>
           <div class="widget-content nopadding">
              <?php 
-            echo form_open("jabatan/prosesEditJabatan/",  
+            echo form_open("jabatan/prosesEditJabatan/".$idEditJabatan,  
               array(
                 'name' => 'basic_validate', 
                 'id' => 'basic_validate',
