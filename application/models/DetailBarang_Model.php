@@ -29,8 +29,17 @@ class DetailBarang_Model extends CI_Model {
     public function delete_detailBarang($id_barang){
         $this->db->trans_start();
 
-    	$sql = "DELETE FROM detail_barang WHERE id_barang = ?";
-    	$this->db->query($sql, array($id_barang));
+        $sql = "DELETE FROM detail_barang WHERE id_barang = ?";
+        $this->db->query($sql, array($id_barang));
+
+        $this->db->trans_complete();
+    }
+
+    public function delete_detailBarangByType($id_barang, $type){
+        $this->db->trans_start();
+
+        $sql = "DELETE FROM detail_barang WHERE id_barang = ? AND type = ?";
+        $this->db->query($sql, array($id_barang, $type));
 
         $this->db->trans_complete();
     }

@@ -158,7 +158,8 @@ class Barang extends CI_Controller {
 
 		//isi data diisi array post
 		$isiData = $this->input->post();
-		//print_r($isiData);
+		/*print_r($isiData);
+		exit();*/
 		$isLow=FALSE;
 
 		if($this->input->post('btnTambah'))

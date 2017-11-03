@@ -54,7 +54,7 @@
             ); 
             ?>
            <?php
-           //print_r($barangSelected);
+           //print_r($dataMerk);
            //exit();
               $isLow=false;
               $kode=false;

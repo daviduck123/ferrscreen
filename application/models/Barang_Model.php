@@ -56,8 +56,22 @@ class Barang_Model extends CI_Model {
 		//Type N = Normal, L = Low
     	$this->DetailBarang_Model->update_detailBarang($id, $id_merk, "N", $kode, $harga, $deskripsi);
     	if($is_low == TRUE){
-    		$this->DetailBarang_Model->update_detailBarang($id, $id_merk2, "L", $kode2, $harga2, $deskripsi2);
-    	}
+            //Need to check if it exist
+            $details = $this->DetailBarang_Model->get_allDetailBarangByIdBarang($id);
+            if(count($details) > 1){
+                $this->DetailBarang_Model->update_detailBarang($id, $id_merk2, "L", $kode2, $harga2, $deskripsi2);
+            }else{
+                //Insert if only found 1 data Details
+                $this->DetailBarang_Model->insert_detailBarang($id, $id_merk2, "L", $kode2, $harga2, $deskripsi2);
+            }
+    	}else{
+             //Need to check if it exist
+            $details = $this->DetailBarang_Model->get_allDetailBarangByIdBarang($id);
+            if(count($details) > 1){
+                //delete if low not checked and Found more than 1 data
+                $this->DetailBarang_Model->delete_detailBarangByType($id, "L");
+            }
+        }
 
         $this->db->trans_complete();
         return $id;
