@@ -75,5 +75,9 @@ class Supplier_Model extends CI_Model {
         return $result->result_array();
     }
 
+    public function delete_supplier($id){
+        $sql = "DELETE FROM supplier WHERE id = ?";
+        return $this->db->query($sql, array($id));
+    }
 
 }
