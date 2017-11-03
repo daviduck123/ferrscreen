@@ -149,8 +149,8 @@
             <div class = "modal-body">
                 <!-- Di sini nanti buat table untuk liat Stok yang di dapat dari Stok-Supplier -->
                 <!-- Data tergantung dari Supplier Barang, klo ada array isinya, maka ada isinya -->
-                <?php print_r($dataBarang[0]);?>
-
+                <div id="divDetailBarang">
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-github" data-dismiss="modal">Kembali</button>
@@ -174,7 +174,7 @@
                 <!-- Di sini nanti buat table untuk update Stok yang di dapat dari Stok-Supplier -->
                 <!-- Data tergantung dari Supplier Barang, klo ada array isinya, maka ada isinya -->
                 <!-- Klo ga ada isinya, ada inputan, Combobox supplier, Input Box Stok, button Hapus -->
-                <?php print_r($dataBarang[0]['supplier_barang']);?>
+                <div id="divUpdateBarang"></div>
 
             </div>
             <div class="modal-footer">
@@ -263,45 +263,91 @@
     {
         var title = $("#btnModal"+angka).data('title');
         var id = $("#btnModal" + angka).data('id');
-        var kode = $("#btnModal" + angka).data('kode');
-        var nama = $("#btnModal" + angka).data('nama');
-        var status = $("#btnModal" + angka).data('status');
-        var hakakses = $("#btnModal" + angka).data('hakakses');
-        var username = $("#btnModal" + angka).data('username');
-        var poin = $("#btnModal" + angka).data('poin');
-        var hakakses2 = 'Karyawan';
-        if (hakakses === 1) {
-            hakakses2 = "Pemilik";
-        }
-        var status2 = "Resign";
-        if (status === 1) {
-            status2 = "Aktif";
-        }
+      
         document.getElementById("id").innerHTML = id;
-        document.getElementById("kode").innerHTML = kode;
-        document.getElementById("namax").innerHTML = nama;
-        document.getElementById("poin").innerHTML = poin;
-        document.getElementById("hakakses2").innerHTML = hakakses2;
-        document.getElementById("usernamex").innerHTML = username;
-        document.getElementById("status2").innerHTML = status2;
-        $.ajax({
-            url: "<?php echo site_url(); ?>/c_master_data/getTableDaftarKaryawan",
-            type: "POST",
-            data: {id: $("#btnModal" + angka).data('id')},
-            dataType: "html",
-            success: function(data) {
-                $("#javascript").html(data);
-            }
-        });
+
+        var dataBarang = <?php echo json_encode($dataBarang) ?>;       
+
+        //For Opening Modal
+        processDetailModal(dataBarang, id);
+        processUpdateModal(dataBarang, id);
 
         $(".modal-body #id").val(id);
-        $(".modal-body #kode").val(kode);
-        $(".modal-body #nama").val(nama);
-        $(".modal-body #poin").val(poin);
-        $(".modal-body #hakakses").val(hakakses);
-        $(".modal-body #username").val(username);
-        $(".modal-body #status").val(status);
-        $(".modal-title").text( title+' Karyawan');
+        $(".modal-title").text(title);
+    }
+
+    function processDetailModal(dataBarang, id){
+        var html = "<table class='table table-bordered' id='tableDetail'>";
+        html    += "  <thead>"
+        html    += "    <tr>";
+        html    += "      <th>Supplier</th>";
+        html    += "      <th>Stok</th>";
+        html    += "    </tr>";
+        html    += "  </thead>"
+        html    += "  <tbody>"
+        for(var i = 0 ; i < dataBarang.length; i++){
+          if(Number(dataBarang[i]['id']) === Number(id)){
+
+            var supplier_barang = dataBarang[i]['supplier_barang'];
+            for(var j = 0 ; j < supplier_barang.length; j++){
+              html += "<tr>";
+              html += "<td>"+ supplier_barang[j]['nama_supplier'] +"</td>";
+              html += "<td>"+ supplier_barang[j]['stok'] +"</td>";
+              html += "</tr>";
+            }
+          }
+        }
+        html    += "  </tbody>"
+        html    += "</table>"
+
+        $("#divDetailBarang").html(html);
+
+        $('#tableDetail').dataTable({
+          "bJQueryUI": true,
+          "sPaginationType": "full_numbers",
+          "sDom": '<""l>t<"F"fp>'
+        });
+    }
+
+    function processUpdateModal(dataBarang, id){
+        //Buat tampilan untuk Edit
+        var html = "<table class='table table-bordered' id='tableUpdate'>";
+        html    += "  <thead>"
+        html    += "    <tr>";
+        html    += "      <th>Supplier</th>";
+        html    += "      <th>Stok</th>";
+        html    += "      <th></th>";
+        html    += "    </tr>";
+        html    += "  </thead>"
+        html    += "  <tbody>"
+        html += "<tr>";
+        html += "<td><input type='text'/></td>";
+        html += "<td><input type='number'/></td>";
+        html += "<td><button class='btn btn-info btn-mini'>Tambah</button></td>";
+        html += "</tr>";
+        for(var i = 0 ; i < dataBarang.length; i++){
+          if(Number(dataBarang[i]['id']) === Number(id)){
+
+            var supplier_barang = dataBarang[i]['supplier_barang'];
+            for(var j = 0 ; j < supplier_barang.length; j++){
+              html += "<tr>";
+              html += "<td><input type='text' value='"+  supplier_barang[j]['nama_supplier']  +"'/></td>";
+              html += "<td><input type='number' value='"+  supplier_barang[j]['stok']  +"'/></td>";
+              html += "<td><button class='btn btn-danger btn-mini'>Hapus</button></td>";
+              html += "</tr>";
+            }
+          }
+        }
+        html    += "  </tbody>"
+        html    += "</table>"
+
+        $("#divUpdateBarang").html(html);
+
+        $('#tableUpdate').dataTable({
+          "bJQueryUI": true,
+          "sPaginationType": "full_numbers",
+          "sDom": '<""l>t<"F"fp>'
+        });
     }
 </script>
 </body>
