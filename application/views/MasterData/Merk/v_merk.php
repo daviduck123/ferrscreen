@@ -73,8 +73,22 @@
                                 <td>'.$merk["nama"].'</td>
                                 <td>'.$merk["keterangan"].'</td>
                                 <td class="center">
-                                    <a href="'.base_url().'merk/editMerk/'.$merk["id"].'" class="btn btn-success btn-mini" role="button">Edit</a>
-                                    <button value="'.$merk["id"].'" class="btn btn-warning btn-mini">Hapus</button>
+                                    <a href="'.base_url().'merk/editMerk/'.$merk["id"].'" class="btn btn-warning btn-mini" role="button">Edit</a>
+                                    <a href="#deleteData'.$merk["id"].'" data-toggle="modal" class="btn btn-danger btn-mini" role="button">Hapus</a>
+
+                                    <div id="deleteData'.$merk["id"].'" class="modal hide" aria-hidden="true" style="display: none;">
+                                      <div class="modal-header">
+                                        <button data-dismiss="modal" class="close" type="button">×</button>
+                                        <h3>Hapus Data</h3>
+                                      </div>
+                                      <div class="modal-body">
+                                        <p>Apakah kamu ingin menghapus data '.$merk["nama"].'?</p>
+                                      </div>
+                                      <div class="modal-footer"> 
+                                        <a class="btn btn-primary" href="'.base_url().'merk/hapusMerk/'.$merk["id"].'" name="btnHapus">Hapus</a> 
+                                        <a data-dismiss="modal" class="btn" href="#">Cancel</a> 
+                                      </div>
+                                    </div>
                                 </td>
                               </tr>';
                       $number++;

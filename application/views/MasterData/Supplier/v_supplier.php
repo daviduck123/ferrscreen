@@ -91,8 +91,22 @@
                                 <td>'.$supplier["limit_hutang"].'</td>
                                 <td>'.$supplier["jatuh_tempo"].'</td>
                                 <td class="center">
-                                    <a href="'.base_url().'supplier/editsupplier/'.$supplier["id"].'" class="btn btn-success btn-mini" role="button">Edit</a>
-                                    <button value="'.$supplier["id"].'" class="btn btn-warning btn-mini">Hapus</button>
+                                    <a href="'.base_url().'supplier/editsupplier/'.$supplier["id"].'" class="btn btn-warning btn-mini" role="button">Edit</a>
+                                    <a href="#deleteData'.$supplier["id"].'" data-toggle="modal" class="btn btn-danger btn-mini" role="button">Hapus</a>
+
+                                    <div id="deleteData'.$supplier["id"].'" class="modal hide" aria-hidden="true" style="display: none;">
+                                      <div class="modal-header">
+                                        <button data-dismiss="modal" class="close" type="button">×</button>
+                                        <h3>Hapus Data</h3>
+                                      </div>
+                                      <div class="modal-body">
+                                        <p>Apakah kamu ingin menghapus data '.$supplier["nama"].'?</p>
+                                      </div>
+                                      <div class="modal-footer"> 
+                                        <a class="btn btn-primary" href="'.base_url().'supplier/hapusSupplier/'.$supplier["id"].'" name="btnHapus">Hapus</a> 
+                                        <a data-dismiss="modal" class="btn" href="#">Cancel</a> 
+                                      </div>
+                                    </div>
                                 </td>
                               </tr>';
                       $number++;

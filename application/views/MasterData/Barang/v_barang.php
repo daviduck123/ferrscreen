@@ -105,8 +105,22 @@
                             <?php } ?>
                           </td>
                           <td style = "vertical-align: middle;">
-                            <a href="<?php echo base_url();?>barang/editBarang/<?php echo $barang["id"] ?>" class="btn btn-success btn-mini" role="button">Edit</a>
-                            <button value="<?php echo $barang["id"]; ?>" class="btn btn-warning btn-mini">Hapus</button>
+                            <a href="<?php echo base_url();?>barang/editBarang/<?php echo $barang["id"] ?>" class="btn btn-warning btn-mini" role="button">Edit</a>
+                            <a href="#deleteData<?php echo $barang["id"] ?>" data-toggle="modal" class="btn btn-danger btn-mini" role="button">Hapus</a>
+
+                            <div id="deleteData<?php echo $barang["id"] ?>" class="modal hide" aria-hidden="true" style="display: none;">
+                              <div class="modal-header">
+                                <button data-dismiss="modal" class="close" type="button">×</button>
+                                <h3>Hapus Data</h3>
+                              </div>
+                              <div class="modal-body">
+                                <p>Apakah kamu ingin menghapus data <?php echo $barang["nama"] ?>?</p>
+                              </div>
+                              <div class="modal-footer"> 
+                                <a class="btn btn-primary" href="<?php echo base_url();?>barang/hapusBarang/<?php echo $barang["id"] ?>" name="btnHapus">Hapus</a> 
+                                <a data-dismiss="modal" class="btn" href="#">Cancel</a> 
+                              </div>
+                            </div>
                           </td>
                         </tr>
                         <?php 
