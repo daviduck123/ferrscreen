@@ -129,4 +129,109 @@ class Barang extends CI_Controller {
 			echo "jangan lakukan refresh saat pengiriman data";
 		}
 	}
+
+	public function editBarang($id)
+	{
+		$dataMenu = array(
+	        'menuAktif' => "masterdata",
+	        'subMenu' => "barang"
+		);
+		$barangSelected =$this->Barang_Model->get_barangById($id);
+		$dataBarang = $this->Barang_Model->get_allBarang();
+		$dataMerk = $this->Merk_Model->get_allMerk();
+		$data = array(
+			'idBarang' => $id,
+	        'dataBarang' => $dataBarang,
+	        'dataMerk' => $dataMerk,
+	        'barangSelected'=>$barangSelected
+		);
+		$this->load->view('header');
+		$this->load->view('sidebar',$dataMenu);
+		$this->load->view('MasterData/Barang/v_editBarang',$data);
+		//$this->load->view('footer');
+	}
+
+	public function prosesUpdateBarang($id)
+	{
+		$this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+
+		//isi data diisi array post
+		$isiData = $this->input->post();
+		//print_r($isiData);
+		$isLow=FALSE;
+
+		if($this->input->post('btnTambah'))
+		{
+			$this->form_validation->set_rules('kodeBarang', 'Kode barang', 'required');
+			$this->form_validation->set_rules('namaBarang', 'Nama barang', 'required');
+			$this->form_validation->set_rules('minStok', 'Minimal stok', 'required');
+			$this->form_validation->set_rules('pilihMerkBarang', 'Pilih merek barang', 'required');
+			$this->form_validation->set_rules('hargaNormal', 'Harga normal', 'required');
+
+			if($this->input->post('checkLow')!==null && $this->input->post('checkLow')=="low")
+			{
+				$this->form_validation->set_rules('pilihMerkBarangLow', 'Pilih merek barang low', 'required');
+				$this->form_validation->set_rules('hargaLow', 'Harga low', 'required');
+			}
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$this->session->set_flashdata('error', 'Data tidak lengkap');
+				redirect('barang/editBarang/'.$id);
+           	}
+           	else
+           	{
+           		$kodeBarang	= $this->input->post('kodeBarang');
+				$namaBarang	= $this->input->post('namaBarang');
+				$minStok	= $this->input->post('minStok');
+				$similarMerk	= $this->input->post('similarMerk');
+				$pilihMerkBarang	= $this->input->post('pilihMerkBarang');
+				$hargaNormal	= $this->input->post('hargaNormal');
+				$deskripsiNormal	= $this->input->post('deskripsiNormal');
+
+
+				if($this->input->post('checkLow')!==null && $this->input->post('checkLow')=="low")
+					$isLow=TRUE;
+
+				$kodeBarangLow	= "L".$kodeBarang;
+				$pilihMerkBarangLow	= $this->input->post('pilihMerkBarangLow');
+				$hargaLow	= $this->input->post('hargaLow');
+				$deskripsiLow	= $this->input->post('deskripsiLow');
+				$result = $this->Barang_Model->update_barang($id, $namaBarang, $minStok, $pilihMerkBarang, $similarMerk, $kodeBarang, $hargaNormal, $deskripsiNormal, $isLow, $pilihMerkBarangLow, $kodeBarangLow, $hargaLow, $deskripsiLow);
+
+
+				if(count($result) > 0)
+				{
+
+					$this->session->set_flashdata('sukses', 'Berhasil edit barang');
+					redirect('barang');
+				} 
+				else 
+				{
+					$this->session->set_flashdata('error', 'Gagal edit barang');
+					redirect('barang');
+				}
+         	}
+		}
+		else
+		{
+			echo "jangan lakukan refresh saat pengiriman data";
+		}
+	}
+
+	public function hapusBarang($id)
+	{
+		$result = $this->Barang_Model->delete_barang($id);
+		if(count($result) > 0)
+		{
+			$this->session->set_flashdata('sukses', 'Berhasil hapus barang');
+			redirect('barang');
+		} 
+		else 
+		{
+			$this->session->set_flashdata('error', 'Gagal hapus barang');
+			redirect('barang');
+		}
+	}
 }

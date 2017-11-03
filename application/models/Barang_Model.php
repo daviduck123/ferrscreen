@@ -131,4 +131,9 @@ class Barang_Model extends CI_Model {
         }
         return $barangs2;
     }
+
+    public function delete_barang($id){
+        $sql = "DELETE FROM barang WHERE id = ?";
+        return $this->db->query($sql, array($id));
+    }
 }

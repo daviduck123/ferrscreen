@@ -12,10 +12,10 @@
         Barang
       </a>
       <a href="#" class="current">
-        Tambah Barang
+        Edit Barang
       </a>
     </div>
-    <h1>Tambah Barang</h1>
+    <h1>Edit Barang</h1>
   </div>
   <div class="container-fluid">
      <?php
@@ -40,11 +40,11 @@
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>Tambah Barang</h5>
+            <h5>Edit Barang</h5>
           </div>
           <div class="widget-content nopadding">
             <?php 
-            echo form_open("barang/prosesTambahBarang",  
+            echo form_open("barang/prosesUpdateBarang/".$idBarang,  
               array(
                 'name' => 'basic_validate', 
                 'id' => 'basic_validate',
@@ -53,28 +53,78 @@
               )
             ); 
             ?>
-           <!--  <form class="form-horizontal" method="post" action="<?php echo base_url();?>barang/prosesTambahBarang" name="basic_validate" id="basic_validate" novalidate="novalidate"> -->
+           <?php
+           //print_r($barangSelected);
+           //exit();
+              $isLow=false;
+              $kode=false;
+              $hargaNormal=0;
+              $deskripsiNormal="";
+              $hargaLow=0;
+              $deskripsiLow="";
+              if(count($barangSelected[0]["detail_barang"]) > 0)
+              {
+                foreach($barangSelected[0]["detail_barang"] as $data)
+                {
+                  if($data["type"]=="L")
+                  {
+                    $isLow=true;
+                    $hargaLow=$data["harga"];
+                    $deskripsiLow=$data["deskripsi"];
+                  }
+                  else
+                  {
+                    $kode=$data["kode"];
+                    $hargaNormal=$data["harga"];
+                    $deskripsiNormal=$data["deskripsi"];
+                  }
+                }
+              }
+           ?>
             <div class="control-group">
             <label class="control-label">Kode</label>
               <div class="controls">
-                <input type="text" oncut="onchangeKode(this.value)" onpaste="onchangeKode(this.value)" onkeyup="onchangeKode(this.value)" onmouseup="onchangeKode(this.value)" onchange="onchangeKode(this.value)" name="kodeBarang" id="kodeBarang">
+                <input type="text" oncut="onchangeKode(this.value)" onpaste="onchangeKode(this.value)" onkeyup="onchangeKode(this.value)" onmouseup="onchangeKode(this.value)" onchange="onchangeKode(this.value)" name="kodeBarang" id="kodeBarang" value="<?php echo $kode; ?>">
               </div>
               <label class="control-label">Nama Barang</label>
               <div class="controls">
-                <input type="text" name="namaBarang" id="namaBarang">
+                <input type="text" name="namaBarang" id="namaBarang" value="<?php echo $barangSelected[0]["nama"] ?>">
               </div>
               <label class="control-label">Min Stok</label>
               <div class="controls">
-                <input type="number" name="minStok" id="minStok">
+                <input type="number" name="minStok" id="minStok" value="<?php echo $barangSelected[0]["min_stok"] ?>">
               </div>
               <label class="control-label">Barang Sama</label>
               <div class="controls">
                 <select multiple="multiple" name="similarBarang[]">
                   <?php 
+                  if(count($dataBarang) > 0)
+                  {
                     foreach ($dataBarang as $barang) 
                     {
-                      echo "<option value='".$barang[id]."'>".$barang[nama]."</option>";
+                      $cek=0;
+                      if(count($barangSelected[0]["detail_barang"]) > 0)
+                      {
+                        foreach($barangSelected[0]["detail_barang"] as $data)
+                        {
+                          if($barang['id']==$data['id_barang'])
+                            $cek=1;
+                        }
+                      }
+                      if($cek==1)
+                      {
+                        ?>
+                          <option value="<?php echo $barang['id']; ?>" selected><?php echo $barang['nama']; ?></option>
+                        <?php
+                      }
+                      else
+                      {
+                        ?>
+                          <option value="<?php echo $barang['id']; ?>"><?php echo $barang['nama']; ?></option>
+                        <?php
+                      }
                     }
+                  }
                   ?>
                   </select>
               </div>
@@ -92,7 +142,27 @@
                   {
                     foreach ($dataMerk as $merk) 
                     {
-                      echo "<option value='".$merk[id]."'>".$merk[nama]."</option>";
+                      $cek=0;
+                      if(count($barangSelected[0]["detail_barang"]) > 0)
+                      {
+                        foreach($barangSelected[0]["detail_barang"] as $data)
+                        {
+                          if($merk['id']==$data['id_merk'] && $data['type']=="N" )
+                            $cek=1;
+                        }
+                      }
+                      if($cek==1)
+                      {
+                        ?>
+                          <option value="<?php echo $merk['id']; ?>" selected><?php echo $merk['nama']; ?></option>
+                        <?php
+                      }
+                      else
+                      {
+                        ?>
+                          <option value="<?php echo $merk['id']; ?>"><?php echo $merk['nama']; ?></option>
+                        <?php
+                      }
                     }
                   }
                   ?>
@@ -100,21 +170,74 @@
               </div>
               <label class="control-label">Harga Normal</label>
               <div class="controls">
-                <input type="number" name="hargaNormal" id="hargaNormal">
+                <input type="number" name="hargaNormal" id="hargaNormal" value="<?php echo $hargaNormal ?>">
               </div>
               <label class="control-label">Deskripsi Barang</label>
               <div class="controls">
-                <textarea rows="4" cols="50" name="deskripsiNormal"></textarea>
+                <textarea rows="4" cols="50" name="deskripsiNormal"><?php echo $deskripsiNormal ?></textarea>
               </div>
               <label class="control-label"> </label>
               <div class="checkbox controls">
-                <label><input type="checkbox" value="low" name="checkLow" id="checkLow">Low?</label>
+                <?php
+                  if($isLow==false)
+                    echo '<label><input type="checkbox" value="low" name="checkLow" id="checkLow">Low?</label>';
+                  else
+                    echo '<label><input type="checkbox" value="low" name="checkLow" id="checkLow" checked="checked">Low?</label>';
+                ?>
               </div>
-              <div id="tempatLow"></div>
+              <div id="tempatLow">
+                <?php
+                if($isLow==true)
+                {
+                  $html='<label class="control-label">Kode</label>
+                          <div class="controls">
+                            <input type="text" name="kodeBarangLow" id="kodeBarangLow" value="L'.$kode.'" disabled>
+                          </div>
+                          <label class="control-label">Pilih Merk Barang</label>
+                          <div class="controls">
+                            <select style class="form-control col-xs-3" name="pilihMerkBarangLow" id="pilihMerkBarangLow">';
+                            if(isset($dataMerk))
+                            {
+                              foreach ($dataMerk as $merk) 
+                              {
+                                $cek=0;
+                                if(count($barangSelected[0]["detail_barang"]) > 0)
+                                {
+                                  foreach($barangSelected[0]["detail_barang"] as $data)
+                                  {
+                                    if($merk['id']==$data['id_merk'] && $data['type']=="L" )
+                                      $cek=1;
+                                  }
+                                }
+                                if($cek==1)
+                                {
+                                  $html.='<option value="'.$merk['id'].'" selected>'.$merk['nama'].'</option>';
+                                }
+                                else
+                                {
+                                  $html.='<option value="'.$merk['id'].'" >'.$merk['nama'].'</option>';
+                                }
+                              }
+                            }
+                  $html.='  </select>
+                          </div>
+                          <label class="control-label">Harga Low</label>
+                          <div class="controls">
+                            <input type="number" name="hargaLow" id="hargaLow" value="'.$hargaLow.'">
+                          </div>
+                          <label class="control-label">Deskripsi Barang</label>
+                          <div class="controls">
+                            <textarea rows="4" cols="50" name="deskripsiLow">'.$deskripsiLow.'</textarea>
+                          </div>';
+
+                  echo $html;
+                }
+                ?>
+              </div>
             </div>
               <div class="form-actions">
-                <input type="submit" name="btnBatal" value="Batal" class="btn btn-info"/>
-                <input type="submit" name="btnTambah" value="Tambah" class="btn btn-success"/>
+                <a href="<?php echo base_url();?>barang/" class="btn btn-info" role="button">Batal</a>
+                <input type="submit" name="btnTambah" value="Ubah" class="btn btn-success"/>
               </div>
             <?php echo form_close(); ?>
           </div>
