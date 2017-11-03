@@ -113,13 +113,26 @@
                       }
                       if($cek==1)
                       {
-                        
+
                       }
                       else
                       {
-                        ?>
+                        $checked = false;
+                        foreach($barangSelected[0]["barang_kembar"] as $kembar){
+                          if($barang['id'] == $kembar['id_barangKembar']){
+                            $checked = true;
+                            break;
+                          }
+                        }
+                        if($checked == true){
+                          ?>
+                          <option value="<?php echo $barang['id']; ?>" selected><?php echo $barang['nama']; ?></option>
+                          <?php
+                        }else{
+                          ?>
                           <option value="<?php echo $barang['id']; ?>"><?php echo $barang['nama']; ?></option>
-                        <?php
+                          <?php
+                        }
                       }
                     }
                   }

@@ -24,4 +24,14 @@ class BarangKembar_Model extends CI_Model {
 
         $this->db->trans_complete();
     }
+
+    public function get_barangKembarByIdBarang($id_barang){
+        $sql = "SELECT bbk.*, b.nama as kembar_nama 
+                FROM barang_kembarbarang bbk, barang b
+                WHERE bbk.id_barang = ? AND b.id = bbk.id_barangKembar";
+
+        $result = $this->db->query($sql, array($id_barang));
+
+        return $result->result_array();
+    }
 }

@@ -95,7 +95,7 @@ class Barang extends CI_Controller {
            		$kodeBarang	= $this->input->post('kodeBarang');
 				$namaBarang	= $this->input->post('namaBarang');
 				$minStok	= $this->input->post('minStok');
-				$similarMerk	= $this->input->post('similarMerk');
+				$similarBarang	= $this->input->post('similarBarang');
 				$pilihMerkBarang	= $this->input->post('pilihMerkBarang');
 				$hargaNormal	= $this->input->post('hargaNormal');
 				$deskripsiNormal	= $this->input->post('deskripsiNormal');
@@ -108,7 +108,7 @@ class Barang extends CI_Controller {
 				$pilihMerkBarangLow	= $this->input->post('pilihMerkBarangLow');
 				$hargaLow	= $this->input->post('hargaLow');
 				$deskripsiLow	= $this->input->post('deskripsiLow');
-				$result = $this->Barang_Model->insert_barang($namaBarang, $minStok, $pilihMerkBarang, $similarMerk, $kodeBarang, $hargaNormal, $deskripsiNormal, $isLow, $pilihMerkBarangLow, $kodeBarangLow, $hargaLow, $deskripsiLow);
+				$result = $this->Barang_Model->insert_barang($namaBarang, $minStok, $pilihMerkBarang, $similarBarang, $kodeBarang, $hargaNormal, $deskripsiNormal, $isLow, $pilihMerkBarangLow, $kodeBarangLow, $hargaLow, $deskripsiLow);
 
 
 				if(count($result) > 0)
@@ -185,7 +185,7 @@ class Barang extends CI_Controller {
            		$kodeBarang	= $this->input->post('kodeBarang');
 				$namaBarang	= $this->input->post('namaBarang');
 				$minStok	= $this->input->post('minStok');
-				$similarMerk	= $this->input->post('similarMerk');
+				$similarBarang	= $this->input->post('similarBarang');
 				$pilihMerkBarang	= $this->input->post('pilihMerkBarang');
 				$hargaNormal	= $this->input->post('hargaNormal');
 				$deskripsiNormal	= $this->input->post('deskripsiNormal');
@@ -198,7 +198,7 @@ class Barang extends CI_Controller {
 				$pilihMerkBarangLow	= $this->input->post('pilihMerkBarangLow');
 				$hargaLow	= $this->input->post('hargaLow');
 				$deskripsiLow	= $this->input->post('deskripsiLow');
-				$result = $this->Barang_Model->update_barang($id, $namaBarang, $minStok, $pilihMerkBarang, $similarMerk, $kodeBarang, $hargaNormal, $deskripsiNormal, $isLow, $pilihMerkBarangLow, $kodeBarangLow, $hargaLow, $deskripsiLow);
+				$result = $this->Barang_Model->update_barang($id, $namaBarang, $minStok, $pilihMerkBarang, $similarBarang, $kodeBarang, $hargaNormal, $deskripsiNormal, $isLow, $pilihMerkBarangLow, $kodeBarangLow, $hargaLow, $deskripsiLow);
 
 
 				if(count($result) > 0)

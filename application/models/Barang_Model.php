@@ -106,6 +106,7 @@ class Barang_Model extends CI_Model {
         foreach($barangs as $barang){
             $detailBarangs = $this->DetailBarang_Model->get_allDetailBarangByIdBarang($barang['id']);
             $supplierBarangs = $this->SupplierBarang_Model->get_allSupplierBarangByIdBarang($barang['id']);
+            $barangKembars = $this->BarangKembar_Model->get_barangKembarByIdBarang($barang['id']);
             
             $totalStok = 0;
             $barang["total_stok"] = 0;
@@ -124,6 +125,12 @@ class Barang_Model extends CI_Model {
                 $barang['supplier_barang'] = $supplierBarangs;
             }else{
                 $barang['supplier_barang'] = [];
+            }
+
+            if(count($barangKembars) > 0){
+                $barang['barang_kembar'] = $barangKembars;
+            }else{
+                $barang['barang_kembar'] = [];
             }
             
             $barang["total_stok"] = $totalStok;
