@@ -1,34 +1,3 @@
-<?php
-                  if(count($dataJabatanAll[0]["hak_akses"]) > 0)
-                  {
-                    foreach($dataJabatanAll[0]["hak_akses"] as $hak_akses)
-                    {
-                      $cek=0;
-                      if(count($dataJabatan[0]["hak_akses"]) > 0)
-                      {
-                        foreach($dataJabatan[0]["hak_akses"] as $data)
-                        {
-                          if($hak_akses['id']==$data['id'])
-                            $cek=1;
-                        }
-                      }
-                      if($cek==1)
-                        {
-                        ?>
-                          <option value="<?php echo $data['id']; ?>" selected><?php echo $data['nama']; ?></option>
-                        <?php
-                        }
-                        else
-                        {
-                        ?>
-                          <option value="<?php echo $hak_akses['id']; ?>"><?php echo $hak_akses['nama']; ?></option>
-                        <?php
-                        }
-                    }
-                  }
-//print_r ($dataJabatanAll[0]["hak_akses"]);
-//exit();
-?>
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> 
@@ -43,10 +12,10 @@
         Jabatan
       </a>
       <a href="#" class="current">
-        Tambah Jabatan
+        Edit Jabatan
       </a>
     </div>
-    <h1>Tambah Jabatan</h1>
+    <h1>Edit Jabatan</h1>
   </div>
   <div class="container-fluid">
      <?php
@@ -71,7 +40,7 @@
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>Tambah Jabatan</h5>
+            <h5>Edit Jabatan</h5>
           </div>
           <div class="widget-content nopadding">
              <?php 

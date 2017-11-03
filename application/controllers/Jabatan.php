@@ -156,4 +156,19 @@ class Jabatan extends CI_Controller {
 			redirect("jabatan", 'refresh');
 		}
 	}
+
+	public function hapusJabatan($id)
+	{
+		$result = $this->Jabatan_Model->delete_jabatan($id);
+		if(count($result) > 0)
+		{
+			$this->session->set_flashdata('sukses', 'Berhasil hapus jabatan');
+			redirect('jabatan');
+		} 
+		else 
+		{
+			$this->session->set_flashdata('error', 'Gagal hapus jabatan');
+			redirect('jabatan');
+		}
+	}
 }

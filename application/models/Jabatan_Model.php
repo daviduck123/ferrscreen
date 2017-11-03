@@ -116,4 +116,9 @@ class Jabatan_Model extends CI_Model {
 
         return $jabatans2;
     }
+
+    public function delete_jabatan($id){
+        $sql = "DELETE FROM jabatan WHERE id = ?";
+        return $this->db->query($sql, array($id));
+    }
 }

@@ -50,6 +50,14 @@
 function resetMenu() {
    document.gomenu.selector.selectedIndex = 2;
 }
+
+ function deleteData() 
+ {
+      if(confirm("Apakah kamu yakin ingin menghapus data ini?"))
+        document.forms[0].submit();
+      else
+        return false;
+}
 </script>
 </body>
 </html>
