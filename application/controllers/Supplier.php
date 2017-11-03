@@ -139,7 +139,8 @@ class Supplier extends CI_Controller {
 	{
 		//isi data diisi array post
 		$isiData = $this->input->post();
-		//print_r($isiData);
+		/*print_r($isiData);
+		exit();*/
 		$isLow=FALSE;
 
 		if($this->input->post('btnTambah'))
@@ -170,7 +171,7 @@ class Supplier extends CI_Controller {
 				if($this->input->post('checkAktif')!==null && $this->input->post('checkAktif')=="aktif")
 					$checkAktif=TRUE;
 
-				$result = $this->Supplier_Model->update_supplier($id, $alamatEmailSupplier, $namaSupplier, $contactPersonSupplier, $alamatSupplier, $kodePosSupplier, $teleponSupplier, $hpSupplier, $faximileSupplier, $limitPiutangSupplier, $jatuhTempoSupplier, $pilihKotaSupplier, $checkAktif);
+				$result = $this->Supplier_Model->update_supplier($id, $alamatEmailSupplier, $namaSupplier, $contactPersonSupplier, $alamatSupplier, $kodePosSupplier, $teleponSupplier, $hpSupplier, $faximileSupplier, $limitPiutangSupplier, $jatuhTempoSupplier, $checkAktif, $pilihKotaSupplier);
 
 
 				if(count($result) > 0)

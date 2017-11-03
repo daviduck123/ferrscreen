@@ -113,9 +113,7 @@
                       }
                       if($cek==1)
                       {
-                        ?>
-                          <option value="<?php echo $barang['id']; ?>" selected><?php echo $barang['nama']; ?></option>
-                        <?php
+                        
                       }
                       else
                       {

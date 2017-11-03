@@ -180,7 +180,7 @@ class Toko extends CI_Controller {
 				if($this->input->post('checkAktif')!==null && $this->input->post('checkAktif')=="aktif")
 					$checkAktif=TRUE;
 
-				$result = $this->Toko_Model->update_toko($id, $kodeToko, $alamatEmailToko, $namaToko, $contactPersonToko, $alamatToko, $kodePosToko, $teleponToko, $hpToko, $faximileToko, $limitPiutangToko, $jatuhTempoToko, $pilihKotaToko, $checkAktif);
+				$result = $this->Toko_Model->update_toko($id, $kodeToko, $alamatEmailToko, $namaToko, $contactPersonToko, $alamatToko, $kodePosToko, $teleponToko, $hpToko, $faximileToko, $limitPiutangToko, $jatuhTempoToko, $checkAktif, $pilihKotaToko);
 
 
 				if(count($result) > 0)
