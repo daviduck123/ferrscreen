@@ -12,10 +12,10 @@ T<div id="content">
         Supplier
       </a>
       <a href="#" class="current">
-        Tambah Supplier
+        Edit Supplier
       </a>
     </div>
-    <h1>Tambah Supplier</h1>
+    <h1>Edit Supplier</h1>
   </div>
   <div class="container-fluid">
      <?php
@@ -40,11 +40,11 @@ T<div id="content">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>Tambah Supplier</h5>
+            <h5>Edit Supplier</h5>
           </div>
           <div class="widget-content nopadding">
              <?php 
-            echo form_open("supplier/prosesTambahSupplier",  
+            echo form_open("supplier/prosesEditSupplier/".$idSupplier,  
               array(
                 'name' => 'basic_validate', 
                 'id' => 'basic_validate',
@@ -56,19 +56,19 @@ T<div id="content">
             <div class="control-group">
               <label class="control-label">Nama Supplier</label>
               <div class="controls">
-                <input type="text" name="namaSupplier" id="namaSupplier">
+                <input type="text" name="namaSupplier" id="namaSupplier" value="<?php echo $dataSupplier[0]["nama"] ?>">
               </div>
               <label class="control-label">Contact Person</label>
               <div class="controls">
-                <input type="text" name="contactPersonSupplier" id="contactPersonSupplier">
+                <input type="text" name="contactPersonSupplier" id="contactPersonSupplier" value="<?php echo $dataSupplier[0]["contact_person"] ?>">
               </div>
               <label class="control-label">Email</label>
               <div class="controls">
-                <input type="text" name="alamatEmailSupplier" id="alamatEmailSupplier">
+                <input type="text" name="alamatEmailSupplier" id="alamatEmailSupplier" value="<?php echo $dataSupplier[0]["email"] ?>">
               </div>
               <label class="control-label">Alamat Supplier</label>
               <div class="controls">
-                <textarea rows="4" cols="50" name="alamatSupplier" id="alamatSupplier"></textarea>
+                <textarea rows="4" cols="50" name="alamatSupplier" id="alamatSupplier"><?php echo $dataSupplier[0]["alamat"] ?></textarea>
               </div>
               <label class="control-label">Pilih Kota</label>
               <div class="controls">
@@ -78,7 +78,10 @@ T<div id="content">
                   {
                     foreach ($dataKota as $kota) 
                     {
-                      echo "<option value='".$kota["id"]."'>".$kota["nama"]."</option>";
+                      if($dataSupplier[0]["id_kota"]==$kota["id"])
+                        echo "<option value='".$kota["id"]."' selected>".$kota["nama"]."</option>";
+                      else
+                        echo "<option value='".$kota["id"]."'>".$kota["nama"]."</option>";
                     }
                   }
                   ?>
@@ -86,32 +89,41 @@ T<div id="content">
               </div>
               <label class="control-label">Kode Pos</label>
               <div class="controls">
-                <input type="number" name="kodePosSupplier" id="kodePosSupplier">
+                <input type="number" name="kodePosSupplier" id="kodePosSupplier" value="<?php echo $dataSupplier[0]["kode_pos"] ?>">
               </div>
               <label class="control-label">Telepon</label>
               <div class="controls">
-                <input type="number" name="teleponSupplier" id="teleponSupplier">
+                <input type="number" name="teleponSupplier" id="teleponSupplier" value="<?php echo $dataSupplier[0]["telp"] ?>">
               </div>
               <label class="control-label">HP</label>
               <div class="controls">
-                <input type="number" name="hpSupplier" id="hpSupplier">
+                <input type="number" name="hpSupplier" id="hpSupplier" value="<?php echo $dataSupplier[0]["hp"] ?>">
               </div>
               <label class="control-label">Faximile</label>
               <div class="controls">
-                <input type="number" name="faximileSupplier" id="faximileSupplier">
+                <input type="number" name="faximileSupplier" id="faximileSupplier" value="<?php echo $dataSupplier[0]["fax"] ?>">
               </div>
               <label class="control-label">Limit Piutang</label>
               <div class="controls">
-                <input type="number" name="limitPiutangSupplier" id="limitPiutangSupplier">
+                <input type="number" name="limitPiutangSupplier" id="limitPiutangSupplier" value="<?php echo $dataSupplier[0]["limit_hutang"] ?>">
               </div>
               <label class="control-label">Jatuh Tempo</label>
               <div class="controls">
-                <input type="number" name="jatuhTempoSupplier" id="jatuhTempoSupplier">
+                <input type="number" name="jatuhTempoSupplier" id="jatuhTempoSupplier" value="<?php echo $dataSupplier[0]["jatuh_tempo"] ?>">
+              </div>
+              <label class="control-label"> </label>
+              <div class="checkbox controls">
+                <?php
+                  if($dataSupplier[0]["is_aktif"]==0)
+                    echo '<label><input type="checkbox" value="aktif" name="checkAktif" id="checkAktif">Aktif?</label>';
+                  else
+                    echo '<label><input type="checkbox" value="aktif" name="checkAktif" id="checkAktif" checked="checked">Aktif?</label>';
+                ?>
               </div>
             </div>
               <div class="form-actions">
-                <input type="submit" name="btnBatal" value="Batal" class="btn btn-info"/>
-                <input type="submit" name="btnTambah" value="Tambah" class="btn btn-success"/>
+                <a href="<?php echo base_url();?>supplier/" class="btn btn-info" role="button">Batal</a>
+                <input type="submit" name="btnTambah" value="Ubah" class="btn btn-success"/>
               </div>
             <?php echo form_close();?>
           </div>

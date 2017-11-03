@@ -17,7 +17,7 @@ class Supplier_Model extends CI_Model {
         return $id;
     }
 
-    public function update_supplier($email, $nama, $cp, $alamat, $kode_pos, $telp, $hp, $fax, $limit, $jatuh_tempo, $is_aktif, $id_kota, $id){
+    public function update_supplier($id,$email, $nama, $cp, $alamat, $kode_pos, $telp, $hp, $fax, $limit, $jatuh_tempo, $is_aktif, $id_kota){
         $this->db->trans_start();
 
         $sql="UPDATE `supplier` 
@@ -36,6 +36,15 @@ class Supplier_Model extends CI_Model {
                 WHERE c.id_kota = k.id
                 ORDER BY c.nama ASC";
         $result = $this->db->query($sql);
+        return $result->result_array();
+    }
+
+    public function get_supplierById($id){
+        $sql = "SELECT c.*, k.nama as nama_kota
+                FROM supplier c, kota k
+                WHERE c.id_kota = k.id and c.id=?
+                ORDER BY c.nama ASC";
+        $result = $this->db->query($sql,array($id));
         return $result->result_array();
     }
 
