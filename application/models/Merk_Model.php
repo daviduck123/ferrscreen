@@ -35,4 +35,17 @@ class Merk_Model extends CI_Model {
         $result = $this->db->query($sql);
         return $result->result_array();
     }
+
+    public function get_merkById($id){
+        $sql = "SELECT m.*
+                FROM merk m
+                WHERE m.id = ?";
+        $result = $this->db->query($sql, array($id));
+        return $result->result_array();
+    }
+
+    public function delete_merk($id){
+        $sql = "DELETE FROM merk WHERE id = ?";
+        return $this->db->query($sql, array($id));
+    }
 }

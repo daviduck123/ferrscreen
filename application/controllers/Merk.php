@@ -99,4 +99,81 @@ class Merk extends CI_Controller {
 		}
 	}
 
+	public function editMerk($id)
+	{
+		$dataMenu = array(
+	        'menuAktif' => "masterdata",
+	        'subMenu' => "merk"
+		);
+
+		$dataMerk = $this->Merk_Model->get_merkById($id);
+		$data = array(
+			'idMerk' => $id,
+	        'dataMerk' => $dataMerk
+		);
+		$this->load->view('header');
+		$this->load->view('sidebar',$dataMenu);
+		$this->load->view('MasterData/Merk/v_editMerk',$data);
+	}
+
+	public function prosesEditMerk($id)
+	{
+		$this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+
+		//isi data diisi array post
+		$isiData = $this->input->post();
+		//print_r($isiData);
+		$isLow=FALSE;
+
+		if($this->input->post('btnTambah'))
+		{
+			$this->form_validation->set_rules('namaMerk', 'Nama merk', 'required');
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$this->session->set_flashdata('error', 'Data tidak lengkap');
+				redirect("merk/editMerk/".$id);
+           	}
+           	else
+           	{
+				$namaMerk	= $this->input->post('namaMerk');
+				$keterangan	= $this->input->post('keterangan');
+
+				$result = $this->Merk_Model->update_merk($id, $namaMerk,$keterangan);
+
+				if(count($result) > 0)
+				{
+
+					$this->session->set_flashdata('sukses', 'Berhasil edit merk');
+					redirect('merk');
+				} 
+				else 
+				{
+					$this->session->set_flashdata('error', 'Gagal edit merk');
+					redirect('merk');
+				}
+         	}
+		}
+		else
+		{
+			echo "jangan lakukan refresh saat pengiriman data";
+			redirect("merk", 'refresh');
+		}
+	}
+
+	public function hapusMerk($id)
+	{
+		$result = $this->Merk_Model->delete_merk($id);
+		if(count($result) > 0)
+		{
+			$this->session->set_flashdata('sukses', 'Berhasil hapus merk');
+			redirect('merk');
+		} 
+		else 
+		{
+			$this->session->set_flashdata('error', 'Gagal hapus merk');
+			redirect('merk');
+		}
+	}
 }
