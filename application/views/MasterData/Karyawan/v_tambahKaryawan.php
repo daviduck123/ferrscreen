@@ -8,8 +8,8 @@ T<div id="content">
       <a href="#" class="">
         Master Data
       </a>
-      <a href="<?php echo base_url();?>supplier" class="">
-        Supplier
+      <a href="<?php echo base_url();?>karyawan" class="">
+        Karyawan
       </a>
       <a href="#" class="current">
         Tambah Karyawan

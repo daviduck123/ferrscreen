@@ -84,7 +84,6 @@ class Karyawan extends CI_Controller {
 				$result = $this->User_Model->insert_user($alamatEmailKaryawan, $namaKaryawan, $alamatKaryawan, $teleponKaryawan, $hpKaryawan, $deskripsiKaryawan, $tglMasuk, null, $pilihKotaKaryawan, $jabatan);
 				if(count($result) > 0)
 				{
-
 					$this->session->set_flashdata('sukses', 'Berhasil simpan karyawan');
 					redirect('karyawan');
 				} 
