@@ -150,6 +150,9 @@ class Barang extends CI_Controller {
 				}
          	}
 		}
+		else if($this->input->post('btnBatal')){
+			redirect('barang');
+		}
 		else
 		{
 			echo "jangan lakukan refresh saat pengiriman data";

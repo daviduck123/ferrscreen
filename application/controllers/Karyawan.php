@@ -180,18 +180,18 @@ class Karyawan extends CI_Controller {
 				$tglMasuk=$arrDate->format('Y-m-d H:i:s');
 
 				$arrDate=$this->input->post('tglKeluar');
-				if(isset($arrDate)){
-					$arrDate = str_replace('/', '-', $arrDate);
-					$arrDate	= new DateTime($arrDate);
-					$tglKeluar=$arrDate->format('Y-m-d H:i:s');
-				}else{
-					$tglKeluar = null;
-				}
+				$arrDate = str_replace('/', '-', $arrDate);
+				$arrDate	= new DateTime($arrDate);
+				$tglKeluar=$arrDate->format('Y-m-d H:i:s');
 				
 				$jabatan	= $this->input->post('jabatan');
 				$is_aktif = "0";
-				if($this->input->post('is_aktif')!==null && $this->input->post('is_aktif')=="is_aktif")
+				if($this->input->post('is_aktif')!==null && $this->input->post('is_aktif')=="is_aktif"){
 					$is_aktif="1";
+				}
+				if($is_aktif == "1"){
+					$tglKeluar = null;
+				}
 
 				$result = $this->User_Model->update_user($alamatEmailKaryawan, $namaKaryawan, $alamatKaryawan, $teleponKaryawan, $hpKaryawan, $deskripsiKaryawan, $tglMasuk, $tglKeluar, $is_aktif, $pilihKotaKaryawan, $id, $jabatan);
 				if(count($result) > 0)
