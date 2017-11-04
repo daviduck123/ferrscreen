@@ -87,7 +87,7 @@
                               onclick="OpenModal(<?php echo $number; ?>)"
                               id="btnModal<?php echo $number; ?>"
                               >Detail Stok</button>
-                            <button style='float:right; margin-left: 3px;' class="btn btn-success btn-mini" data-toggle="modal" data-target="#updateModal"
+                            <button style='float:right; margin-left: 3px;' class="btn btn-success btn-mini" data-backdrop="static" data-toggle="modal" data-keyboard="false" data-target="#updateModal"
                               data-id="<?php echo $barang['id']; ?>"
                               data-title="Update Stok"
                               onclick="OpenModal(<?php echo $number; ?>)"
@@ -116,13 +116,21 @@
                           </td>
                           <td style = "vertical-align: middle;">
                             <a href="<?php echo base_url();?>barang/editBarang/<?php echo $barang["id"] ?>" class="btn btn-warning btn-mini" role="button">Edit</a>
-                            <button class="btn btn-danger btn-mini" data-toggle="modal" data-target="#hapusModal"
-                              data-id="<?php echo $barang['id']; ?>"
-                              data-title="Hapus Barang"
-                              onclick="OpenModal(<?php echo $number; ?>)"
-                              id="btnModal<?php echo $number; ?>"
-                              >Hapus</button>
-                          </td>
+                            <a href="#deleteData<?php echo $barang["id"] ?>" data-toggle="modal" class="btn btn-danger btn-mini" role="button">Hapus</a>
+
+                                    <div id="deleteData<?php echo $barang["id"] ?>" class="modal hide" aria-hidden="true" style="display: none;">
+                                      <div class="modal-header">
+                                        <button data-dismiss="modal" class="close" type="button">×</button>
+                                          <h3>Hapus Data</h3>
+                                      </div>
+                                      <div class="modal-body">
+                                        <p>Apakah kamu ingin menghapus data <?php echo $barang["nama"] ?>?</p>
+                                      </div>
+                                      <div class="modal-footer"> 
+                                        <a class="btn btn-primary" href="<?php echo base_url();?>barang/hapusBarang/<?php echo $barang["id"] ?>" name="btnHapus">Hapus</a> 
+                                        <a data-dismiss="modal" class="btn" href="#">Cancel</a> 
+                                      </div>
+                                    </div>
                         </tr>
                         <?php 
                       $number++;
@@ -162,24 +170,79 @@
 </div>
 <!-- /.modal-->
 <!--modal Update data-->
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade"  id="updateModal" style="width:50%; left:30%; " role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Hapus Nota</h4>
+                <h4 class="modal-title" id="myModalLabel">Update Stok</h4>
             </div>
 
             <div class = "modal-body">
+                <div class="container-fluid">
+                  <div class="widget-box">
+                    <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
+                      <h5>Tambah Stok</h5>
+                    </div>
+                    <div class="widget-content nopadding">
+                      <?php echo form_open("barang/prosesTambahDetailBarang",  
+                        array(
+                          'name' => 'basic_validate', 
+                          'id' => 'basic_validate',
+                          'novalidate' => 'novalidate',
+                          'class' => "form-horizontal"
+                        )
+                      );   
+                      ?>
+                      <table class="table table-striped table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Supplier</th>
+                            <th>Stok</th>
+                            <th>Harga</th>
+                            <th>Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="taskDesc">
+                              <div id="divUpdateAddIdBarang"></div>
+                              <div id="divUpdateAddBarang">
+                              </div>
+                            </td>
+                            <td class="taskStatus">
+                               <input type="number" name="stok"/>
+                            </td>
+                            <td class="taskStatus">
+                               <input type="number" name="harga"/>
+                            </td>
+                            <td class="taskOptions">
+                              <input type="submit" name="btnTambah" value="Tambah" class="btn btn-success btn-mini"/>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <?php  echo form_close(); ?>
+                    </div>
+                  </div>
+                </div>
                 <!-- Di sini nanti buat table untuk update Stok yang di dapat dari Stok-Supplier -->
                 <!-- Data tergantung dari Supplier Barang, klo ada array isinya, maka ada isinya -->
                 <!-- Klo ga ada isinya, ada inputan, Combobox supplier, Input Box Stok, button Hapus -->
-                <div id="divUpdateBarang"></div>
+                <div class="container-fluid">
+                  <div class="widget-box">
+                    <div class="widget-title"> 
+                      <span class="icon"><i class="icon-th"></i></span>
+                      <span class="icon"><b>List Stok</b></span>
+                    </div>
+                    <div id="divUpdateBarang"></div>
+                  </div>
+                </div>
 
             </div>
             <div class="modal-footer">
                 <button class="btn btn-github" data-dismiss="modal">Kembali</button>
-                <button class="btn btn-success" name="btn_submit">Update</button>
+                <!--<button class="btn btn-success" name="btn_submit">Update</button>-->
             </div>
         </div>
         <!-- /.modal-content -->
@@ -320,11 +383,11 @@
         html    += "    </tr>";
         html    += "  </thead>"
         html    += "  <tbody>"
-        html += "<tr>";
-        html += "<td><input type='text'/></td>";
-        html += "<td><input type='number'/></td>";
-        html += "<td><button class='btn btn-info btn-mini'>Tambah</button></td>";
-        html += "</tr>";
+        //html += "<tr>";
+        //html += "<td><input type='text'/></td>";
+        //html += "<td><input type='number'/></td>";
+        //html += '<td><input type="submit" name="btnTambah" value="Tambah" class="btn btn-success btn-mini"/></td>';
+        //html += "</tr>";
         for(var i = 0 ; i < dataBarang.length; i++){
           if(Number(dataBarang[i]['id']) === Number(id)){
 
@@ -333,7 +396,8 @@
               html += "<tr>";
               html += "<td><input type='text' value='"+  supplier_barang[j]['nama_supplier']  +"'/></td>";
               html += "<td><input type='number' value='"+  supplier_barang[j]['stok']  +"'/></td>";
-              html += "<td><button class='btn btn-danger btn-mini'>Hapus</button></td>";
+              html += '<td><a class="btn btn-warning btn-mini" href="<?php echo base_url(); ?>barang/editDetailBarang/'+supplier_barang[j]['id_supplier']+'/'+id+'" name="btnEdit">Edit</a>';
+              html += '<a class="btn btn-danger btn-mini" href="<?php echo base_url(); ?>barang/hapusDetailBarang/'+supplier_barang[j]['id_supplier']+'/'+id+'" name="btnHapus">Hapus</a></td>';
               html += "</tr>";
             }
           }
@@ -348,6 +412,23 @@
           "sPaginationType": "full_numbers",
           "sDom": '<""l>t<"F"fp>'
         });
+
+        var html ='<select class="col-xs-3" name="pilihSupplier" id="pilihSupplier">;'
+        <?php 
+          if(isset($dataSupplier))
+          {
+            foreach ($dataSupplier as $supplier) 
+            {
+              echo "html+="."'"."<option  value=".'"'.$supplier["id"].'"'.">".$supplier["nama"]."</option>"."';";
+            }
+          }
+        ?>
+        html +='</select>';
+        $("#divUpdateAddBarang").html(html);
+
+        var html = "<input type='hidden' name='id_barang' value='"+id+"'>";
+        $("#divUpdateAddIdBarang").html(html);
+
     }
 </script>
 </body>

@@ -10,9 +10,17 @@ class SupplierBarang_Model extends CI_Model {
         $this->db->trans_start();
 
     	$sql = "INSERT INTO `supplier_barang`(`id_supplier`, `id_barang`, `stok`, `harga`, `created_at`) VALUES (?,?,?,?,NOW())";
-    	$this->db->query($sql, array($id_supplier, $id_barang, $stok, $harga));
+    	$result=$this->db->query($sql, array($id_supplier, $id_barang, $stok, $harga));
 
         $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE)
+        {
+                // generate an error... or use the log_message() function to log your error
+        }
+        else
+        {
+            return $result;
+        }
     }
 
     public function update_supplierBarang($id_supplier, $id_barang, $stok, $harga){
@@ -21,9 +29,18 @@ class SupplierBarang_Model extends CI_Model {
     	$sql = "UPDATE `supplier_barang` 
     			SET `stok`=?,`harga`=?
     			WHERE id_supplier = ? AND id_barang = ?";
-    	$this->db->query($sql, array($stok, $kode, $harga, $id_supplier, $id_barang));
+    	$result=$this->db->query($sql, array($stok, $kode, $harga, $id_supplier, $id_barang));
 
         $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE)
+        {
+                // generate an error... or use the log_message() function to log your error
+        }
+        else
+        {
+            return $result;
+        }
     }
 
     public function delete_supplierBarang($id_supplier, $id_barang){
@@ -31,9 +48,18 @@ class SupplierBarang_Model extends CI_Model {
 
         $sql = "DELETE FROM supplier_barang 
                 WHERE id_supplier = ? AND id_barang = ?";
-        $this->db->query($sql, array($id_supplier, $id_barang));
+        $result=$this->db->query($sql, array($id_supplier, $id_barang));
 
         $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE)
+        {
+                // generate an error... or use the log_message() function to log your error
+        }
+        else
+        {
+            return $result;
+        }
     }
 
     public function delete_supplierBarangByIdSupplier($id_supplier){
@@ -49,9 +75,18 @@ class SupplierBarang_Model extends CI_Model {
         $this->db->trans_start();
 
         $sql = "DELETE FROM supplier_barang WHERE id_barang = ?";
-        $this->db->query($sql, array($id_barang));
+        $temp=$this->db->query($sql, array($id_barang));
 
         $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE)
+        {
+                // generate an error... or use the log_message() function to log your error
+        }
+        else
+        {
+            return $temp;
+        }
     }
 
     public function get_allSupplierBarangByIdBarang($id_barang){

@@ -22,6 +22,8 @@ class Barang extends CI_Controller {
         header('Access-Control-Allow-Origin: *');
         parent::__construct();
 	 	$this->load->model('Barang_Model');
+	 	$this->load->model('Supplier_Model');
+	 	$this->load->model('SupplierBarang_Model');
 	 	$this->load->model('Merk_Model');
     }
 
@@ -32,8 +34,10 @@ class Barang extends CI_Controller {
 	        'subMenu' => "barang"
 		);
 
+		$dataSupplier = $this->Supplier_Model->get_allSupplier();
 		$dataBarang = $this->Barang_Model->get_allBarang();
 		$data = array(
+	        'dataSupplier' => $dataSupplier,
 	        'dataBarang' => $dataBarang,
 		);
 
@@ -232,6 +236,73 @@ class Barang extends CI_Controller {
 		else 
 		{
 			$this->session->set_flashdata('error', 'Gagal hapus barang');
+			redirect('barang');
+		}
+	}
+
+	public function prosesTambahDetailBarang()
+	{
+		$this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+
+		//isi data diisi array post
+		$isiData = $this->input->post();
+		//print_r($isiData);
+		//exit();
+		$isLow=FALSE;
+
+		if($this->input->post('btnTambah'))
+		{
+			
+			$this->form_validation->set_rules('pilihSupplier', 'Id Supplier', 'required');
+			$this->form_validation->set_rules('id_barang', 'Id Barang', 'required');
+			$this->form_validation->set_rules('stok', 'Stok', 'required');
+			$this->form_validation->set_rules('harga', 'Harga', 'required');
+
+			if ($this->form_validation->run() == FALSE)
+			{
+				$this->session->set_flashdata('error', 'Data tidak lengkap');
+				redirect('barang/');
+           	}
+           	else
+           	{
+	           		$id_supplier	= $this->input->post('pilihSupplier');
+	           		$id_barang	= $this->input->post('id_barang');
+					$stok	= $this->input->post('stok');
+					$harga	= $this->input->post('harga');
+
+					$result = $this->SupplierBarang_Model->insert_supplierBarang($id_supplier, $id_barang, $stok, $harga);
+
+					
+					if(count($result) > 0)
+					{
+						$this->session->set_flashdata('sukses', 'Berhasil simpan barang');
+						redirect('barang');
+					} 
+					else 
+					{
+						$this->session->set_flashdata('error', 'Gagal simpan barang');
+						redirect('barang');
+					}
+         	}
+		}
+		else
+		{
+			echo "jangan lakukan refresh saat pengiriman data";
+		}
+	}
+
+	public function hapusDetailBarang($id_supplier,$id_barang)
+	{
+		$result = $this->SupplierBarang_Model->delete_supplierBarang($id_supplier,$id_barang);
+		if(count($result) > 0)
+		{
+			$this->session->set_flashdata('sukses', 'Berhasil hapus supplier barang');
+			redirect('barang');
+		} 
+		else 
+		{
+			$this->session->set_flashdata('error', 'Gagal hapus supplier barang');
 			redirect('barang');
 		}
 	}
