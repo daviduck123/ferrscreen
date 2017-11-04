@@ -33,9 +33,9 @@ class Supplier_Model extends CI_Model {
     public function get_allSupplier(){
         $sql = "SELECT c.*, k.nama as nama_kota
                 FROM supplier c, kota k
-                WHERE c.id_kota = k.id
+                WHERE c.id_kota = k.id AND c.is_aktif = ?
                 ORDER BY c.nama ASC";
-        $result = $this->db->query($sql);
+        $result = $this->db->query($sql, array("1"));
         return $result->result_array();
     }
 
@@ -60,24 +60,24 @@ class Supplier_Model extends CI_Model {
     public function get_allSupplierByIdKota($id_kota){
         $sql = "SELECT c.*, k.nama as nama_kota
                 FROM supplier c, kota k
-                WHERE c.id_kota = k.id AND c.id_kota = ?
+                WHERE c.id_kota = k.id AND c.id_kota = ? AND c.is_aktif = ?
                 ORDER BY c.nama ASC";
-        $result = $this->db->query($sql, array($id_kota));
+        $result = $this->db->query($sql, array($id_kota, "1"));
         return $result->result_array();
     }
 
     public function get_allSupplierByIdProvinsi($id_provinsi){
         $sql = "SELECT c.*, k.nama as nama_kota
                 FROM supplier c, kota k
-                WHERE c.id_kota = k.id AND k.id_provinsi = ?
+                WHERE c.id_kota = k.id AND k.id_provinsi = ? AND c.is_aktif=?
                 ORDER BY c.nama ASC";
-        $result = $this->db->query($sql, array($id_provinsi));
+        $result = $this->db->query($sql, array($id_provinsi, "1"));
         return $result->result_array();
     }
 
     public function delete_supplier($id){
-        $sql = "DELETE FROM supplier WHERE id = ?";
-        return $this->db->query($sql, array($id));
+        $sql = "UPDATE supplier SET is_aktif=? WHERE id = ?";
+        return $this->db->query($sql, array("0", $id));
     }
 
 }

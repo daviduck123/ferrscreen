@@ -9,8 +9,8 @@ class Merk_Model extends CI_Model {
     public function insert_merk($nama, $keterangan){
         $this->db->trans_start();
         
-        $sql="INSERT INTO merk (nama, keterangan, created_at) VALUES (?,?,NOW())";
-        $hasil=$this->db->query($sql, array($nama, $keterangan));
+        $sql="INSERT INTO merk (nama, keterangan, is_aktif, created_at) VALUES (?,?,?,NOW())";
+        $hasil=$this->db->query($sql, array($nama, $keterangan, "1"));
         $id = $this->db->insert_id();
 
         $this->db->trans_complete();
@@ -31,21 +31,22 @@ class Merk_Model extends CI_Model {
     public function get_allMerk(){
         $sql = "SELECT m.*
                 FROM merk m
+                WHERE m.is_aktif=?
                 ORDER BY m.nama ASC";
-        $result = $this->db->query($sql);
+        $result = $this->db->query($sql, array("1"));
         return $result->result_array();
     }
 
     public function get_merkById($id){
         $sql = "SELECT m.*
                 FROM merk m
-                WHERE m.id = ?";
-        $result = $this->db->query($sql, array($id));
+                WHERE m.id = ? AND m.is_aktif=?";
+        $result = $this->db->query($sql, array($id, "1"));
         return $result->result_array();
     }
 
     public function delete_merk($id){
-        $sql = "DELETE FROM merk WHERE id = ?";
-        return $this->db->query($sql, array($id));
+        $sql = "UPDATE merk SET is_aktif = ? WHERE id = ?";
+        return $this->db->query($sql, array("0", $id));
     }
 }

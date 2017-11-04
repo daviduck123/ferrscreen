@@ -12,8 +12,8 @@ class Barang_Model extends CI_Model {
     public function insert_barang($nama, $min_stok, $id_merk, $kembars, $kode, $harga, $deskripsi, $is_low, $id_merk2, $kode2, $harga2, $deskripsi2){
         $this->db->trans_start();
 
-    	$sql = "INSERT INTO `barang`(`nama`, `min_stok`, `created_at`) VALUES (?,?,NOW())";
-    	$this->db->query($sql, array($nama, $min_stok));
+    	$sql = "INSERT INTO `barang`(`nama`, `min_stok`, `is_aktif`, `created_at`) VALUES (?,?,?,NOW())";
+    	$this->db->query($sql, array($nama, $min_stok, "1"));
 
     	$sql2 = "SELECT LAST_INSERT_ID() as id";
         $hasil = $this->db->query($sql2);
@@ -80,8 +80,9 @@ class Barang_Model extends CI_Model {
     public function get_allBarang(){
         $sql = "SELECT b.* 
         		FROM barang b
+                WHERE b.is_aktif = ?
         		ORDER BY b.nama ASC";
-        $result = $this->db->query($sql);
+        $result = $this->db->query($sql, array("1"));
         
         $barangs = $result->result_array();
 
@@ -103,11 +104,11 @@ class Barang_Model extends CI_Model {
     public function get_barangByNama($nama){
         $sql = "SELECT b.* 
         		FROM barang b
-        		WHERE b.nama LIKE ?
+        		WHERE b.nama LIKE ? AND b.is_aktif = ?
         		ORDER BY b.nama ASC";
 
        	$like = "%".$nama."%";
-        $result = $this->db->query($sql, array($like));
+        $result = $this->db->query($sql, array($like, "1"));
         
         $barangs = $result->result_array();
 
@@ -154,7 +155,7 @@ class Barang_Model extends CI_Model {
     }
 
     public function delete_barang($id){
-        $sql = "DELETE FROM barang WHERE id = ?";
-        return $this->db->query($sql, array($id));
+        $sql = "UPDATE barang SET is_aktif= ? WHERE id = ?";
+        return $this->db->query($sql, array("0", $id));
     }
 }
