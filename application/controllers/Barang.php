@@ -242,18 +242,16 @@ class Barang extends CI_Controller {
 
 	public function prosesTambahDetailBarang()
 	{
-		$this->load->helper(array('form', 'url'));
-		$this->load->library('form_validation');
+		//$this->load->helper(array('form', 'url'));
+		//$this->load->library('form_validation');
 
 		//isi data diisi array post
 		$isiData = $this->input->post();
-		//print_r($isiData);
-		//exit();
-		$isLow=FALSE;
+		//$isLow=FALSE;
 
 		if($this->input->post('btnTambah'))
 		{
-			
+			/*
 			$this->form_validation->set_rules('pilihSupplier', 'Id Supplier', 'required');
 			$this->form_validation->set_rules('id_barang', 'Id Barang', 'required');
 			$this->form_validation->set_rules('stok', 'Stok', 'required');
@@ -265,8 +263,8 @@ class Barang extends CI_Controller {
 				redirect('barang/');
            	}
            	else
-           	{
-	           		$id_supplier	= $this->input->post('pilihSupplier');
+           	{*/
+	           		$id_supplier	= $this->input->post('id_supplier');
 	           		$id_barang	= $this->input->post('id_barang');
 					$stok	= $this->input->post('stok');
 					$harga	= $this->input->post('harga');
@@ -276,19 +274,24 @@ class Barang extends CI_Controller {
 					
 					if(count($result) > 0)
 					{
-						$this->session->set_flashdata('sukses', 'Berhasil simpan barang');
-						redirect('barang');
+						$data = array('status' => 1, 'deskripsi' => "Berhasil tambah data");
+						echo json_encode($data);
+						//$this->session->set_flashdata('sukses', 'Berhasil simpan barang');
+						//redirect('barang');
 					} 
 					else 
 					{
-						$this->session->set_flashdata('error', 'Gagal simpan barang');
-						redirect('barang');
+						$data = array('status' => 0, 'deskripsi' => "Gagal tambah data");
+						echo json_encode($data);
+						//$this->session->set_flashdata('error', 'Gagal simpan barang');
+						//redirect('barang');
 					}
-         	}
+         	//}
 		}
 		else
 		{
-			echo "jangan lakukan refresh saat pengiriman data";
+			$data = array('status' => 0, 'deskripsi' => "Gunakan hanya website ini");
+			echo json_encode($data);
 		}
 	}
 

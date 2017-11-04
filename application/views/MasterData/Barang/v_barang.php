@@ -179,11 +179,13 @@
             </div>
 
             <div class = "modal-body">
+              <!--
                 <div class="container-fluid">
                   <div class="widget-box">
                     <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
                       <h5>Tambah Stok</h5>
                     </div>
+                    <!--
                     <div class="widget-content nopadding">
                       <?php echo form_open("barang/prosesTambahDetailBarang",  
                         array(
@@ -373,6 +375,8 @@
     }
 
     function processUpdateModal(dataBarang, id){
+
+        var dataSupplier = <?php echo json_encode($dataSupplier) ?>;
         //Buat tampilan untuk Edit
         var html = "<table class='table table-bordered' id='tableUpdate'>";
         html    += "  <thead>"
@@ -383,11 +387,57 @@
         html    += "    </tr>";
         html    += "  </thead>"
         html    += "  <tbody>"
-        //html += "<tr>";
-        //html += "<td><input type='text'/></td>";
-        //html += "<td><input type='number'/></td>";
-        //html += '<td><input type="submit" name="btnTambah" value="Tambah" class="btn btn-success btn-mini"/></td>';
-        //html += "</tr>";
+        html += "<tr>";
+        html += "<td>";
+        html += "<select class='col-xs-3' name='pilihSupplier' id='pilihSupplier'>;";
+
+        for(var x = 0 ; x < dataBarang.length; x++)
+        {
+          if(Number(dataBarang[x]['id']) === Number(id))
+          {
+            console.log(dataSupplier);
+            console.log(dataBarang[x]['id']);
+            console.log(dataBarang[x]);
+
+            if(dataBarang[x]['supplier_barang'].length>0)
+            {
+              for(var j = 0 ; j < dataBarang[x]['supplier_barang'].length; j++)
+              {
+                var check=0;
+                var temp=0;
+                for(var i = 0 ; i < dataSupplier.length; i++)
+                {
+                  if (dataSupplier[i]["id"]==dataBarang[x]['supplier_barang'][j]['id_supplier'])
+                  {
+                  }
+                  else
+                  {
+                    html += "<option  value="+dataSupplier[i]['id']+">"+dataSupplier[i]['nama']+"</option>";
+                  }
+                }
+                if(check==1)
+                {
+                  console.log(temp);
+                  html += "<option  value="+dataSupplier[temp]['id']+">"+dataSupplier[temp]['nama']+"</option>";
+                }
+              }
+            }
+            else
+            {
+              for(var i = 0 ; i < dataSupplier.length; i++)
+                {
+                  html += "<option  value="+dataSupplier[i]['id']+">"+dataSupplier[i]['nama']+"</option>";
+                }
+            }
+          }
+        }
+
+        html +='</select>';
+        html+="</td>";
+        html += "<td><input type='number' id='tambahStok'/></td>";
+
+        html += '<td><button type="submit" onclick="tambahDetail(this.id)" name="btnTambah" id="'+id+'" class="btn btn-success btn-mini">Tambah</button></td>';
+        html += "</tr>";
         for(var i = 0 ; i < dataBarang.length; i++){
           if(Number(dataBarang[i]['id']) === Number(id)){
 
@@ -412,7 +462,7 @@
           "sPaginationType": "full_numbers",
           "sDom": '<""l>t<"F"fp>'
         });
-
+        /*
         var html ='<select class="col-xs-3" name="pilihSupplier" id="pilihSupplier">;'
         <?php 
           if(isset($dataSupplier))
@@ -428,7 +478,47 @@
 
         var html = "<input type='hidden' name='id_barang' value='"+id+"'>";
         $("#divUpdateAddIdBarang").html(html);
+        */
 
+    }
+
+    function tambahDetail(id)
+    {
+      var stok = document.getElementById("tambahStok").value;
+      if(stok!="")
+      {
+        var e = document.getElementById("pilihSupplier");
+        if( $('#pilihSupplier').has('option').length > 0 ) 
+        {
+          var id_supplier = e.options[e.selectedIndex].value;
+
+          var dataPost={
+              "btnTambah": "btnTambah", 
+                    "id_supplier" : id_supplier,
+                    "id_barang": id, 
+                    "stok": stok, 
+                    "harga" : 100
+          };
+          console.log(dataPost);
+          $.ajax({
+            url: "<?php echo base_url(); ?>barang/prosesTambahDetailBarang",
+            type: 'POST',
+            data: dataPost,
+            dataType: 'jsonp',
+            contentType: "application/x-www-form-urlencoded",
+            success: function (response) {
+              alert(response.status);
+            },
+            error: function(xhr, status, error) {
+              alert(xhr.responseText);
+            }
+         });
+        }
+      }
+      else
+      {
+        alert("Mohon isi jumlah stok");
+      }
     }
 </script>
 </body>
