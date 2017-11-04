@@ -128,11 +128,21 @@ T<div id="content">
                   </select>
                 </div>
             </div>
+            <label class="control-label"> </label>
+            <div class="checkbox controls">
+                <?php
+                  if($dataKaryawan[0]['is_aktif']==0)
+                    echo '<label><input type="checkbox" value="is_aktif" name="is_aktif" id="is_aktif">Aktif</label>';
+                  else
+                    echo '<label><input type="checkbox" value="is_aktif" name="is_aktif" id="is_aktif" checked="checked">Aktif</label>';
+                ?>
+            </div>
             </div>
               <div class="form-actions">
                 <input type="submit" name="btnBatal" value="Batal" class="btn btn-info"/>
-                <input type="submit" name="btnTambah" value="Tambah" class="btn btn-success"/>
+                <input type="submit" name="btnUpdate" value="Update" class="btn btn-success"/>
               </div>
+              <input type="hidden" name='id' value="<?php echo $dataKaryawan[0]['id'];?>"/>
             <?php echo form_close();?>
           </div>
         </div>

@@ -127,21 +127,38 @@ class Karyawan extends CI_Controller {
 	{
 		//isi data diisi array post
 		$isiData = $this->input->post();
-		//print_r($isiData);
+/*		print_r($isiData);
+		exit();*/
 		$isLow=FALSE;
 
-		if($this->input->post('btnTambah'))
+		if($this->input->post('btnUpdate'))
 		{
 			$this->form_validation->set_rules('namaKaryawan', 'Nama Karyawan', 'required');
-			$this->form_validation->set_rules('alamatKaryawan', 'Alamat Karyawan', 'required');
-			$this->form_validation->set_rules('pilihKotaKaryawan', 'Kota Karyawan', 'required');
+			//$this->form_validation->set_rules('alamatKaryawan', 'Alamat Karyawan', 'required');
+			//$this->form_validation->set_rules('pilihKotaKaryawan', 'Kota Karyawan', 'required');
 			/*$this->form_validation->set_rules('tglMasuk', 'Tanggal Masuk', 'required');*/
-			$this->form_validation->set_rules('jabatan', 'Jabatan', 'required');
+			//$this->form_validation->set_rules('jabatan', 'Jabatan', 'required');
 			
 			if ($this->form_validation->run() == FALSE)
 			{
+				$id	= $this->input->post('id');
 				$this->session->set_flashdata('error', 'Data tidak lengkap');
-				$this->tambahKaryawan();
+				$dataMenu = array(
+			        'menuAktif' => "masterdata",
+			        'subMenu' => "karyawan"
+				);
+
+				$dataKaryawan = $this->User_Model->get_userById($id);
+				$dataKota = $this->Kota_Model->get_allKota();
+				$dataJabatan = $this->Jabatan_Model->get_allJabatan();
+				$data = array(
+			        'dataKota' => $dataKota,
+			        'dataJabatan' => $dataJabatan,
+			        'dataKaryawan' => $dataKaryawan
+				);
+				$this->load->view('header');
+				$this->load->view('sidebar',$dataMenu);
+				$this->load->view('MasterData/Karyawan/v_editKaryawan',$data);
 				/*redirect('karyawan/tambahKaryawan');*/
            	}
            	else
@@ -157,6 +174,9 @@ class Karyawan extends CI_Controller {
 				$tglMasuk	=  $this->input->post('tglMasuk');
 				$tglKeluar	=  $this->input->post('tglKeluar');
 				$jabatan	= $this->input->post('jabatan');
+				$is_aktif = "0";
+				if($this->input->post('is_aktif')!==null && $this->input->post('is_aktif')=="is_aktif")
+					$is_aktif="1";
 
 				$result = $this->User_Model->update_user($alamatEmailKaryawan, $namaKaryawan, $alamatKaryawan, $teleponKaryawan, $hpKaryawan, $deskripsiKaryawan, $tglMasuk, $tgl_keluar, $is_aktif, $pilihKotaKaryawan, $id, $jabatan);
 				if(count($result) > 0)
@@ -174,7 +194,7 @@ class Karyawan extends CI_Controller {
 		else
 		{
 			echo "jangan lakukan refresh saat pengiriman data";
-			redirect(base_url()."merk", 'refresh');
+			redirect(base_url()."karyawan", 'refresh');
 		}
 	}
 }

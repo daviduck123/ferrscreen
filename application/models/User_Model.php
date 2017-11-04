@@ -25,7 +25,7 @@ class User_Model extends CI_Model {
         return $id;
     }
 
-    public function update_user($email, $nama, $alamat, $telp, $hp, $deskripsi, $tgl_masuk, $tgl_keluar, $is_aktif, $id_kota, $id, $jabatans){
+    public function update_user($email, $nama, $alamat, $telp, $hp, $deskripsi, $tgl_masuk, $tgl_keluar, $is_aktif, $id_kota, $id, $id_jabatan){
         $this->db->trans_start();
 
         $sql = "UPDATE `user`
@@ -33,14 +33,11 @@ class User_Model extends CI_Model {
                 WHERE id = ?";
         $this->db->query($sql, array($email, $nama, $alamat, $telp, $hp, $deskripsi, $tgl_masuk, $tgl_keluar, $is_aktif, $id_kota, $id));
 
-        if(count($jabatans) > 0){
+        if(count($id_jabatan) > 0){
             //Delete yang lama
             $this->UserJabatan_Model->delete_userJabatanByIdUser($id);
-
-            foreach($jabatan as $id_jabatan){
-                //$jabatan = [0,1,2,3,4,5,6,7,8,9,10]
-                $this->UserJabatan_Model->insert_userJabatan($id, $id_jabatan);
-            }
+            
+            $this->UserJabatan_Model->insert_userJabatan($id, $id_jabatan);
         }
 
         $this->db->trans_complete();
