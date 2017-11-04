@@ -101,4 +101,80 @@ class Karyawan extends CI_Controller {
 			redirect(base_url()."merk", 'refresh');
 		}
 	}
+
+	public function editKaryawan($id)
+	{
+		$dataMenu = array(
+	        'menuAktif' => "masterdata",
+	        'subMenu' => "karyawan"
+		);
+
+		$dataKaryawan = $this->User_Model->get_userById($id);
+		$dataKota = $this->Kota_Model->get_allKota();
+		$dataJabatan = $this->Jabatan_Model->get_allJabatan();
+		$data = array(
+	        'dataKota' => $dataKota,
+	        'dataJabatan' => $dataJabatan,
+	        'dataKaryawan' => $dataKaryawan
+		);
+		$this->load->view('header');
+		$this->load->view('sidebar',$dataMenu);
+		$this->load->view('MasterData/Karyawan/v_editKaryawan',$data);
+		//$this->load->view('footer');
+	}
+
+	public function prosesEditKaryawan()
+	{
+		//isi data diisi array post
+		$isiData = $this->input->post();
+		//print_r($isiData);
+		$isLow=FALSE;
+
+		if($this->input->post('btnTambah'))
+		{
+			$this->form_validation->set_rules('namaKaryawan', 'Nama Karyawan', 'required');
+			$this->form_validation->set_rules('alamatKaryawan', 'Alamat Karyawan', 'required');
+			$this->form_validation->set_rules('pilihKotaKaryawan', 'Kota Karyawan', 'required');
+			/*$this->form_validation->set_rules('tglMasuk', 'Tanggal Masuk', 'required');*/
+			$this->form_validation->set_rules('jabatan', 'Jabatan', 'required');
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$this->session->set_flashdata('error', 'Data tidak lengkap');
+				$this->tambahKaryawan();
+				/*redirect('karyawan/tambahKaryawan');*/
+           	}
+           	else
+           	{
+				$id	= $this->input->post('id');
+				$namaKaryawan	= $this->input->post('namaKaryawan');
+				$alamatKaryawan	= $this->input->post('alamatKaryawan');
+				$alamatEmailKaryawan	= $this->input->post('alamatEmailKaryawan');
+				$pilihKotaKaryawan	= $this->input->post('pilihKotaKaryawan');
+				$deskripsiKaryawan	= $this->input->post('deskripsiKaryawan');
+				$teleponKaryawan	= $this->input->post('teleponKaryawan');
+				$hpKaryawan	= $this->input->post('hpKaryawan');
+				$tglMasuk	=  $this->input->post('tglMasuk');
+				$tglKeluar	=  $this->input->post('tglKeluar');
+				$jabatan	= $this->input->post('jabatan');
+
+				$result = $this->User_Model->update_user($alamatEmailKaryawan, $namaKaryawan, $alamatKaryawan, $teleponKaryawan, $hpKaryawan, $deskripsiKaryawan, $tglMasuk, $tgl_keluar, $is_aktif, $pilihKotaKaryawan, $id, $jabatan);
+				if(count($result) > 0)
+				{
+					$this->session->set_flashdata('sukses', 'Berhasil simpan karyawan');
+					redirect('karyawan');
+				} 
+				else 
+				{
+					$this->session->set_flashdata('error', 'Gagal simpan karyawan');
+					redirect('karyawan');
+				}
+         	}
+		}
+		else
+		{
+			echo "jangan lakukan refresh saat pengiriman data";
+			redirect(base_url()."merk", 'refresh');
+		}
+	}
 }
