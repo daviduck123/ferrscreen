@@ -1,4 +1,4 @@
-T<div id="content">
+<div id="content">
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<?php echo base_url();?>dashboard" title="Go to Home" class="tip-bottom">
@@ -95,8 +95,8 @@ T<div id="content">
                   <input type="text" value="<?php echo $dataKaryawan[0]['tgl_masuk'];?>"  data-date-format="dd-mm-yyyy" class="span11" name='tglMasuk' id='tglMasuk'>
                   <span class="add-on"><i class="icon-th"></i></span> </div>
               </div>
-              <label class="control-label">Tanggal Keluar</label>
-              <div class="controls">
+              <label class="control-label tglKel">Tanggal Keluar</label>
+              <div class="controls tglKel">
                 <div  data-date="13-01-2018" class="input-append date datepicker">
                   <input type="text" value="<?php echo $dataKaryawan[0]['tgl_keluar'];?>"  data-date-format="dd-mm-yyyy" class="span11" name='tglKeluar' id='tglKeluar'>
                   <span class="add-on"><i class="icon-th"></i></span> </div>
@@ -165,15 +165,48 @@ T<div id="content">
 <script src="<?php echo asset_url();?>js/matrix.tables.js"></script>
 <script src="<?php echo asset_url();?>js/bootstrap-datepicker.js"></script> 
 <script src="<?php echo asset_url();?>js/bootstrap-colorpicker.js"></script> 
-<script src="<?php echo asset_url();?>js/jquery.toggle.buttons.js"></script> 
 <script src="<?php echo asset_url();?>js/masked.js"></script> 
-<script src="<?php echo asset_url();?>js/matrix.form_common.js"></script> 
 <script src="<?php echo asset_url();?>js/wysihtml5-0.3.0.js"></script> 
 <script src="<?php echo asset_url();?>js/jquery.peity.min.js"></script> 
 <script src="<?php echo asset_url();?>js/bootstrap-wysihtml5.js"></script> 
 <script>
   $('.textarea_editor').wysihtml5();
   
+</script>
+<script>
+  $(document).ready(function(){
+
+      $('#is_aktif').change(function() 
+      {
+        if(this.checked) 
+        {
+          var elements = document.getElementsByClassName('tglKel');
+          for(var i = 0, length = elements.length; i < length; i++) 
+          {
+               elements[i].style.display = 'none';
+          }
+        } 
+        else 
+        {
+          var elements = document.getElementsByClassName('tglKel');
+          for(var i = 0, length = elements.length; i < length; i++) 
+          {
+               elements[i].style.display = 'block';
+          }
+        } 
+      });
+
+  });
+
+//function cekKeluar()
+//{
+  console.log("asd");
+  var elements = document.getElementsByClassName('tglKel');
+  for(var i = 0, length = elements.length; i < length; i++) 
+  {
+     elements[i].style.display = 'none';
+  }
+//}
 </script>
 </body>
 </html>
