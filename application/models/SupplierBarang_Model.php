@@ -29,7 +29,7 @@ class SupplierBarang_Model extends CI_Model {
     	$sql = "UPDATE `supplier_barang` 
     			SET `stok`=?,`harga`=?
     			WHERE id_supplier = ? AND id_barang = ?";
-    	$result=$this->db->query($sql, array($stok, $kode, $harga, $id_supplier, $id_barang));
+    	$result=$this->db->query($sql, array($stok, $harga, $id_supplier, $id_barang));
 
         $this->db->trans_complete();
 

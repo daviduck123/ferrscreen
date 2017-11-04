@@ -247,7 +247,7 @@
       var dataPost={
               "btnUpdate": "btnUpdate", 
               "id_supplier" : id_supplier,
-              "id_barang": id, 
+              "id_barang": id_barang, 
               "stok": stok, 
               "harga" : 0
             };
@@ -268,7 +268,7 @@
               var datax = JSON.parse(data);
               var dataBarang = datax["dataBarang"];
               var dataSupplier = datax["dataSupplier"];
-              processUpdateModal(dataBarang, dataSupplier, id);
+              processUpdateModal(dataBarang, dataSupplier, id_barang);
               $('#tBodyBarang').load('<?php echo base_url();?>/Barang/load_tableBarang');
           },
           error: function(xhr, status, error) {
