@@ -91,7 +91,7 @@ T<div id="content">
               <label class="control-label">Tanggal Masuk</label>
               <div class="controls">
                 <div  data-date="13-01-018" class="input-append date datepicker">
-                  <input type="text" value="15-01-2018"  data-date-format="dd-mm-yyyy" class="span11" name='tglMasuk' id='tglMasuk'>
+                  <input type="text" value=""  data-date-format="dd-mm-yyyy" class="span11" name='tglMasuk' id='tglMasuk'>
                   <span class="add-on"><i class="icon-th"></i></span> </div>
               </div>
               <label class="control-label">Deskripsi</label>

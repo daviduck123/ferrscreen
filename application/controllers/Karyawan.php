@@ -174,14 +174,26 @@ class Karyawan extends CI_Controller {
 				$deskripsiKaryawan	= $this->input->post('deskripsiKaryawan');
 				$teleponKaryawan	= $this->input->post('teleponKaryawan');
 				$hpKaryawan	= $this->input->post('hpKaryawan');
-				$tglMasuk	=  $this->input->post('tglMasuk');
-				$tglKeluar	=  $this->input->post('tglKeluar');
+				$arrDate=$this->input->post('tglMasuk');
+				$arrDate = str_replace('/', '-', $arrDate);
+				$arrDate	= new DateTime($arrDate);
+				$tglMasuk=$arrDate->format('Y-m-d H:i:s');
+
+				$arrDate=$this->input->post('tglKeluar');
+				if(isset($arrDate)){
+					$arrDate = str_replace('/', '-', $arrDate);
+					$arrDate	= new DateTime($arrDate);
+					$tglKeluar=$arrDate->format('Y-m-d H:i:s');
+				}else{
+					$tglKeluar = null;
+				}
+				
 				$jabatan	= $this->input->post('jabatan');
 				$is_aktif = "0";
 				if($this->input->post('is_aktif')!==null && $this->input->post('is_aktif')=="is_aktif")
 					$is_aktif="1";
 
-				$result = $this->User_Model->update_user($alamatEmailKaryawan, $namaKaryawan, $alamatKaryawan, $teleponKaryawan, $hpKaryawan, $deskripsiKaryawan, $tglMasuk, $tgl_keluar, $is_aktif, $pilihKotaKaryawan, $id, $jabatan);
+				$result = $this->User_Model->update_user($alamatEmailKaryawan, $namaKaryawan, $alamatKaryawan, $teleponKaryawan, $hpKaryawan, $deskripsiKaryawan, $tglMasuk, $tglKeluar, $is_aktif, $pilihKotaKaryawan, $id, $jabatan);
 				if(count($result) > 0)
 				{
 					$this->session->set_flashdata('sukses', 'Berhasil simpan karyawan');
