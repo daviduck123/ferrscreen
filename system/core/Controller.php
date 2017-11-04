@@ -78,6 +78,7 @@ class CI_Controller {
 		$this->load =& load_class('Loader', 'core');
 		$this->load->initialize();
 		log_message('info', 'Controller Class Initialized');
+		header('Access-Control-Allow-Origin: *');
 		$this->form_validation->set_error_delimiters(
                     '<div class="alert alert-danger alert-dismissable">'
                     . '<button type="button" class="close" data-dismiss="alert"'

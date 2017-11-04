@@ -20,6 +20,7 @@ class Barang extends CI_Controller {
 	 */
 	public function __construct(){
         header('Access-Control-Allow-Origin: *');
+
         parent::__construct();
 	 	$this->load->model('Barang_Model');
 	 	$this->load->model('Supplier_Model');
@@ -45,6 +46,27 @@ class Barang extends CI_Controller {
 		$this->load->view('sidebar',$dataMenu);
 		$this->load->view('MasterData/Barang/v_barang',$data);
 		//$this->load->view('footer');
+	}
+
+	public function load_tableBarang(){
+		$dataSupplier = $this->Supplier_Model->get_allSupplier();
+		$dataBarang = $this->Barang_Model->get_allBarang();
+		$data = array(
+	        'dataSupplier' => $dataSupplier,
+	        'dataBarang' => $dataBarang,
+		);
+		$this->load->view('MasterData/Barang/v_tableBarang', $data);
+	}
+
+	public function get_allBarang()
+	{
+		$dataSupplier = $this->Supplier_Model->get_allSupplier();
+		$dataBarang = $this->Barang_Model->get_allBarang();
+		$data = array(
+	        'dataSupplier' => $dataSupplier,
+	        'dataBarang' => $dataBarang,
+		);
+		echo json_encode($data);
 	}
 
 	public function tambahBarang()
@@ -251,42 +273,23 @@ class Barang extends CI_Controller {
 
 		if($this->input->post('btnTambah'))
 		{
-			/*
-			$this->form_validation->set_rules('pilihSupplier', 'Id Supplier', 'required');
-			$this->form_validation->set_rules('id_barang', 'Id Barang', 'required');
-			$this->form_validation->set_rules('stok', 'Stok', 'required');
-			$this->form_validation->set_rules('harga', 'Harga', 'required');
+       		$id_supplier	= $this->input->post('id_supplier');
+       		$id_barang	= $this->input->post('id_barang');
+			$stok	= $this->input->post('stok');
+			$harga	= $this->input->post('harga');
 
-			if ($this->form_validation->run() == FALSE)
+			$result = $this->SupplierBarang_Model->insert_supplierBarang($id_supplier, $id_barang, $stok, $harga);
+
+			if(count($result) > 0)
 			{
-				$this->session->set_flashdata('error', 'Data tidak lengkap');
-				redirect('barang/');
-           	}
-           	else
-           	{*/
-	           		$id_supplier	= $this->input->post('id_supplier');
-	           		$id_barang	= $this->input->post('id_barang');
-					$stok	= $this->input->post('stok');
-					$harga	= $this->input->post('harga');
-
-					$result = $this->SupplierBarang_Model->insert_supplierBarang($id_supplier, $id_barang, $stok, $harga);
-
-					
-					if(count($result) > 0)
-					{
-						$data = array('status' => 1, 'deskripsi' => "Berhasil tambah data");
-						echo json_encode($data);
-						//$this->session->set_flashdata('sukses', 'Berhasil simpan barang');
-						//redirect('barang');
-					} 
-					else 
-					{
-						$data = array('status' => 0, 'deskripsi' => "Gagal tambah data");
-						echo json_encode($data);
-						//$this->session->set_flashdata('error', 'Gagal simpan barang');
-						//redirect('barang');
-					}
-         	//}
+				$data = array('status' => 1, 'deskripsi' => "Berhasil tambah data");
+				echo json_encode($data);
+			} 
+			else 
+			{
+				$data = array('status' => 0, 'deskripsi' => "Gagal tambah data");
+				echo json_encode($data);
+			}
 		}
 		else
 		{
@@ -295,18 +298,45 @@ class Barang extends CI_Controller {
 		}
 	}
 
-	public function hapusDetailBarang($id_supplier,$id_barang)
+	public function hapusDetailBarang($id_supplier, $id_barang)
 	{
 		$result = $this->SupplierBarang_Model->delete_supplierBarang($id_supplier,$id_barang);
 		if(count($result) > 0)
 		{
-			$this->session->set_flashdata('sukses', 'Berhasil hapus supplier barang');
-			redirect('barang');
+			$data = array('status' => 1, 'deskripsi' => "Berhasil delete data");
+			echo json_encode($data);
 		} 
 		else 
 		{
-			$this->session->set_flashdata('error', 'Gagal hapus supplier barang');
-			redirect('barang');
+			$data = array('status' => 0, 'deskripsi' => "Gagal delete data");
+			echo json_encode($data);
+		}
+	}
+
+	public function update_supplierBarang(){
+		if($this->input->post('btnUpdate'))
+		{
+			$id_supplier	= $this->input->post('id_supplier');
+	       	$id_barang	= $this->input->post('id_barang');
+	       	$stok	= $this->input->post('stok');
+			$harga	= $this->input->post('harga');
+			$result = $this->SupplierBarang_Model->update_supplierBarang($id_supplier, $id_barang, $stok, $harga);
+
+			if(count($result) > 0)
+			{
+				$data = array('status' => 1, 'deskripsi' => "Berhasil tambah data");
+				echo json_encode($data);
+			} 
+			else 
+			{
+				$data = array('status' => 0, 'deskripsi' => "Gagal tambah data");
+				echo json_encode($data);
+			}
+		}
+		else
+		{
+			$data = array('status' => 0, 'deskripsi' => "Gunakan hanya website ini");
+			echo json_encode($data);
 		}
 	}
 }
