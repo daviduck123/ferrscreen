@@ -78,6 +78,13 @@ class CI_Controller {
 		$this->load =& load_class('Loader', 'core');
 		$this->load->initialize();
 		log_message('info', 'Controller Class Initialized');
+		$this->form_validation->set_error_delimiters(
+                    '<div class="alert alert-danger alert-dismissable">'
+                    . '<button type="button" class="close" data-dismiss="alert"'
+                    . ' area-hidden="true">x</button>', '</div>');
+		$this->form_validation->set_message('required', '%s harus di isi');
+		$this->form_validation->set_message('is_unique', '%s sudah terdaftar, silahkan pilih yang lain');
+		$this->form_validation->set_message('min_length', '%s harus lebih besar dari %s kata/angka');
 	}
 
 	// --------------------------------------------------------------------
