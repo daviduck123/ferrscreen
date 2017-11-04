@@ -9,7 +9,7 @@
         Master Data
       </a>
       <a href="<?php echo base_url();?>general" class="">
-        Barang
+        General
       </a>
     </div>
     <h1>General</h1>
@@ -37,7 +37,7 @@
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>Edit Barang</h5>
+            <h5>Update General</h5>
           </div>
           <div class="widget-content nopadding">
             <?php 
