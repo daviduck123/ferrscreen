@@ -60,7 +60,7 @@ class Karyawan extends CI_Controller {
 			$this->form_validation->set_rules('namaKaryawan', 'Nama Karyawan', 'required');
 			$this->form_validation->set_rules('alamatKaryawan', 'Alamat Karyawan', 'required');
 			$this->form_validation->set_rules('pilihKotaKaryawan', 'Kota Karyawan', 'required');
-			/*$this->form_validation->set_rules('tglMasuk', 'Tanggal Masuk', 'required');*/
+			$this->form_validation->set_rules('tglMasuk', 'Tanggal Masuk', 'required');
 			$this->form_validation->set_rules('jabatan', 'Jabatan', 'required');
 			
 			if ($this->form_validation->run() == FALSE)
@@ -78,7 +78,11 @@ class Karyawan extends CI_Controller {
 				$deskripsiKaryawan	= $this->input->post('deskripsiKaryawan');
 				$teleponKaryawan	= $this->input->post('teleponKaryawan');
 				$hpKaryawan	= $this->input->post('hpKaryawan');
-				$tglMasuk	= date();
+				$arrDate=$this->input->post('tglMasuk');
+				$arrDate = str_replace('/', '-', $arrDate);
+				$arrDate	= new DateTime($arrDate);
+				$tglMasuk=$arrDate->format('Y-m-d H:i:s');
+				//$arrDate = date('Y-m-d H:i:s', strtotime($arrDate));
 				$jabatan	= $this->input->post('jabatan');
 
 				$result = $this->User_Model->insert_user($alamatEmailKaryawan, $namaKaryawan, $alamatKaryawan, $teleponKaryawan, $hpKaryawan, $deskripsiKaryawan, $tglMasuk, null, $pilihKotaKaryawan, $jabatan);

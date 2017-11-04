@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="<?php echo asset_url();?>css/bootstrap.min.css" />
 <link rel="stylesheet" href="<?php echo asset_url();?>css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="<?php echo asset_url();?>css/datepicker.css" />
 <link rel="stylesheet" href="<?php echo asset_url();?>css/uniform.css" />
 <link rel="stylesheet" href="<?php echo asset_url();?>css/select2.css" />
 <link rel="stylesheet" href="<?php echo asset_url();?>css/fullcalendar.css" />

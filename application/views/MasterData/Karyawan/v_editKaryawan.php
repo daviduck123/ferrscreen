@@ -91,17 +91,15 @@ T<div id="content">
               </div>
               <label class="control-label">Tanggal Masuk</label>
               <div class="controls">
-                <div class="input-append date datepicker">
-                  <input type="text" data-date-format="mm-dd-yyyy" class="" nama='tglMasuk' id='tglMasuk'>
-                  <span class="add-on"><i class="icon-th"></i></span> 
-                </div>
+                <div  data-date="13-01-2018" class="input-append date datepicker">
+                  <input type="text" value="15-01-2018"  data-date-format="dd-mm-yyyy" class="span11" name='tglMasuk' id='tglMasuk'>
+                  <span class="add-on"><i class="icon-th"></i></span> </div>
               </div>
               <label class="control-label">Tanggal Keluar</label>
               <div class="controls">
-                <div class="input-append date datepicker">
-                  <input type="text" data-date-format="mm-dd-yyyy" class="" nama='tglKeluar' id='tglKeluar'>
-                  <span class="add-on"><i class="icon-th"></i></span>
-                </div>
+                <div  data-date="13-01-2018" class="input-append date datepicker">
+                  <input type="text" value="15-01-2018"  data-date-format="dd-mm-yyyy" class="span11" name='tglKeluar' id='tglKeluar'>
+                  <span class="add-on"><i class="icon-th"></i></span> </div>
               </div>
               <label class="control-label">Deskripsi</label>
               <div class="controls">
@@ -156,6 +154,7 @@ T<div id="content">
   <div id="footer" class="span12"> 2017 &copy; Ferrscreen Admin</div>
 </div>
 <!--end-Footer-part-->
+<!--end-Footer-part-->
 <script src="<?php echo asset_url();?>js/jquery.min.js"></script> 
 <script src="<?php echo asset_url();?>js/jquery.ui.custom.js"></script> 
 <script src="<?php echo asset_url();?>js/bootstrap.min.js"></script> 
@@ -164,5 +163,17 @@ T<div id="content">
 <script src="<?php echo asset_url();?>js/jquery.dataTables.min.js"></script> 
 <script src="<?php echo asset_url();?>js/matrix.js"></script> 
 <script src="<?php echo asset_url();?>js/matrix.tables.js"></script>
+<script src="<?php echo asset_url();?>js/bootstrap-datepicker.js"></script> 
+<script src="<?php echo asset_url();?>js/bootstrap-colorpicker.js"></script> 
+<script src="<?php echo asset_url();?>js/jquery.toggle.buttons.js"></script> 
+<script src="<?php echo asset_url();?>js/masked.js"></script> 
+<script src="<?php echo asset_url();?>js/matrix.form_common.js"></script> 
+<script src="<?php echo asset_url();?>js/wysihtml5-0.3.0.js"></script> 
+<script src="<?php echo asset_url();?>js/jquery.peity.min.js"></script> 
+<script src="<?php echo asset_url();?>js/bootstrap-wysihtml5.js"></script> 
+<script>
+  $('.textarea_editor').wysihtml5();
+  
+</script>
 </body>
 </html>
