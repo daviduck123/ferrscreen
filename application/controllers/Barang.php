@@ -281,7 +281,12 @@ class Barang extends CI_Controller {
 			$stok	= $this->input->post('stok');
 			$harga	= $this->input->post('harga');
 
-			$result = $this->SupplierBarang_Model->insert_supplierBarang($id_supplier, $id_barang, $stok, $harga);
+			$foundData = $this->SupplierBarang_Model->check_supplierBarangByIdSupplierAndIdBarang($id_supplier, $id_barang);
+			if($foundData == true){
+				$result = $this->SupplierBarang_Model->update_supplierBarang($id_supplier, $id_barang, $stok, $harga);
+			}else{
+				$result = $this->SupplierBarang_Model->insert_supplierBarang($id_supplier, $id_barang, $stok, $harga);
+			}
 
 			if(count($result) > 0)
 			{
@@ -301,19 +306,31 @@ class Barang extends CI_Controller {
 		}
 	}
 
-	public function hapusDetailBarang($id_supplier, $id_barang)
+	public function hapus_supplierBarang()
 	{
-		$result = $this->SupplierBarang_Model->delete_supplierBarang($id_supplier,$id_barang);
-		if(count($result) > 0)
+		if($this->input->post('btnDelete'))
 		{
-			$data = array('status' => 1, 'deskripsi' => "Berhasil delete data");
-			echo json_encode($data);
-		} 
-		else 
-		{
-			$data = array('status' => 0, 'deskripsi' => "Gagal delete data");
-			echo json_encode($data);
+			$id_supplier	= $this->input->post('id_supplier');
+	       	$id_barang	= $this->input->post('id_barang');
+
+			$result = $this->SupplierBarang_Model->delete_supplierBarang($id_supplier,$id_barang);
+
+			if(count($result) > 0)
+			{
+				$data = array('status' => 1, 'deskripsi' => "Berhasil delete data");
+				echo json_encode($data);
+			} 
+			else 
+			{
+				$data = array('status' => 0, 'deskripsi' => "Gagal delete data");
+				echo json_encode($data);
+			}
 		}
+		else
+		{
+			$data = array('status' => 0, 'deskripsi' => "Gunakan hanya website ini");
+			echo json_encode($data);
+		}	
 	}
 
 	public function update_supplierBarang(){

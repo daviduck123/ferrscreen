@@ -175,7 +175,7 @@
               html += "<td><input type='text' value='"+  supplier_barang[j]['nama_supplier']  +"' disabled/></td>";
               html += "<td><input type='number' value='"+  supplier_barang[j]['stok']  +"' id='stok-"+supplier_barang[j]['id_supplier']+"-"+id+"'/></td>";
               html += '<td><a class="btn btn-warning btn-mini" onclick="editDetailBarang('+supplier_barang[j]['id_supplier']+','+id+')" name="btnEdit">Update</a> ';
-              html += '<a class="btn btn-danger btn-mini" href="<?php echo base_url(); ?>barang/hapusDetailBarang/'+supplier_barang[j]['id_supplier']+'/'+id+'" name="btnHapus">Hapus</a></td>';
+              html += '<a class="btn btn-danger btn-mini" onclick="deleteDetailBarang('+supplier_barang[j]['id_supplier']+','+id+')" name="btnHapus">Hapus</a></td>';
               html += "</tr>";
             }
           }
@@ -276,4 +276,38 @@
           }
        });
     }
+
+    function deleteDetailBarang(id_supplier, id_barang){
+      var stok = $("#stok-"+id_supplier+"-"+id_barang).val();
+      var dataPost={
+              "btnDelete": "btnDelete", 
+              "id_supplier" : id_supplier,
+              "id_barang": id_barang
+            };
+      $.ajax({
+        url: "<?php echo base_url(); ?>barang/hapus_supplierBarang",
+        type: 'POST',
+        data: dataPost,
+        dataType: 'jsonp',
+        contentType: "application/x-www-form-urlencoded",
+        async: false,
+      }).done(function(data){
+      });
+
+       $.ajax({
+          url: "<?php echo base_url(); ?>Barang/get_allBarang",
+          type: 'GET',
+          success: function (data) {
+              var datax = JSON.parse(data);
+              var dataBarang = datax["dataBarang"];
+              var dataSupplier = datax["dataSupplier"];
+              processUpdateModal(dataBarang, dataSupplier, id_barang);
+              $('#tBodyBarang').load('<?php echo base_url();?>/Barang/load_tableBarang');
+          },
+          error: function(xhr, status, error) {
+            alert(xhr.responseText);
+          }
+       });
+    }
+
 </script>

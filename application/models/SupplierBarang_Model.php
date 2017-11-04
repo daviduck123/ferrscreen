@@ -27,9 +27,9 @@ class SupplierBarang_Model extends CI_Model {
         $this->db->trans_start();
 
     	$sql = "UPDATE `supplier_barang` 
-    			SET `stok`=?,`harga`=?
+    			SET `stok`=?,`harga`=?, `is_aktif` = ?
     			WHERE id_supplier = ? AND id_barang = ?";
-    	$result=$this->db->query($sql, array($stok, $harga, $id_supplier, $id_barang));
+    	$result=$this->db->query($sql, array($stok, $harga, "1", $id_supplier, $id_barang));
 
         $this->db->trans_complete();
 
@@ -96,5 +96,16 @@ class SupplierBarang_Model extends CI_Model {
         WHERE sb.id_barang = ? AND sb.id_supplier = s.id AND sb.is_aktif = ?";
         $hasil = $this->db->query($sql, array($id_barang, "1"));
         return $hasil->result_array();
+    }
+
+    public function check_supplierBarangByIdSupplierAndIdBarang($id_supplier, $id_barang){
+        $sql = "SELECT sb.*
+        FROM supplier_barang sb
+        WHERE sb.id_barang = ? AND sb.id_supplier = ?";
+        $hasil = $this->db->query($sql, array($id_supplier, $id_barang));
+        if(count($hasil) > 0)
+            return true;
+        else
+            return false;
     }
 }
