@@ -128,8 +128,8 @@
             </div>
             <label class="control-label"> </label>
             <div class="checkbox controls">
-                <?php
-                  if($dataKaryawan[0]['is_aktif']==0)
+                <?php 
+                  if($dataKaryawan[0]['is_aktif'] == "0")
                     echo '<label><input type="checkbox" value="is_aktif" name="is_aktif" id="is_aktif">Aktif</label>';
                   else
                     echo '<label><input type="checkbox" value="is_aktif" name="is_aktif" id="is_aktif" checked="checked">Aktif</label>';
@@ -195,18 +195,8 @@
           }
         } 
       });
-
+      $("#is_aktif").change();
   });
-
-//function cekKeluar()
-//{
-  console.log("asd");
-  var elements = document.getElementsByClassName('tglKel');
-  for(var i = 0, length = elements.length; i < length; i++) 
-  {
-     elements[i].style.display = 'none';
-  }
-//}
 </script>
 </body>
 </html>

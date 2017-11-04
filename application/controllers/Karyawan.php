@@ -100,8 +100,8 @@ class Karyawan extends CI_Controller {
 		}
 		else
 		{
-			echo "jangan lakukan refresh saat pengiriman data";
-			redirect(base_url()."merk", 'refresh');
+			/*echo "jangan lakukan refresh saat pengiriman data";*/
+			redirect("karyawan", 'refresh');
 		}
 	}
 
@@ -208,7 +208,7 @@ class Karyawan extends CI_Controller {
 		}
 		else
 		{
-			echo "jangan lakukan refresh saat pengiriman data";
+			/*echo "jangan lakukan refresh saat pengiriman data";*/
 			redirect(base_url()."karyawan", 'refresh');
 		}
 	}
