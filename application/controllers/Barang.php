@@ -26,6 +26,7 @@ class Barang extends CI_Controller {
 	 	$this->load->model('Supplier_Model');
 	 	$this->load->model('SupplierBarang_Model');
 	 	$this->load->model('Merk_Model');
+	 	$this->load->model('Type_Model');
     }
 
 	public function index()
@@ -75,11 +76,15 @@ class Barang extends CI_Controller {
 	        'menuAktif' => "masterdata",
 	        'subMenu' => "barang"
 		);
+
 		$dataBarang = $this->Barang_Model->get_allBarang();
 		$dataMerk = $this->Merk_Model->get_allMerk();
+		$dataType = $this->Type_Model->get_allType();
+
 		$data = array(
 	        'dataBarang' => $dataBarang,
-	        'dataMerk' => $dataMerk
+	        'dataMerk' => $dataMerk,
+	        'dataType' => $dataType
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);

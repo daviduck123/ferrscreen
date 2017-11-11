@@ -67,23 +67,15 @@
               <div class="controls">
                 <input type="number" name="minStok" id="minStok">
               </div>
-              <label class="control-label">Barang Sama</label>
+              <label class="control-label"> </label>
               <div class="controls">
-                <select multiple="multiple" name="similarBarang[]">
-                  <?php 
-                    foreach ($dataBarang as $barang) 
-                    {
-                      echo "<option value='".$barang[id]."'>".$barang[nama]."</option>";
-                    }
-                  ?>
-                  </select>
+                <button class="btn btn-success btn-mini" data-backdrop="static" data-toggle="modal" data-keyboard="false" data-target="#kembarModal"
+                data-id=""
+                data-title="Barang Sama"
+                onclick="modalKembar()"
+                id="btnKembarModal">Barang Sama
+                </button>
               </div>
-              <!--<label class="control-label"> </label>
-              <div class="controls">
-                <div class="buttons"> 
-                  <a id="add-event" data-toggle="modal" href="#modalSimilar" class="btn btn-inverse btn-mini"><i class="icon-plus icon-white"></i> Similar</a>
-                </div>
-              </div>-->
               <label class="control-label">Pilih Merk Barang</label>
               <div class="controls">
                 <select style class="form-control col-xs-3" name="pilihMerkBarang" id="pilihMerkBarang">
@@ -111,6 +103,11 @@
                 <label><input type="checkbox" value="low" name="checkLow" id="checkLow">Low?</label>
               </div>
               <div id="tempatLow"></div>
+              <label class="control-label"> </label>
+              <div class="checkbox controls">
+                <label><input type="checkbox" value="premium" name="checkPremium" id="checkPremium">Premium?</label>
+              </div>
+              <div id="tempatPremium"></div>
             </div>
               <div class="form-actions">
                 <input type="submit" name="btnBatal" value="Batal" class="btn btn-info"/>
@@ -124,36 +121,37 @@
   </div>
 </div>
 
-<!-- Modal Tambah Similar-->
-<div class="modal hide" id="modalSimilar">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h3>Tambah Similar Merk</h3>
-    </div>
-    <div class="modal-body">
-        <div class="control-group">
-              <label class="control-label">Pilih Merk</label>
-              <div class="controls">
-                <select multiple="multiple" name="similarBarang[]">
-                  <?php 
-                  if(isset($dataBarang))
-                  {
-                    foreach ($dataBarang as $barang) 
-                    {
-                      echo "<option value='".$barang["id"]."'>".$barang["nama"]."</option>";
-                    }
-                  }
-                  ?>
-                  </select>
-              </div>
+<!--modal Kembar data-->
+<div class="modal fade"  id="kembarModal" style="width:50%; left:30%; " role="dialog" aria-labelledby="Barang Kembar" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Tambah Barang Kembar</h4>
+            </div>
+
+            <div class = "modal-body">
+                <div class="container-fluid">
+                  <div class="widget-box">
+                    <div class="widget-title"> 
+                      <span class="icon"><i class="icon-th"></i></span>
+                      <span class="icon"><b>Masukkan Barang Kembar</b></span>
+                    </div>
+                    <div id="divBarangKembar"></div>
+                  </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-github" data-dismiss="modal">Kembali</button>
+                <!--<button class="btn btn-success" name="btn_submit">Update</button>-->
+            </div>
         </div>
+        <!-- /.modal-content -->
     </div>
-    <div class="modal-footer"> 
-      <a href="#" class="btn" data-dismiss="modal">Tutup</a>
-    </div>
-  </div>
+    <!-- /.modal-dialog -->
 </div>
-<!-- Tutup Modal Similar -->
+<!-- /.modal-->
 
 <!--Footer-part-->
 <div class="row-fluid">
@@ -210,9 +208,46 @@
         } 
       });
 
+      $('#checkPremium').change(function() 
+      {
+        if(this.checked) 
+        {
+          var valKode = "L"+document.getElementById("kodeBarang").value
+          var html='<label class="control-label">Kode</label>'+
+                 '<div class="controls">'+
+                    '<input type="text" name="kodeBarangPremium" id="kodeBarangPremium" value="'+valKode+'" disabled>'+
+                  '</div>'+
+                  '<label class="control-label">Pilih Merk Barang</label>'+
+                  '<div class="controls">'+
+                    '<select style class="form-control col-xs-3" name="pilihMerkBarangPremium" id="pilihMerkBarangPremium">'+
+                    <?php 
+                    if(isset($dataMerk))
+                    {
+                      foreach ($dataMerk as $merk) 
+                      {
+                        echo "'<option value=".'"'.$merk["id"].'"'.">".$merk["nama"]."</option>'+";
+                      }
+                    }
+                    ?>
+                    '</select>'+
+                  '</div>'+
+                  '<label class="control-label">Harga Premium</label>'+
+                  '<div class="controls">'+
+                    '<input type="number" name="hargaPremium" id="hargaPremium">'+
+                  '</div>'+
+                  '<label class="control-label">Deskripsi Barang</label>'+
+                  '<div class="controls">'+
+                    '<textarea rows="4" cols="50" name="deskripsiPremium"></textarea>'+
+                  '</div>';
+          $("#tempatPremium").html(html);
+        } 
+        else 
+        {
+          $("#tempatPremium").html("");
+        } 
+      });
+
   });
-
-
 
     function onchangeKode(kode)
     {
@@ -225,8 +260,113 @@
       {
         document.getElementById("kodeBarangLow").value = "L"+kode;
       }
+
+      var elementPremium = document.getElementById('kodeBarangPremium');
+      if (elementPremium === null)
+      {
+        
+      }
+      else
+      {
+        document.getElementById("kodeBarangPremium").value = "L"+kode;
+      }
     }
 
+    function modalKembar()
+    {
+        var title = $("#btnKembarModal").data('title');
+        var id = $("#btnKembarModal").data('id');
+      
+        //document.getElementById("id").innerHTML = id;
+
+        var dataBarang = <?php echo json_encode($dataBarang) ?>;
+        var dataType = <?php echo json_encode($dataType) ?>;
+
+        console.log(id);
+        console.log(title);
+        console.log(dataBarang);
+        console.log(dataType);
+
+        //For Opening Modal
+        //processDetailModal(dataBarang, id);
+        processBarangSama(dataBarang, dataType);
+
+        $(".modal-body #id").val(id);
+        $(".modal-title").text(title);
+    }
+
+    function processBarangSama(dataBarang, dataType){
+      var id=0;
+      /*
+        var dataBarangUsed = null;
+        for(var i = 0 ; i < dataBarang.length; i++){
+          if(Number(dataBarang[i]['id']) === Number(id)){
+            dataBarangUsed = dataBarang[i];
+          }
+        }
+
+        var dataSupplierBarang = dataBarangUsed["supplier_barang"];
+        var options = "";
+        for(var i = 0 ; i < dataSupplier.length; i++){
+          var foundSupplier = false;
+          for(var j = 0 ; j < dataSupplierBarang.length; j++){
+            if(dataSupplierBarang[j]['id_supplier'] == dataSupplier[i]['id']){
+              foundSupplier = true;
+            }
+          }
+          if(foundSupplier === false){
+            options += "<option  value="+dataSupplier[i]['id']+">"+dataSupplier[i]['nama']+"</option>";
+          }
+        }
+        */
+        //Buat tampilan untuk Edit
+        var html = "<table class='table table-bordered' id='tableBarangSama'>";
+        html    += "  <thead>"
+        html    += "    <tr>";
+        html    += "      <th>Type</th>";
+        html    += "      <th>Barang</th>";
+        html    += "      <th></th>";
+        html    += "    </tr>";
+        html    += "  </thead>"
+        html    += "  <tbody>"
+        html += "<tr>";
+        html += "<td>";
+        html += "<select class='col-xs-3' name='pilihBarangSama' id='pilihBarangSama'>;";
+        html += "options";
+        html +='</select>';
+        html+="</td>";
+        html += "<td><input type='number' id='tambahStok'/></td>";
+
+        html += '<td><button type="submit" onclick="tambahDetail(this.id)" name="btnTambah" id="'+id+'" class="btn btn-success btn-mini">Tambah</button></td>';
+        html += "</tr>";
+        /*
+        for(var i = 0 ; i < dataType.length; i++){
+          if(Number(dataType[i]['id']) === Number(id)){
+
+            var supplier_barang = dataType[i]['supplier_barang'];
+            for(var j = 0 ; j < supplier_barang.length; j++){
+              html += "<tr>";
+              html += "<td><input type='text' value='"+  supplier_barang[j]['nama_supplier']  +"' disabled/></td>";
+              html += "<td><input type='number' value='"+  supplier_barang[j]['stok']  +"' id='stok-"+supplier_barang[j]['id_supplier']+"-"+id+"'/></td>";
+              html += '<td><a class="btn btn-warning btn-mini" onclick="editDetailBarang('+supplier_barang[j]['id_supplier']+','+id+')" name="btnEdit">Update</a> ';
+              html += '<a class="btn btn-danger btn-mini" onclick="deleteDetailBarang('+supplier_barang[j]['id_supplier']+','+id+')" name="btnHapus">Hapus</a></td>';
+              html += "</tr>";
+            }
+          }
+        }
+        */
+        html    += "  </tbody>"
+        html    += "</table>"
+
+        $("#divBarangKembar").html(html);
+        /*
+        $('#tableUpdate').dataTable({
+          "bJQueryUI": true,
+          "sPaginationType": "full_numbers",
+          "sDom": '<""l>t<"F"fp>'
+        });
+        */
+    }
 </script>
 </body>
 </html>
