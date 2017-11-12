@@ -163,7 +163,7 @@
         html += options;
         html +='</select>';
         html+="</td>";
-        html += "<td><input type='number' id='tambahStok'/></td>";
+        html += "<td><input type='number' id='tambahSupplier'/></td>";
         html += "<td><input type='number' id='tambahStok'/></td>";
         html += '<td><button type="submit" onclick="tambahDetail(this.id)" name="btnTambah" id="'+id+'" class="btn btn-success btn-mini">Tambah</button></td>';
         html += "</tr>";
