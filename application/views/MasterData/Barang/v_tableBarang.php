@@ -151,6 +151,7 @@
         html    += "  <thead>"
         html    += "    <tr>";
         html    += "      <th>Supplier</th>";
+        html    += "      <th>Type</th>";
         html    += "      <th>Stok</th>";
         html    += "      <th></th>";
         html    += "    </tr>";
@@ -163,7 +164,7 @@
         html +='</select>';
         html+="</td>";
         html += "<td><input type='number' id='tambahStok'/></td>";
-
+        html += "<td><input type='number' id='tambahStok'/></td>";
         html += '<td><button type="submit" onclick="tambahDetail(this.id)" name="btnTambah" id="'+id+'" class="btn btn-success btn-mini">Tambah</button></td>';
         html += "</tr>";
         for(var i = 0 ; i < dataBarang.length; i++){
@@ -171,8 +172,8 @@
 
             var supplier_barang = dataBarang[i]['supplier_barang'];
             for(var j = 0 ; j < supplier_barang.length; j++){
-              html += "<tr>";
-              html += "<td><input type='text' value='"+  supplier_barang[j]['nama_supplier']  +"' disabled/></td>";
+              html += "<tr>";              html += "<td><input type='text' value='"+  supplier_barang[j]['nama_supplier']  +"' disabled/></td>";
+              html += "<td><p>"+ supplier_barang[j]['nama_supplier']+"</p></td>";
               html += "<td><input type='number' value='"+  supplier_barang[j]['stok']  +"' id='stok-"+supplier_barang[j]['id_supplier']+"-"+id+"'/></td>";
               html += '<td><a class="btn btn-warning btn-mini" onclick="editDetailBarang('+supplier_barang[j]['id_supplier']+','+id+')" name="btnEdit">Update</a> ';
               html += '<a class="btn btn-danger btn-mini" onclick="deleteDetailBarang('+supplier_barang[j]['id_supplier']+','+id+')" name="btnHapus">Hapus</a></td>';
