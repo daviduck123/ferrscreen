@@ -58,9 +58,9 @@
               <div class="controls">
                 <input type="text" name="namaType" id="namaType">
               </div>
-              <label class="control-label">Keterangan</label>
+              <label class="control-label">Deskripsi</label>
               <div class="controls">
-                <textarea rows="4" cols="50" name="keterangan"></textarea>
+                <textarea rows="4" cols="50" name="deskripsi"></textarea>
               </div>
             </div>
               <div class="form-actions">

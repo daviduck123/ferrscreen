@@ -58,9 +58,9 @@
               <div class="controls">
                 <input type="text" name="namaType" id="namaType" value ="<?php echo $dataType[0]["nama"] ?>">
               </div>
-              <label class="control-label">Keterangan</label>
+              <label class="control-label">Deskripsi</label>
               <div class="controls">
-                <textarea rows="4" cols="50" name="keterangan"><?php echo $dataType[0]["keterangan"] ?></textarea>
+                <textarea rows="4" cols="50" name="deskripsi"><?php echo $dataType[0]["deskripsi"] ?></textarea>
               </div>
             </div>
               <div class="form-actions">

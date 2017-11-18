@@ -57,7 +57,7 @@
                 <tr>
                   <th>Nomor</th>
                   <th>List Type</th>
-                  <th>Keterangan</th>
+                  <th>Deskripsi</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -71,7 +71,7 @@
                       echo ' <tr class="gradeX">
                                 <td>'.$number.'</td>
                                 <td>'.$type["nama"].'</td>
-                                <td>'.$type["keterangan"].'</td>
+                                <td>'.$type["deskripsi"].'</td>
                                 <td class="center">
                                     <a href="'.base_url().'type/editType/'.$type["id"].'" class="btn btn-warning btn-mini" role="button">Edit</a>
                                     <a href="#deleteData'.$type["id"].'" data-toggle="modal" class="btn btn-danger btn-mini" role="button">Hapus</a>

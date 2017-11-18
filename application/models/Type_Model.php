@@ -43,4 +43,9 @@ class Type_Model extends CI_Model {
         $result = $this->db->query($sql, array($id));
         return $result->result_array();
     }
+
+    public function delete_type($id){
+        $sql = "DELETE FROM type WHERE id = ?";
+        return $this->db->query($sql, array($id));
+    }
 }
