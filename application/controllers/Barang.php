@@ -107,6 +107,7 @@ class Barang extends CI_Controller {
 		$isiData = $this->input->post();
 		//print_r($isiData);
 		$isLow=FALSE;
+		$isPremium=FALSE;
 
 		if($this->input->post('btnTambah'))
 		{
@@ -147,8 +148,9 @@ class Barang extends CI_Controller {
 				$hargaLow	= $this->input->post('hargaLow');
 				$deskripsiLow	= $this->input->post('deskripsiLow');
 
+
 				if($this->input->post('checkPremium')!==null && $this->input->post('checkPremium')=="premium")
-					$isLow=TRUE;
+					$isPremium=TRUE;
 
 				$kodeBarangPremium	= "P".$kodeBarang;
 				$pilihMerkBarangPremium	= $this->input->post('pilihMerkBarangPremium');
@@ -190,11 +192,13 @@ class Barang extends CI_Controller {
 		$barangSelected =$this->Barang_Model->get_barangById($id);
 		$dataBarang = $this->Barang_Model->get_allBarang();
 		$dataMerk = $this->Merk_Model->get_allMerk();
+		$dataType = $this->Type_Model->get_allType();
 		$data = array(
 			'idBarang' => $id,
 	        'dataBarang' => $dataBarang,
 	        'dataMerk' => $dataMerk,
-	        'barangSelected'=>$barangSelected
+	        'barangSelected'=>$barangSelected,
+	        'dataType' => $dataType
 		);
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
@@ -253,7 +257,7 @@ class Barang extends CI_Controller {
 				$deskripsiLow	= $this->input->post('deskripsiLow');
 
 				if($this->input->post('checkPremium')!==null && $this->input->post('checkPremium')=="premium")
-					$isLow=TRUE;
+					$isPremium=TRUE;
 
 				$kodeBarangPremium	= "P".$kodeBarang;
 				$pilihMerkBarangPremium	= $this->input->post('pilihMerkBarangPremium');
@@ -265,7 +269,6 @@ class Barang extends CI_Controller {
 
 				if(count($result) > 0)
 				{
-
 					$this->session->set_flashdata('sukses', 'Berhasil edit barang');
 					redirect('barang');
 				} 

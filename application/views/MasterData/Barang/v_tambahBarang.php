@@ -112,8 +112,8 @@
                 <label><input type="checkbox" value="premium" name="checkPremium" id="checkPremium">Premium?</label>
               </div>
               <div id="tempatPremium"></div>
-              <input type="hidden" value="" id="types" />
-              <input type="hidden" value="" id="similarBarang" />
+              <input type="hidden" value="" id="types" name="types"/>
+              <input type="hidden" value="" id="similarBarang" name="similarBarang"/>
             </div>
               <div class="form-actions">
                 <input type="submit" name="btnBatal" value="Batal" class="btn btn-info"/>
@@ -218,7 +218,7 @@
       {
         if(this.checked) 
         {
-          var valKode = "L"+document.getElementById("kodeBarang").value
+          var valKode = "P"+document.getElementById("kodeBarang").value
           var html='<label class="control-label">Kode</label>'+
                  '<div class="controls">'+
                     '<input type="text" name="kodeBarangPremium" id="kodeBarangPremium" value="'+valKode+'" disabled>'+
@@ -274,7 +274,7 @@
       }
       else
       {
-        document.getElementById("kodeBarangPremium").value = "L"+kode;
+        document.getElementById("kodeBarangPremium").value = "P"+kode;
       }
     }
 
@@ -283,18 +283,10 @@
         var title = $("#btnKembarModal").data('title');
         var id = $("#btnKembarModal").data('id');
       
-        //document.getElementById("id").innerHTML = id;
 
         var dataBarang = <?php echo json_encode($dataBarang) ?>;
         var dataType = <?php echo json_encode($dataType) ?>;
 
-        console.log(id);
-        console.log(title);
-        console.log(dataBarang);
-        console.log(dataType);
-
-        //For Opening Modal
-        //processDetailModal(dataBarang, id);
         processBarangSama(dataBarang, dataType);
 
         $(".modal-body #id").val(id);
@@ -316,8 +308,16 @@
         var dataKembar = "";
         for(var i = 0 ; i < kembars.length; i++){
           dataKembar += '<tr>';
-          dataKembar += '<td><input type="text" value="'+types[i]['nama']+'" disabled></td>';
-          dataKembar += '<td><input type="text" value="'+kembars[i]['nama']+'" disabled></td>';
+
+          for(var j = 0 ; j < dataType.length; j++){
+            if(dataType[j]['id']==types[i])
+              dataKembar += '<td><input type="text" value="'+dataType[j]['nama']+'" disabled></td>';
+          }
+
+          for(var j = 0 ; j < dataBarang.length; j++){
+            if(dataBarang[j]['id']==kembars[i])
+            dataKembar += '<td><input type="text" value="'+dataBarang[j]['nama']+'" disabled></td>';
+          }
           dataKembar += '<td><button onclick="prosesHapusKembar(this.id)" name="btnHapus" id="'+i+'" class="btn btn-danger btn-mini">hapus</button></td>';
           dataKembar += '</tr>';
         }
@@ -375,9 +375,6 @@
         */
     }
     function prosesTambahKembar(){
-      var dataBarang = <?php echo json_encode($dataBarang) ?>;
-      var dataType = <?php echo json_encode($dataType) ?>;
-
       var e = document.getElementById("pilihTypeSama");
       var f = document.getElementById("pilihBarangSama");
       if($('#pilihTypeSama').has('option').length > 0 && $('#pilihBarangSama').has('option').length > 0) 
@@ -385,30 +382,20 @@
         var id_type = e.options[e.selectedIndex].value;
         var id_barang = f.options[f.selectedIndex].value;
 
-        for(var i = 0 ; i < dataBarang.length; i++){
-          if(Number(dataBarang[i]["id"])==Number(id_barang))
-            id_barang=i;
-        }
-
-        for(var i = 0 ; i < dataType.length; i++){
-          if(Number(dataType[i]["id"])==Number(id_type))
-            id_type=i;
-        }
-
         //check apakah sudah pernah dimasukkan
         var check=false;
         for(var i = 0 ; i < kembars.length; i++){
-          if(kembars[i]['id']==dataBarang[id_barang]['id'] && types[i]['id']==dataType[id_type]['id'] )
+          if(kembars[i]==id_barang && types[i]==id_type)
             check=true;
         }
 
         if(check==false)
         {
-          kembars.push(dataBarang[id_barang]);
-          types.push(dataType[id_type]);
+          kembars.push(id_barang);
+          types.push(id_type);
 
-        document.getElementById("types").value=JSON.stringify(types);
-        document.getElementById("similarBarang").value=JSON.stringify(kembars);
+        document.getElementById("types").value=types;
+        document.getElementById("similarBarang").value=kembars;
         
         }
 
@@ -420,8 +407,8 @@
       kembars.splice(id, 1);
       types.splice(id, 1);
 
-      document.getElementById("types").value=JSON.stringify(types);
-      document.getElementById("similarBarang").value=JSON.stringify(kembars);
+      document.getElementById("types").value=types;
+      document.getElementById("similarBarang").value=kembars;
 
       modalKembar();
     }
