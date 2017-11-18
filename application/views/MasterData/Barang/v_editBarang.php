@@ -1,17 +1,4 @@
 <div id="content">
-  <script type="text/javascript">
-    var kembars=[];
-    var types=[];
-
-    var barangSelected = <?php echo json_encode($barangSelected) ?>;
-
-    for(var i = 0 ; i < barangSelected[0]['barang_kembar'].length; i++){
-
-      kembars.push(barangSelected[0]['barang_kembar'][i]['id_barangKembar']);
-      types.push(barangSelected[0]['barang_kembar'][i]['id_type']);
-    }
-
-  </script>
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<?php echo base_url();?>dashboard" title="Go to Home" class="tip-bottom">
@@ -67,7 +54,7 @@
             ); 
             ?>
            <?php
-           //print_r($dataMerk);
+           //print_r($barangSelected[0]["detail_barang"]);
            //exit();
               $isLow=false;
               $isPremium=false;
@@ -227,7 +214,12 @@
               </div>
               <label class="control-label"> </label>
               <div class="checkbox controls">
-                <label><input type="checkbox" value="premium" name="checkPremium" id="checkPremium">Premium?</label>
+                <?php
+                  if($isPremium==false)
+                    echo '<label><input type="checkbox" value="premium" name="checkPremium" id="checkPremium">Premium?</label>';
+                  else
+                    echo '<label><input type="checkbox" value="premium" name="checkPremium" id="checkPremium" checked="checked">Premium?</label>';
+                ?>
               </div>
               <div id="tempatPremium">
                 <?php
@@ -277,6 +269,8 @@
                   echo $html;
                 }
                 ?>
+              </div>
+              <div id='hidden'>
               </div>
               <input type="hidden" value="" id="types" name="types"/>
               <input type="hidden" value="" id="similarBarang" name="similarBarang"/>
@@ -339,12 +333,24 @@
 <script src="<?php echo asset_url();?>js/matrix.js"></script> 
 <script src="<?php echo asset_url();?>js/matrix.tables.js"></script>
 <script>
-  $(document).ready(function(){
-    document.getElementById("types").value=types;
-    document.getElementById("similarBarang").value=kembars;
+  var kembars=[];
+    var types=[];
 
-      $('#checkLow').change(function() 
-      {
+    var barangSelected = <?php echo json_encode($barangSelected) ?>;
+    for(var i = 0 ; i < barangSelected[0]['barang_kembar'].length; i++){
+
+      var id_barang = barangSelected[0]['barang_kembar'][i]['id_barangKembar'];
+      var id_type = barangSelected[0]['barang_kembar'][i]['id_type'];
+      kembars.push(id_barang);
+      types.push(id_type);
+      
+      var text="";
+      text += '<input type="hidden" value="'+ id_type +'" id="types-'+ id_type +'" name="types[]"/>';
+      text += '<input type="hidden" value="'+ id_barang +'" id="similarBarang-'+ id_barang +'" name="similarBarang[]"/>';
+      $("#hidden").append(text);
+    }
+  $(document).ready(function(){
+    $('#checkLow').change(function() {
         if(this.checked) 
         {
           var valKode = "L"+document.getElementById("kodeBarang").value
@@ -555,9 +561,10 @@
         {
           kembars.push(id_barang);
           types.push(id_type);
-
-        document.getElementById("types").value=types;
-        document.getElementById("similarBarang").value=kembars;
+          var text="";
+          text += '<input type="hidden" value="'+ id_type +'" id="types-'+ id_type +'" name="types[]"/>';
+          text += '<input type="hidden" value="'+ id_barang +'" id="similarBarang-'+ id_barang +'" name="similarBarang[]"/>';
+          $("#hidden").append(text);
         
         }
 
@@ -566,11 +573,11 @@
     }
 
     function prosesHapusKembar(id){
-      kembars.splice(id, 1);
-      types.splice(id, 1);
+       var id_barang = kembars.splice(id, 1);
+      var id_type = types.splice(id, 1);
 
-      document.getElementById("types").value=types;
-      document.getElementById("similarBarang").value=kembars;
+      $("#types-"+id_type).remove();
+      $("#similarBarang-"+id_barang).remove();
 
       modalKembar();
     }

@@ -157,7 +157,6 @@ class Barang extends CI_Controller {
 				$hargaPremium	= $this->input->post('hargaPremium');
 				$deskripsiPremium	= $this->input->post('deskripsiPremium');
 
-
 				$result = $this->Barang_Model->insert_barang($namaBarang, $minStok, $pilihMerkBarang, $types, $similarBarang, $kodeBarang, $hargaNormal, $deskripsiNormal, $isLow, $pilihMerkBarangLow, $kodeBarangLow, $hargaLow, $deskripsiLow, $isPremium, $pilihMerkBarangPremium, $kodeBarangPremium, $hargaPremium, $deskripsiPremium);
 
 

@@ -112,8 +112,8 @@
                 <label><input type="checkbox" value="premium" name="checkPremium" id="checkPremium">Premium?</label>
               </div>
               <div id="tempatPremium"></div>
-              <input type="hidden" value="" id="types" name="types"/>
-              <input type="hidden" value="" id="similarBarang" name="similarBarang"/>
+              <div id='hidden'>
+              </div>
             </div>
               <div class="form-actions">
                 <input type="submit" name="btnBatal" value="Batal" class="btn btn-info"/>
@@ -393,22 +393,28 @@
         {
           kembars.push(id_barang);
           types.push(id_type);
+          var text="";
+          text += '<input type="hidden" value="'+ id_type +'" id="types-'+ id_type +'" name="types[]"/>';
+          text += '<input type="hidden" value="'+ id_barang +'" id="similarBarang-'+ id_barang +'" name="similarBarang[]"/>';
+          $("#hidden").append(text);
+          
 
-        document.getElementById("types").value=types;
-        document.getElementById("similarBarang").value=kembars;
+        /*document.getElementById("types").value=types;
+        document.getElementById("similarBarang").value=kembars;*/
         
         }
-
         modalKembar();
       }
     }
 
     function prosesHapusKembar(id){
-      kembars.splice(id, 1);
-      types.splice(id, 1);
+      var id_barang = kembars.splice(id, 1);
+      var id_type = types.splice(id, 1);
 
-      document.getElementById("types").value=types;
-      document.getElementById("similarBarang").value=kembars;
+      $("#types-"+id_type).remove();
+      $("#similarBarang-"+id_barang).remove();
+      /*document.getElementById("types").value=types;
+      document.getElementById("similarBarang").value=kembars;*/
 
       modalKembar();
     }
