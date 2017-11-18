@@ -79,13 +79,15 @@
 
         var dataBarang = <?php echo json_encode($dataBarang) ?>;
         var dataSupplier = <?php echo json_encode($dataSupplier) ?>;
+        var dataType = <?php echo json_encode($dataType) ?>;
 
         console.log(dataBarang);
         console.log(dataSupplier);
+        console.log(dataType);
 
         //For Opening Modal
         processDetailModal(dataBarang, id);
-        processUpdateModal(dataBarang, dataSupplier, id);
+        processUpdateModal(dataBarang, dataSupplier, dataType, id);
 
         $(".modal-body #id").val(id);
         $(".modal-title").text(title);
@@ -96,6 +98,7 @@
         html    += "  <thead>"
         html    += "    <tr>";
         html    += "      <th>Supplier</th>";
+        html    += "      <th>Type</th>";
         html    += "      <th>Stok</th>";
         html    += "    </tr>";
         html    += "  </thead>"
@@ -107,6 +110,7 @@
             for(var j = 0 ; j < supplier_barang.length; j++){
               html += "<tr>";
               html += "<td>"+ supplier_barang[j]['nama_supplier'] +"</td>";
+              html += "<td>"+ supplier_barang[j]['nama_type'] +"</td>";
               html += "<td>"+ supplier_barang[j]['stok'] +"</td>";
               html += "</tr>";
             }
@@ -124,7 +128,7 @@
         });
     }
 
-    function processUpdateModal(dataBarang, dataSupplier, id){
+    function processUpdateModal(dataBarang, dataSupplier, dataType, id){
         var dataBarangUsed = null;
         for(var i = 0 ; i < dataBarang.length; i++){
           if(Number(dataBarang[i]['id']) === Number(id)){
@@ -134,17 +138,48 @@
 
         var dataSupplierBarang = dataBarangUsed["supplier_barang"];
         var options = "";
+        var options2 = "";
+        var indexFirstSup = -1;
+        var first = false;
         for(var i = 0 ; i < dataSupplier.length; i++){
           var foundSupplier = false;
-          for(var j = 0 ; j < dataSupplierBarang.length; j++){
-            if(dataSupplierBarang[j]['id_supplier'] == dataSupplier[i]['id']){
-              foundSupplier = true;
-            }
+          var ctrTypeFound = 0;
+          for(var k = 0 ; k < dataType.length; k++){
+             for(var j = 0 ; j < dataSupplierBarang.length; j++){
+               if(dataSupplierBarang[j]['id_supplier'] == dataSupplier[i]['id']
+                  && dataSupplierBarang[j]['id_type'] === dataType[k]['id']){
+                  ctrTypeFound++;
+                }
+             }
           }
-          if(foundSupplier === false){
-            options += "<option  value="+dataSupplier[i]['id']+">"+dataSupplier[i]['nama']+"</option>";
+          /*for(var j = 0 ; j < dataSupplierBarang.length; j++){
+            if(dataSupplierBarang[j]['id_supplier'] == dataSupplier[i]['id']){
+              foundSupplier = false;
+              indexFound = j;
+            }
+          }*/
+          if(ctrTypeFound !== dataType.length){
+            options += "<option  value="+dataSupplier[i]['id']+">"+dataSupplier[i]['nama']+"</option>"; 
+            if(indexFirstSup === -1)
+              indexFirstSup = i;
           }
         }
+        if(indexFirstSup >= 0){
+          var supFirst = dataSupplier[indexFirstSup];
+          for(var k = 0 ; k < dataType.length; k++){
+            var foundType = false;
+            for(var j = 0 ; j < dataSupplierBarang.length; j++){
+              if(dataSupplierBarang[j]['id_supplier'] == dataSupplier[indexFirstSup]['id']
+                && dataSupplierBarang[j]['id_type'] === dataType[k]['id']){
+                foundType = true;
+              }
+            }
+            if(!foundType){
+              options2 += "<option  value="+dataType[k]['id']+">"+dataType[k]['nama']+"</option>";
+            }
+          }
+        }
+       
 
         //Buat tampilan untuk Edit
         var html = "<table class='table table-bordered' id='tableUpdate'>";
@@ -163,7 +198,11 @@
         html += options;
         html +='</select>';
         html+="</td>";
-        html += "<td><input type='number' id='tambahSupplier'/></td>";
+        html += "<td>";
+        html += "<select class='col-xs-3' name='pilihType' id='pilihType'>;";
+        html += options2;
+        html +='</select>';
+        html+="</td>";
         html += "<td><input type='number' id='tambahStok'/></td>";
         html += '<td><button type="submit" onclick="tambahDetail(this.id)" name="btnTambah" id="'+id+'" class="btn btn-success btn-mini">Tambah</button></td>';
         html += "</tr>";
@@ -172,11 +211,12 @@
 
             var supplier_barang = dataBarang[i]['supplier_barang'];
             for(var j = 0 ; j < supplier_barang.length; j++){
-              html += "<tr>";              html += "<td><input type='text' value='"+  supplier_barang[j]['nama_supplier']  +"' disabled/></td>";
-              html += "<td><p>"+ supplier_barang[j]['nama_supplier']+"</p></td>";
-              html += "<td><input type='number' value='"+  supplier_barang[j]['stok']  +"' id='stok-"+supplier_barang[j]['id_supplier']+"-"+id+"'/></td>";
-              html += '<td><a class="btn btn-warning btn-mini" onclick="editDetailBarang('+supplier_barang[j]['id_supplier']+','+id+')" name="btnEdit">Update</a> ';
-              html += '<a class="btn btn-danger btn-mini" onclick="deleteDetailBarang('+supplier_barang[j]['id_supplier']+','+id+')" name="btnHapus">Hapus</a></td>';
+              html += "<tr>";              
+              html += "<td><input type='text' value='"+  supplier_barang[j]['nama_supplier']  +"' disabled/></td>";
+               html += "<td><input type='text' value='"+  supplier_barang[j]['nama_type']  +"' disabled/></td>";
+              html += "<td><input type='number' value='"+  supplier_barang[j]['stok']  +"' id='stok-"+supplier_barang[j]['id_supplier']+"-"+id+"-"+supplier_barang[j]['id_type'] +"'/></td>";
+              html += '<td><a class="btn btn-warning btn-mini" onclick="editDetailBarang('+supplier_barang[j]['id_supplier']+','+id+','+supplier_barang[j]['id_type']+')" name="btnEdit">Update</a> ';
+              html += '<a class="btn btn-danger btn-mini" onclick="deleteDetailBarang('+supplier_barang[j]['id_supplier']+','+id+','+supplier_barang[j]['id_type']+')" name="btnHapus">Hapus</a></td>';
               html += "</tr>";
             }
           }
@@ -192,6 +232,10 @@
           "sDom": '<""l>t<"F"fp>'
         });
 
+        $("#pilihSupplier").on('change', function(e) {
+          alert(this.value );
+        });
+
     }
 
     function tambahDetail(id)
@@ -200,16 +244,19 @@
       if(stok!="")
       {
         var e = document.getElementById("pilihSupplier");
-        if( $('#pilihSupplier').has('option').length > 0 ) 
+        var f = document.getElementById("pilihType");
+        if($('#pilihSupplier').has('option').length > 0 && $('#pilihType').has('option').length > 0) 
         {
           var id_supplier = e.options[e.selectedIndex].value;
+          var id_type = f.options[f.selectedIndex].value;
 
           var dataPost={
               "btnTambah": "btnTambah", 
-                    "id_supplier" : id_supplier,
-                    "id_barang": id, 
-                    "stok": stok, 
-                    "harga" : 100
+              "id_supplier" : id_supplier,
+              "id_type" : id_type,
+              "id_barang": id, 
+              "stok": stok, 
+              "harga" : 100
           };
           $.ajax({
             url: "<?php echo base_url(); ?>barang/prosesTambahDetailBarang",
@@ -228,7 +275,8 @@
                   var datax = JSON.parse(data);
                   var dataBarang = datax["dataBarang"];
                   var dataSupplier = datax["dataSupplier"];
-                  processUpdateModal(dataBarang, dataSupplier, id);
+                  var dataType = datax["dataType"];
+                  processUpdateModal(dataBarang, dataSupplier, dataType, id);
                   $('#tBodyBarang').load('<?php echo base_url();?>/Barang/load_tableBarang');
               },
               error: function(xhr, status, error) {
@@ -243,11 +291,12 @@
       }
     }
 
-    function editDetailBarang(id_supplier, id_barang){
-      var stok = $("#stok-"+id_supplier+"-"+id_barang).val();
+    function editDetailBarang(id_supplier, id_barang, id_type){
+      var stok = $("#stok-"+id_supplier+"-"+id_barang+"-"+id_type).val();
       var dataPost={
               "btnUpdate": "btnUpdate", 
               "id_supplier" : id_supplier,
+              "id_type" : id_type,
               "id_barang": id_barang, 
               "stok": stok, 
               "harga" : 0
@@ -269,7 +318,8 @@
               var datax = JSON.parse(data);
               var dataBarang = datax["dataBarang"];
               var dataSupplier = datax["dataSupplier"];
-              processUpdateModal(dataBarang, dataSupplier, id_barang);
+              var dataType = datax["dataType"];
+              processUpdateModal(dataBarang, dataSupplier,dataType, id_barang);
               $('#tBodyBarang').load('<?php echo base_url();?>/Barang/load_tableBarang');
           },
           error: function(xhr, status, error) {
@@ -278,11 +328,12 @@
        });
     }
 
-    function deleteDetailBarang(id_supplier, id_barang){
-      var stok = $("#stok-"+id_supplier+"-"+id_barang).val();
+    function deleteDetailBarang(id_supplier, id_barang, id_type){
+      var stok = $("#stok-"+id_supplier+"-"+id_barang+"-"+id_type).val();
       var dataPost={
               "btnDelete": "btnDelete", 
               "id_supplier" : id_supplier,
+              "id_type" : id_type,
               "id_barang": id_barang
             };
       $.ajax({
@@ -302,7 +353,8 @@
               var datax = JSON.parse(data);
               var dataBarang = datax["dataBarang"];
               var dataSupplier = datax["dataSupplier"];
-              processUpdateModal(dataBarang, dataSupplier, id_barang);
+              var dataType = datax["dataType"];
+              processUpdateModal(dataBarang, dataSupplier, dataType, id_barang);
               $('#tBodyBarang').load('<?php echo base_url();?>/Barang/load_tableBarang');
           },
           error: function(xhr, status, error) {

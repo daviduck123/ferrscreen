@@ -37,10 +37,12 @@ class Barang extends CI_Controller {
 		);
 
 		$dataSupplier = $this->Supplier_Model->get_allSupplier();
+		$dataType = $this->Type_Model->get_allType();
 		$dataBarang = $this->Barang_Model->get_allBarang();
 		$data = array(
 	        'dataSupplier' => $dataSupplier,
 	        'dataBarang' => $dataBarang,
+	        'dataType' => $dataType
 		);
 
 		$this->load->view('header');
@@ -51,10 +53,12 @@ class Barang extends CI_Controller {
 
 	public function load_tableBarang(){
 		$dataSupplier = $this->Supplier_Model->get_allSupplier();
+		$dataType = $this->Type_Model->get_allType();
 		$dataBarang = $this->Barang_Model->get_allBarang();
 		$data = array(
 	        'dataSupplier' => $dataSupplier,
 	        'dataBarang' => $dataBarang,
+	        'dataType' => $dataType
 		);
 		$this->load->view('MasterData/Barang/v_tableBarang', $data);
 	}
@@ -62,10 +66,12 @@ class Barang extends CI_Controller {
 	public function get_allBarang()
 	{
 		$dataSupplier = $this->Supplier_Model->get_allSupplier();
+		$dataType = $this->Type_Model->get_allType();
 		$dataBarang = $this->Barang_Model->get_allBarang();
 		$data = array(
 	        'dataSupplier' => $dataSupplier,
 	        'dataBarang' => $dataBarang,
+	        'dataType' => $dataType
 		);
 		echo json_encode($data);
 	}
@@ -308,7 +314,8 @@ class Barang extends CI_Controller {
 			$stok	= $this->input->post('stok');
 			$harga	= $this->input->post('harga');
 
-			$foundData = $this->SupplierBarang_Model->check_supplierBarangByIdSupplierAndIdBarang($id_supplier, $id_barang, $id_type);
+			$foundData = $this->SupplierBarang_Model->check_supplierBarangByIdSupplierAndIdBarangAndIdType($id_supplier, $id_barang, $id_type);
+
 			if($foundData == true){
 				$result = $this->SupplierBarang_Model->update_supplierBarang($id_supplier, $id_barang, $id_type, $stok, $harga);
 			}else{

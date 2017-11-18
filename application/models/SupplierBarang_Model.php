@@ -91,9 +91,12 @@ class SupplierBarang_Model extends CI_Model {
     }
 
     public function get_allSupplierBarangByIdBarang($id_barang){
-        $sql = "SELECT sb.*, s.nama as nama_supplier 
-        FROM supplier_barang sb, supplier s
-        WHERE sb.id_barang = ? AND sb.id_supplier = s.id AND sb.is_aktif = ?";
+            $sql = "SELECT sb.*, s.nama as nama_supplier, t.nama as nama_type 
+                    FROM supplier_barang sb, supplier s, type t
+                    WHERE sb.id_barang = ? 
+                        AND sb.id_supplier = s.id 
+                        AND sb.id_type = t.id 
+                        AND sb.is_aktif = ?";
         $hasil = $this->db->query($sql, array($id_barang, "1"));
         return $hasil->result_array();
     }
@@ -101,9 +104,10 @@ class SupplierBarang_Model extends CI_Model {
     public function check_supplierBarangByIdSupplierAndIdBarangAndIdType($id_supplier, $id_barang, $id_type){
         $sql = "SELECT sb.*
         FROM supplier_barang sb
-        WHERE sb.id_barang = ? AND sb.id_supplier = ?";
+        WHERE sb.id_barang = ? AND sb.id_supplier = ? AND sb.id_type = ?";
         $hasil = $this->db->query($sql, array($id_supplier, $id_barang, $id_type));
-        if(count($hasil) > 0)
+        $result = $hasil->result_array();
+        if(count($result) > 0)
             return true;
         else
             return false;
