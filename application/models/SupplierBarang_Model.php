@@ -6,11 +6,11 @@ class SupplierBarang_Model extends CI_Model {
         $this->load->database();
     }
 
-    public function insert_supplierBarang($id_supplier, $id_barang, $stok, $harga){
+    public function insert_supplierBarang($id_supplier, $id_barang, $id_type, $stok, $harga){
         $this->db->trans_start();
 
-    	$sql = "INSERT INTO `supplier_barang`(`id_supplier`, `id_barang`, `stok`, `harga`, `is_aktif`, `created_at`) VALUES (?,?,?,?,?,NOW())";
-    	$result=$this->db->query($sql, array($id_supplier, $id_barang, $stok, $harga, "1"));
+    	$sql = "INSERT INTO `supplier_barang`(`id_supplier`, `id_barang`, `id_type`, `stok`, `harga`, `is_aktif`, `created_at`) VALUES (?,?,?,?,?,?,NOW())";
+    	$result=$this->db->query($sql, array($id_supplier, $id_barang, $id_type, $stok, $harga, "1"));
 
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE)
@@ -23,13 +23,13 @@ class SupplierBarang_Model extends CI_Model {
         }
     }
 
-    public function update_supplierBarang($id_supplier, $id_barang, $stok, $harga){
+    public function update_supplierBarang($id_supplier, $id_barang, $id_type, $stok, $harga){
         $this->db->trans_start();
 
     	$sql = "UPDATE `supplier_barang` 
     			SET `stok`=?,`harga`=?, `is_aktif` = ?
-    			WHERE id_supplier = ? AND id_barang = ?";
-    	$result=$this->db->query($sql, array($stok, $harga, "1", $id_supplier, $id_barang));
+    			WHERE id_supplier = ? AND id_barang = ? AND id_type = ?";
+    	$result=$this->db->query($sql, array($stok, $harga, "1", $id_supplier, $id_barang, $id_type));
 
         $this->db->trans_complete();
 
@@ -43,13 +43,13 @@ class SupplierBarang_Model extends CI_Model {
         }
     }
 
-    public function delete_supplierBarang($id_supplier, $id_barang){
+    public function delete_supplierBarang($id_supplier, $id_barang, $id_type){
         $this->db->trans_start();
 
         $sql = "UPDATE supplier_barang 
                 SET is_aktif = ?
-                WHERE id_supplier = ? AND id_barang = ?";
-        $result=$this->db->query($sql, array("0", $id_supplier, $id_barang));
+                WHERE id_supplier = ? AND id_barang = ? AND id_type = ?";
+        $result=$this->db->query($sql, array("0", $id_supplier, $id_barang, $id_type));
 
         $this->db->trans_complete();
 
@@ -98,11 +98,11 @@ class SupplierBarang_Model extends CI_Model {
         return $hasil->result_array();
     }
 
-    public function check_supplierBarangByIdSupplierAndIdBarang($id_supplier, $id_barang){
+    public function check_supplierBarangByIdSupplierAndIdBarangAndIdType($id_supplier, $id_barang, $id_type){
         $sql = "SELECT sb.*
         FROM supplier_barang sb
         WHERE sb.id_barang = ? AND sb.id_supplier = ?";
-        $hasil = $this->db->query($sql, array($id_supplier, $id_barang));
+        $hasil = $this->db->query($sql, array($id_supplier, $id_barang, $id_type));
         if(count($hasil) > 0)
             return true;
         else

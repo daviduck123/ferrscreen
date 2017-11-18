@@ -9,7 +9,7 @@ class Barang_Model extends CI_Model {
         $this->load->model("SupplierBarang_Model");
     }
 
-    public function insert_barang($nama, $min_stok, $id_merk, $types, $kembars, $kode, $harga, $deskripsi, $is_low, $id_merk2, $kode2, $harga2, $deskripsi2){
+    public function insert_barang($nama, $min_stok, $id_merk, $types, $kembars, $kode, $harga, $deskripsi, $is_low, $id_merk2, $kode2, $harga2, $deskripsi2, $is_premium, $id_merk3, $kode3, $harga3, $deskripsi3){
         $this->db->trans_start();
 
     	$sql = "INSERT INTO `barang`(`nama`, `min_stok`, `is_aktif`, `created_at`) VALUES (?,?,?,NOW())";
@@ -27,17 +27,22 @@ class Barang_Model extends CI_Model {
         	}
         }
 
-        //Type N = Normal, L = Low
+        //Type N = Normal, L = Low, P = Premium
         $this->DetailBarang_Model->insert_detailBarang($id, $id_merk, "N", $kode, $harga, $deskripsi);
         if($is_low == TRUE){
-        	$this->DetailBarang_Model->insert_detailBarang($id, $id_merk2, "L", $kode2, $harga2, $deskripsi2);
+            $this->DetailBarang_Model->insert_detailBarang($id, $id_merk2, "L", $kode2, $harga2, $deskripsi2);
         }
+        if($is_premium == TRUE){
+            $this->DetailBarang_Model->insert_detailBarang($id, $id_merk3, "P", $kode3, $harga3, $deskripsi3);
+        }
+
+
 
         $this->db->trans_complete();
         return $id;
     }
 
-    public function update_barang($id, $nama, $min_stok, $id_merk, $types, $kembars, $kode, $harga, $deskripsi, $is_low, $id_merk2, $kode2, $harga2, $deskripsi2){
+    public function update_barang($id, $nama, $min_stok, $id_merk, $types, $kembars, $kode, $harga, $deskripsi, $is_low, $id_merk2, $kode2, $harga2, $deskripsi2, $is_premium, $id_merk3, $kode3, $harga3, $deskripsi3){
         $this->db->trans_start();
 
     	$sql = "UPDATE `barang` 
@@ -53,7 +58,7 @@ class Barang_Model extends CI_Model {
                 $this->BarangKembar_Model->insert_barangKembar($id, $types[$i], $kembars[$i]);
             }
         }
-		//Type N = Normal, L = Low
+		//Type N = Normal, L = Low, P == Premium
     	$this->DetailBarang_Model->update_detailBarang($id, $id_merk, "N", $kode, $harga, $deskripsi);
     	if($is_low == TRUE){
             //Need to check if it exist
@@ -64,12 +69,30 @@ class Barang_Model extends CI_Model {
                 //Insert if only found 1 data Details
                 $this->DetailBarang_Model->insert_detailBarang($id, $id_merk2, "L", $kode2, $harga2, $deskripsi2);
             }
-    	}else{
+        }else{
              //Need to check if it exist
             $details = $this->DetailBarang_Model->get_allDetailBarangByIdBarang($id);
             if(count($details) > 1){
                 //delete if low not checked and Found more than 1 data
                 $this->DetailBarang_Model->delete_detailBarangByType($id, "L");
+            }
+        }
+
+        if($is_premium == TRUE){
+            //Need to check if it exist
+            $details = $this->DetailBarang_Model->get_allDetailBarangByIdBarang($id);
+            if(count($details) > 1){
+                $this->DetailBarang_Model->update_detailBarang($id, $id_merk3, "P", $kode3, $harga3, $deskripsi3);
+            }else{
+                //Insert if only found 1 data Details
+                $this->DetailBarang_Model->insert_detailBarang($id, $id_merk3, "P", $kode3, $harga3, $deskripsi3);
+            }
+        }else{
+             //Need to check if it exist
+            $details = $this->DetailBarang_Model->get_allDetailBarangByIdBarang($id);
+            if(count($details) > 1){
+                //delete if premium not checked and Found more than 1 data
+                $this->DetailBarang_Model->delete_detailBarangByType($id, "P");
             }
         }
 

@@ -126,6 +126,7 @@ class Barang extends CI_Controller {
            		$kodeBarang	= $this->input->post('kodeBarang');
 				$namaBarang	= $this->input->post('namaBarang');
 				$minStok	= $this->input->post('minStok');
+				$types	= $this->input->post('types');
 				$similarBarang	= $this->input->post('similarBarang');
 				$pilihMerkBarang	= $this->input->post('pilihMerkBarang');
 				$hargaNormal	= $this->input->post('hargaNormal');
@@ -139,7 +140,17 @@ class Barang extends CI_Controller {
 				$pilihMerkBarangLow	= $this->input->post('pilihMerkBarangLow');
 				$hargaLow	= $this->input->post('hargaLow');
 				$deskripsiLow	= $this->input->post('deskripsiLow');
-				$result = $this->Barang_Model->insert_barang($namaBarang, $minStok, $pilihMerkBarang, $similarBarang, $kodeBarang, $hargaNormal, $deskripsiNormal, $isLow, $pilihMerkBarangLow, $kodeBarangLow, $hargaLow, $deskripsiLow);
+
+				if($this->input->post('checkPremium')!==null && $this->input->post('checkPremium')=="premium")
+					$isLow=TRUE;
+
+				$kodeBarangPremium	= "P".$kodeBarang;
+				$pilihMerkBarangPremium	= $this->input->post('pilihMerkBarangPremium');
+				$hargaPremium	= $this->input->post('hargaPremium');
+				$deskripsiPremium	= $this->input->post('deskripsiPremium');
+
+
+				$result = $this->Barang_Model->insert_barang($namaBarang, $minStok, $pilihMerkBarang, $types, $similarBarang, $kodeBarang, $hargaNormal, $deskripsiNormal, $isLow, $pilihMerkBarangLow, $kodeBarangLow, $hargaLow, $deskripsiLow, $isPremium, $pilihMerkBarangPremium, $kodeBarangPremium, $hargaPremium, $deskripsiPremium);
 
 
 				if(count($result) > 0)
@@ -220,6 +231,7 @@ class Barang extends CI_Controller {
            		$kodeBarang	= $this->input->post('kodeBarang');
 				$namaBarang	= $this->input->post('namaBarang');
 				$minStok	= $this->input->post('minStok');
+				$types	= $this->input->post('types');
 				$similarBarang	= $this->input->post('similarBarang');
 				$pilihMerkBarang	= $this->input->post('pilihMerkBarang');
 				$hargaNormal	= $this->input->post('hargaNormal');
@@ -233,7 +245,16 @@ class Barang extends CI_Controller {
 				$pilihMerkBarangLow	= $this->input->post('pilihMerkBarangLow');
 				$hargaLow	= $this->input->post('hargaLow');
 				$deskripsiLow	= $this->input->post('deskripsiLow');
-				$result = $this->Barang_Model->update_barang($id, $namaBarang, $minStok, $pilihMerkBarang, $similarBarang, $kodeBarang, $hargaNormal, $deskripsiNormal, $isLow, $pilihMerkBarangLow, $kodeBarangLow, $hargaLow, $deskripsiLow);
+
+				if($this->input->post('checkPremium')!==null && $this->input->post('checkPremium')=="premium")
+					$isLow=TRUE;
+
+				$kodeBarangPremium	= "P".$kodeBarang;
+				$pilihMerkBarangPremium	= $this->input->post('pilihMerkBarangPremium');
+				$hargaPremium	= $this->input->post('hargaPremium');
+				$deskripsiPremium	= $this->input->post('deskripsiPremium');
+
+				$result = $this->Barang_Model->update_barang($id, $namaBarang, $minStok, $pilihMerkBarang, $types, $similarBarang, $kodeBarang, $hargaNormal, $deskripsiNormal, $isLow, $pilihMerkBarangLow, $kodeBarangLow, $hargaLow, $deskripsiLow, $isPremium, $pilihMerkBarangPremium, $kodeBarangPremium, $hargaPremium, $deskripsiPremium);
 
 
 				if(count($result) > 0)
@@ -283,14 +304,15 @@ class Barang extends CI_Controller {
 		{
        		$id_supplier	= $this->input->post('id_supplier');
        		$id_barang	= $this->input->post('id_barang');
+			$id_type	= $this->input->post('id_type');
 			$stok	= $this->input->post('stok');
 			$harga	= $this->input->post('harga');
 
-			$foundData = $this->SupplierBarang_Model->check_supplierBarangByIdSupplierAndIdBarang($id_supplier, $id_barang);
+			$foundData = $this->SupplierBarang_Model->check_supplierBarangByIdSupplierAndIdBarang($id_supplier, $id_barang, $id_type);
 			if($foundData == true){
-				$result = $this->SupplierBarang_Model->update_supplierBarang($id_supplier, $id_barang, $stok, $harga);
+				$result = $this->SupplierBarang_Model->update_supplierBarang($id_supplier, $id_barang, $id_type, $stok, $harga);
 			}else{
-				$result = $this->SupplierBarang_Model->insert_supplierBarang($id_supplier, $id_barang, $stok, $harga);
+				$result = $this->SupplierBarang_Model->insert_supplierBarang($id_supplier, $id_barang, $id_type, $stok, $harga);
 			}
 
 			if(count($result) > 0)
@@ -317,8 +339,9 @@ class Barang extends CI_Controller {
 		{
 			$id_supplier	= $this->input->post('id_supplier');
 	       	$id_barang	= $this->input->post('id_barang');
+	       	$id_type	= $this->input->post('id_type');
 
-			$result = $this->SupplierBarang_Model->delete_supplierBarang($id_supplier,$id_barang);
+			$result = $this->SupplierBarang_Model->delete_supplierBarang($id_supplier,$id_barang, $id_type);
 
 			if(count($result) > 0)
 			{
@@ -343,9 +366,10 @@ class Barang extends CI_Controller {
 		{
 			$id_supplier	= $this->input->post('id_supplier');
 	       	$id_barang	= $this->input->post('id_barang');
+	       	$id_type	= $this->input->post('id_type');
 	       	$stok	= $this->input->post('stok');
 			$harga	= $this->input->post('harga');
-			$result = $this->SupplierBarang_Model->update_supplierBarang($id_supplier, $id_barang, $stok, $harga);
+			$result = $this->SupplierBarang_Model->update_supplierBarang($id_supplier, $id_barang, $id_type, $stok, $harga);
 
 			if(count($result) > 0)
 			{
