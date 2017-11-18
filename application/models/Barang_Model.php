@@ -9,7 +9,7 @@ class Barang_Model extends CI_Model {
         $this->load->model("SupplierBarang_Model");
     }
 
-    public function insert_barang($nama, $min_stok, $id_merk, $kembars, $kode, $harga, $deskripsi, $is_low, $id_merk2, $kode2, $harga2, $deskripsi2){
+    public function insert_barang($nama, $min_stok, $id_merk, $types, $kembars, $kode, $harga, $deskripsi, $is_low, $id_merk2, $kode2, $harga2, $deskripsi2){
         $this->db->trans_start();
 
     	$sql = "INSERT INTO `barang`(`nama`, `min_stok`, `is_aktif`, `created_at`) VALUES (?,?,?,NOW())";
@@ -21,9 +21,9 @@ class Barang_Model extends CI_Model {
 
         //Untuk tambah yg kembar2
         if(count($kembars) > 0){
-        	foreach($kembars as $id_kembar){
+        	for($i = 0; $i < count($kembars); $i++){
         		//$kembar = [0,1,2,3,4,5]  id Barang
-        		$this->BarangKembar_Model->insert_barangKembar($id, $id_kembar);
+        		$this->BarangKembar_Model->insert_barangKembar($id, $types[$i], $kembars[$i]);
         	}
         }
 
@@ -37,7 +37,7 @@ class Barang_Model extends CI_Model {
         return $id;
     }
 
-    public function update_barang($id, $nama, $min_stok, $id_merk, $kembars, $kode, $harga, $deskripsi, $is_low, $id_merk2, $kode2, $harga2, $deskripsi2){
+    public function update_barang($id, $nama, $min_stok, $id_merk, $types, $kembars, $kode, $harga, $deskripsi, $is_low, $id_merk2, $kode2, $harga2, $deskripsi2){
         $this->db->trans_start();
 
     	$sql = "UPDATE `barang` 
@@ -48,10 +48,10 @@ class Barang_Model extends CI_Model {
     	//Untuk Update yg kembar2
         if(count($kembars) > 0){
         	$this->BarangKembar_Model->delete_barangKembar($id);
-        	foreach($kembars as $id_kembar){
-        		//$kembar = [0,1,2,3,4,5]  id Barang
-        		$this->BarangKembar_Model->insert_barangKembar($id, $id_kembar);
-        	}
+        	for($i = 0; $i < count($kembars); $i++){
+                //$kembar = [0,1,2,3,4,5]  id Barang
+                $this->BarangKembar_Model->insert_barangKembar($id, $types[$i], $kembars[$i]);
+            }
         }
 		//Type N = Normal, L = Low
     	$this->DetailBarang_Model->update_detailBarang($id, $id_merk, "N", $kode, $harga, $deskripsi);

@@ -9,8 +9,8 @@ class Type_Model extends CI_Model {
     public function insert_type($nama, $deskripsi){
         $this->db->trans_start();
         
-        $sql="INSERT INTO type (nama, deskripsi, is_aktif, created_at) VALUES (?,?,?,NOW())";
-        $hasil=$this->db->query($sql, array($nama, $deskripsi, "1"));
+        $sql="INSERT INTO type (nama, deskripsi, created_at) VALUES (?,?,NOW())";
+        $hasil=$this->db->query($sql, array($nama, $deskripsi));
         $id = $this->db->insert_id();
 
         $this->db->trans_complete();
@@ -32,20 +32,15 @@ class Type_Model extends CI_Model {
         $sql = "SELECT y.*
                 FROM type y
                 ORDER BY y.nama ASC";
-        $result = $this->db->query($sql, array("1"));
+        $result = $this->db->query($sql));
         return $result->result_array();
     }
 
     public function get_typeById($id){
         $sql = "SELECT y.*
                 FROM type y
-                WHERE y.id = ? AND y.is_aktif=?";
-        $result = $this->db->query($sql, array($id, "1"));
+                WHERE y.id = ?";
+        $result = $this->db->query($sql, array($id));
         return $result->result_array();
-    }
-
-    public function delete_type($id){
-        $sql = "DELETE FROM type WHERE id = ?";
-        return $this->db->query($sql, array("0", $id));
     }
 }
