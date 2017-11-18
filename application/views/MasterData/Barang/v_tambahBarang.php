@@ -1,4 +1,8 @@
 <div id="content">
+  <script>
+    var kembars=[];
+    var types=[];
+  </script>
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<?php echo base_url();?>dashboard" title="Go to Home" class="tip-bottom">
@@ -108,6 +112,8 @@
                 <label><input type="checkbox" value="premium" name="checkPremium" id="checkPremium">Premium?</label>
               </div>
               <div id="tempatPremium"></div>
+              <input type="hidden" value="" id="types" />
+              <input type="hidden" value="" id="similarBarang" />
             </div>
               <div class="form-actions">
                 <input type="submit" name="btnBatal" value="Batal" class="btn btn-info"/>
@@ -297,28 +303,25 @@
 
     function processBarangSama(dataBarang, dataType){
       var id=0;
-      /*
-        var dataBarangUsed = null;
-        for(var i = 0 ; i < dataBarang.length; i++){
-          if(Number(dataBarang[i]['id']) === Number(id)){
-            dataBarangUsed = dataBarang[i];
-          }
+        var typeList = "";
+        for(var i = 0 ; i < dataType.length; i++){
+          typeList += "<option  value="+dataType[i]['id']+">"+dataType[i]['nama']+"</option>";
         }
 
-        var dataSupplierBarang = dataBarangUsed["supplier_barang"];
-        var options = "";
-        for(var i = 0 ; i < dataSupplier.length; i++){
-          var foundSupplier = false;
-          for(var j = 0 ; j < dataSupplierBarang.length; j++){
-            if(dataSupplierBarang[j]['id_supplier'] == dataSupplier[i]['id']){
-              foundSupplier = true;
-            }
-          }
-          if(foundSupplier === false){
-            options += "<option  value="+dataSupplier[i]['id']+">"+dataSupplier[i]['nama']+"</option>";
-          }
+        var barangList = "";
+        for(var i = 0 ; i < dataBarang.length; i++){
+          barangList += "<option  value="+dataBarang[i]['id']+">"+dataBarang[i]['nama']+"</option>";
         }
-        */
+
+        var dataKembar = "";
+        for(var i = 0 ; i < kembars.length; i++){
+          dataKembar += '<tr>';
+          dataKembar += '<td><input type="text" value="'+types[i]['nama']+'" disabled></td>';
+          dataKembar += '<td><input type="text" value="'+kembars[i]['nama']+'" disabled></td>';
+          dataKembar += '<td><button onclick="prosesHapusKembar(this.id)" name="btnHapus" id="'+i+'" class="btn btn-danger btn-mini">hapus</button></td>';
+          dataKembar += '</tr>';
+        }
+
         //Buat tampilan untuk Edit
         var html = "<table class='table table-bordered' id='tableBarangSama'>";
         html    += "  <thead>"
@@ -331,14 +334,18 @@
         html    += "  <tbody>"
         html += "<tr>";
         html += "<td>";
-        html += "<select class='col-xs-3' name='pilihBarangSama' id='pilihBarangSama'>;";
-        html += "options";
+        html += "<select class='col-xs-3' name='pilihTypeSama' id='pilihTypeSama'>;";
+        html += typeList;
         html +='</select>';
         html+="</td>";
-        html += "<td><input type='number' id='tambahStok'/></td>";
-
-        html += '<td><button type="submit" onclick="tambahDetail(this.id)" name="btnTambah" id="'+id+'" class="btn btn-success btn-mini">Tambah</button></td>';
+        html += "<td>";
+        html += "<select class='col-xs-3' name='pilihBarangSama' id='pilihBarangSama'>;";
+        html += barangList;
+        html +='</select>';
+        html+="</td>";
+        html += '<td><button type="submit" onclick="prosesTambahKembar()" name="btnTambah" id="" class="btn btn-success btn-mini">Tambah</button></td>';
         html += "</tr>";
+        html+=dataKembar;
         /*
         for(var i = 0 ; i < dataType.length; i++){
           if(Number(dataType[i]['id']) === Number(id)){
@@ -366,6 +373,46 @@
           "sDom": '<""l>t<"F"fp>'
         });
         */
+    }
+    function prosesTambahKembar(){
+      var dataBarang = <?php echo json_encode($dataBarang) ?>;
+      var dataType = <?php echo json_encode($dataType) ?>;
+
+      var e = document.getElementById("pilihTypeSama");
+      var f = document.getElementById("pilihBarangSama");
+      if($('#pilihTypeSama').has('option').length > 0 && $('#pilihBarangSama').has('option').length > 0) 
+      {
+        var id_type = e.options[e.selectedIndex].value;
+        var id_barang = f.options[f.selectedIndex].value;
+
+        for(var i = 0 ; i < dataBarang.length; i++){
+          if(Number(dataBarang[i]["id"])==Number(id_barang))
+            id_barang=i;
+        }
+
+        for(var i = 0 ; i < dataType.length; i++){
+          if(Number(dataType[i]["id"])==Number(id_type))
+            id_type=i;
+        }
+
+        kembars.push(dataBarang[id_barang]);
+        types.push(dataType[id_type]);
+
+        document.getElementById("types").value=JSON.stringify(types);
+        document.getElementById("similarBarang").value=JSON.stringify(kembars);
+
+        modalKembar();
+      }
+    }
+
+    function prosesHapusKembar(id){
+      kembars.splice(id, 1);
+      types.splice(id, 1);
+
+      document.getElementById("types").value=JSON.stringify(types);
+      document.getElementById("similarBarang").value=JSON.stringify(kembars);
+
+      modalKembar();
     }
 </script>
 </body>

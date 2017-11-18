@@ -9,8 +9,8 @@
         <li class="<?php if($subMenu=="supplier") echo "active";?>"><a href="<?php echo base_url();?>supplier">Supplier</a></li>
         <li class="<?php if($subMenu=="toko") echo "active";?>"><a href="<?php echo base_url();?>toko">Toko</a></li>
         <li class="<?php if($subMenu=="merk") echo "active";?>"><a href="<?php echo base_url();?>merk">Merk</a></li>
-        <li class="<?php if($subMenu=="barang") echo "active";?>"><a href="<?php echo base_url();?>barang">Barang</a></li>
         <li class="<?php if($subMenu=="type") echo "active";?>"><a href="<?php echo base_url();?>type">Type</a></li>
+        <li class="<?php if($subMenu=="barang") echo "active";?>"><a href="<?php echo base_url();?>barang">Barang</a></li>
       </ul>
     </li>
     <li class="<?php if($menuAktif=="penjualan") echo "active";?>"> <a href="<?php echo base_url();?>penjualan"><i class="icon icon-tag"></i> <span>Penjualan</span></a> </li>
