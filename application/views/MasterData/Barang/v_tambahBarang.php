@@ -395,11 +395,22 @@
             id_type=i;
         }
 
-        kembars.push(dataBarang[id_barang]);
-        types.push(dataType[id_type]);
+        //check apakah sudah pernah dimasukkan
+        var check=false;
+        for(var i = 0 ; i < kembars.length; i++){
+          if(kembars[i]['id']==dataBarang[id_barang]['id'] && types[i]['id']==dataType[id_type]['id'] )
+            check=true;
+        }
+
+        if(check==false)
+        {
+          kembars.push(dataBarang[id_barang]);
+          types.push(dataType[id_type]);
 
         document.getElementById("types").value=JSON.stringify(types);
         document.getElementById("similarBarang").value=JSON.stringify(kembars);
+        
+        }
 
         modalKembar();
       }
