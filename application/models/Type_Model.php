@@ -32,7 +32,7 @@ class Type_Model extends CI_Model {
         $sql = "SELECT y.*
                 FROM type y
                 ORDER BY y.nama ASC";
-        $result = $this->db->query($sql));
+        $result = $this->db->query($sql);
         return $result->result_array();
     }
 
