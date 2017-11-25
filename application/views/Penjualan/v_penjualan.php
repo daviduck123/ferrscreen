@@ -1,75 +1,145 @@
-<div id="content">
+T<div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
-    <h1>Penjualan</h1>
+    <div id="breadcrumb"> 
+      <a href="<?php echo base_url();?>dashboard" title="Go to Home" class="tip-bottom">
+        <i class="icon-dashbard"></i> 
+        Dashboard
+      </a>
+      <a href="#" class="">
+        Master Data
+      </a>
+      <a href="<?php echo base_url();?>supplier" class="">
+        Supplier
+      </a>
+      <a href="#" class="current">
+        Tambah Supplier
+      </a>
+    </div>
+    <h1>Tambah Supplier</h1>
   </div>
   <div class="container-fluid">
+     <?php
+    if ($this->session->flashdata('error')) {
+        ?>
+        <div class="alert alert-danger alert-dismissable">
+            <?php echo $this->session->flashdata('error'); ?>
+            <button type="button" class="close" data-dismiss="alert" area-hidden="true">x</button>
+        </div>
+        <?php
+    } else if ($this->session->flashdata('sukses')) {
+        ?>
+        <div class="alert alert-success alert-dismissable">
+            <?php echo $this->session->flashdata('sukses'); ?>
+            <button type="button" class="close" data-dismiss="alert" area-hidden="true">x</button>
+        </div>
+    <?php }
+    ?>
+    <?php echo validation_errors(); ?>
     <hr>
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
-            <h5>Nota Penjualan</h5>
+          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+            <h5>Tambah Supplier</h5>
           </div>
           <div class="widget-content nopadding">
-            <form action="#" method="get" class="form-horizontal">
+             <?php 
+            echo form_open("supplier/prosesTambahSupplier",  
+              array(
+                'name' => 'basic_validate', 
+                'id' => 'basic_validate',
+                'novalidate' => 'novalidate',
+                'class' => "form-horizontal"
+              )
+            ); 
+            ?>
+            <div class="control-group">
               <div class="span6">
-                <div class="control-group">
-                  <label class="control-label">Customer :</label>
+                  <label class="control-label">Customer</label>
                   <div class="controls">
-                    <input type="text" class="span11" placeholder="First name">
+                    <input type="text" name="customerPenjualan" id="customerPenjualan">
                   </div>
-                  <label class="control-label">Nomor Nota :</label>
+                  <label class="control-label">Nomor Nota</label>
                   <div class="controls">
-                    <input type="text" class="span11" placeholder="Last name">
+                    <input type="text" name="nomorNotaPenjualan" id="nomorNotaPenjualan">
                   </div>
                   <label class="control-label">Jatuh Tempo</label>
                   <div class="controls">
-                    <input type="password" class="span11" placeholder="Enter Password">
+                    <input type="text" name="jatuhTempoPenjualan" id="jatuhTempoPenjualan">
                   </div>
                 </div>
-              </div>
-              <div class="span6">
-                <div class="control-group">
-                  <label class="control-label">Sales :</label>
+                <div class="span6">
+                  <label class="control-label">Sales</label>
                   <div class="controls">
-                    <input type="text" class="span11" placeholder="First name">
+                    <textarea rows="4" cols="50" name="salesPenjualan" id="salesPenjualan"></textarea>
                   </div>
-                  <label class="control-label">Tanggal :</label>
+                  <label class="control-label">Tanggal</label>
                   <div class="controls">
-                    <input type="text" class="span11" placeholder="Last name">
+                    <select style class="form-control col-xs-3" name="pilihKotaSupplier" id="pilihKotaSupplier">
+                      <?php 
+                      if(isset($dataKota))
+                      {
+                        foreach ($dataKota as $kota) 
+                        {
+                          echo "<option value='".$kota["id"]."'>".$kota["nama"]."</option>";
+                        }
+                      }
+                      ?>
+                    </select>
                   </div>
-                </div>
-                <div class="form-actions">
-                  <button type="submit" class="btn btn-success">Simpan Nota</button>
-                </div>
+                  <div class="controls">
+                    <input type="submit" name="btnBatal" value="Batal" class="btn btn-info"/>
+                    <input type="submit" name="btnTambah" value="Tambah" class="btn btn-success"/>
+                  </div>
               </div>
-            </form>
-            <div class="content">
-            <table class="table table-bordered  scrollable " cellspacing="0" width="100%">
-              <thead>
-                <tr>
-                  <th>Nomor</th>
-                  <th>Kode</th>
-                  <th>Nama</th>
-                  <th>Harga</th>
-                  <th>Jumlah</th>
-                  <th>Sub Total</th>
-                  <th>Keterangan</th>
-                </tr>
-              </thead>
-              <tbody id='tBodyPenjualan'>
-                <?php $this->load->view('Penjualan/v_tablePenjualan', $dataPenjualan); ?>
-              </tbody>
-            </table>
             </div>
+            <div class="form-actions">
+              <table class="table table-bordered  scrollable " cellspacing="0" width="100%">
+                  <thead>
+                    <tr>
+                      <th>Nomor</th>
+                      <th>Kode</th>
+                      <th>Nama</th>
+                      <th>Harga</th>
+                      <th>Jumlah</th>
+                      <th>Sub Total</th>
+                      <th>Keterangan</th>
+                    </tr>
+                  </thead>
+                  <tbody id='tBodyPenjualan'>
+                    <?php $this->load->view('Penjualan/v_tablePenjualan', $dataPenjualan); ?>
+                  </tbody>
+                </table>
+            </div>
+            <div class="control-group">
+              <div class="span6">
+                  <label class="control-label">Keterangan</label>
+                  <div class="controls">
+                    <textarea rows="4" cols="50" name="keteranganPenjualan" id="keteranganPenjualan"></textarea>
+                  </div>
+                </div>
+                <div class="span6">
+                  <label class="control-label">Total</label>
+                  <div class="controls">
+                    <input type="number" name="totalPenjualan" id="totalPenjualan">
+                  </div>
+                  <label class="control-label">Biaya Kirim</label>
+                  <div class="controls">
+                    <input type="number" name="biayaKirim" id="biayaKirim">
+                  </div>
+                  <label class="control-label">Grand Total</label>
+                  <div class="controls">
+                    <input type="number" name="grandTotal" id="grandTotal">
+                  </div>
+              </div>
+            </div>
+            <?php echo form_close();?>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<!-- Tutup Modal Similar -->
 
 <!--Footer-part-->
 <div class="row-fluid">
