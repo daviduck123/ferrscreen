@@ -15,9 +15,9 @@
 <link href="<?php echo asset_url();?>font-awesome/css/font-awesome.css" rel="stylesheet" />
 <link rel="stylesheet" href="<?php echo asset_url();?>css/jquery.gritter.css" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="<?php echo asset_url();?>css/jquery.dataTables.min.css" />
 </head>
 <body>
-
 <!--Header-part-->
 <div id="header">
   <h1><a href="dashboard.html">Ferrscreen Admin</a></h1>

@@ -24,4 +24,11 @@ $(document).ready(function(){
 			}
 		});
 	});	
+
+	$('.scrollable').DataTable( {
+        "scrollY":        "200px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+
 });

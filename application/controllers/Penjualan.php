@@ -24,10 +24,31 @@ class Penjualan extends CI_Controller {
 	        'menuAktif' => "penjualan",
 	        'subMenu' =>  ''
 		);
+
+		
+		$kumpulanData=array();
+		 
+		for($i=0;$i<20;$i++)
+		{
+			$cobaData = array(
+		        'kode' => "KODENYA",
+		        'nama' => "nama pembeli kah?",
+		        'harga' => 5000,
+		        'jumlah' => 5,
+		        'subTotal' => 25000,
+		        'keterangan' => "keterangannya diisi"
+			);
+			array_push($kumpulanData,$cobaData);
+		}
+
+		$data = array(
+	        'dataPenjualan' => $kumpulanData
+		);
+
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
 		//$this->load->view('penjualan');
-		$this->load->view('error404');
-		$this->load->view('footer');
+		$this->load->view('Penjualan/v_penjualan',$data);
+		//$this->load->view('footer');
 	}
 }
