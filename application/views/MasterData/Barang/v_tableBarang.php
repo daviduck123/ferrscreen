@@ -81,9 +81,9 @@
         var dataSupplier = <?php echo json_encode($dataSupplier) ?>;
         var dataType = <?php echo json_encode($dataType) ?>;
 
-        console.log(dataBarang);
-        console.log(dataSupplier);
-        console.log(dataType);
+        //console.log(dataBarang);
+        //console.log(dataSupplier);
+        //console.log(dataType);
 
         //For Opening Modal
         processDetailModal(dataBarang, id);

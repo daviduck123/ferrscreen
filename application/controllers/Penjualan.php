@@ -18,6 +18,16 @@ class Penjualan extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+	public function __construct(){
+        header('Access-Control-Allow-Origin: *');
+
+        parent::__construct();
+	 	$this->load->model('Barang_Model');
+	 	$this->load->model('Merk_Model');
+	 	$this->load->model('Type_Model');
+	 	$this->load->model('Supplier_Model');
+    }
+
 	public function index()
 	{
 		$dataMenu = array(
@@ -25,7 +35,12 @@ class Penjualan extends CI_Controller {
 	        'subMenu' =>  ''
 		);
 
-		
+
+		$dataBarang = $this->Barang_Model->get_allBarang();
+		$dataMerk = $this->Merk_Model->get_allMerk();
+		$dataType = $this->Type_Model->get_allType();
+		$dataSupplier = $this->Supplier_Model->get_allSupplier();
+
 		$kumpulanData=array();
 		 
 		for($i=0;$i<20;$i++)
@@ -42,7 +57,11 @@ class Penjualan extends CI_Controller {
 		}
 
 		$data = array(
-	        'dataPenjualan' => $kumpulanData
+	        'dataPenjualan' => $kumpulanData,
+	        'dataSupplier' => $dataSupplier,
+	        'dataBarang' => $dataBarang,
+	        'dataType' => $dataType,
+	        'dataMerk' => $dataMerk
 		);
 
 		$this->load->view('header');

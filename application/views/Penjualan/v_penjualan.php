@@ -98,8 +98,8 @@ T<div id="content">
                   <thead>
                     <tr>
                       <th>Nomor</th>
-                      <th>Kode</th>
                       <th>Nama</th>
+                      <th>Kode</th>
                       <th>Harga</th>
                       <th>Jumlah</th>
                       <th>Sub Total</th>
@@ -107,7 +107,7 @@ T<div id="content">
                       <th></th>
                     </tr>
                   </thead>
-                  <tfoot>
+                  <!--<tfoot>
                     <tr>
                       <th></th>
                       <th>
@@ -132,20 +132,20 @@ T<div id="content">
                         <a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>
                       </th>
                     </tr>
-                  </tfoot>
+                  </tfoot>-->
                   <tbody id='tBodyPenjualan'>
                     <?php $this->load->view('Penjualan/v_tablePenjualan', $dataPenjualan); ?>
                   </tbody>
                 </table>
             </div>
-            <div class="control-group">
-              <div class="span6">
+            <div class="control-group row-fluid">
+              <div class="col-sm-6">
                   <label class="control-label">Keterangan</label>
                   <div class="controls">
                     <textarea rows="4" cols="50" name="keteranganPenjualan" id="keteranganPenjualan"></textarea>
                   </div>
                 </div>
-                <div class="span6">
+                <div class="col-sm-6">
                   <label class="control-label">Total</label>
                   <div class="controls">
                     <input type="number" name="totalPenjualan" id="totalPenjualan">
@@ -168,6 +168,121 @@ T<div id="content">
   </div>
 </div>
 
+<!--modal Detail data-->
+<div class="modal fade"  id="popTabelPenjualan" style="width:50%; left:30%; " role="dialog" aria-labelledby="popKodeTabelPenjualan" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Data Barang</h4>
+            </div>
+
+            <div class = "modal-body">
+             <div class="container-fluid">
+                <div class="widget-box">
+                  <div class="widget-title"> 
+                    <span class="icon"><i class="icon-th"></i></span>
+                    <span class="icon"><b>Data</b></span>
+                  </div>
+                  <div class="widget-content nopadding">
+                    <div class="control-group">
+                      <div class="span6">
+                          <label class="control-label">Kode</label>
+                          <div class="controls">
+                            <input type="number" name="kodePopPenjualan" id="kodePopPenjualan">
+                          </div>
+                          <label class="control-label">Nama</label>
+                          <div class="controls">
+                            <input type="number" name="namaPopPenjualan" id="namaPopPenjualan">
+                          </div>
+                      </div>
+                      <div class="span6">
+                          <label class="control-label">Type</label>
+                          <div class="controls">
+                            <div id="tempatPopListTypePenjualan"></div>
+                          </div>
+                          <label class="control-label">Merk</label>
+                          <div class="controls">
+                            <div id="tempatPopListMerkPenjualan"></div>
+                          </div>
+                          <div class="controls">
+                            <input type="submit" name="btnTambah" value="Cari" class="btn btn-info">
+                          </div>
+                      </div>
+                    </div>
+                    <div class="form-actions">
+                      <table class="table table-bordered  scrollable " cellspacing="0" width="100%">
+                          <thead>
+                            <tr>
+                              <th>Nomor</th>
+                              <th>Nama</th>
+                              <th>Kode</th>
+                              <th>Merk</th>
+                              <th>Supplier</th>
+                              <th>Stok</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody id='tBodyPenjualan'>
+                           <?php 
+                              if(isset($dataPenjualan))
+                              {
+                                  $number=1;
+                                  foreach ($dataPenjualan as $penjualan) 
+                                  {
+                                      $btn = false;
+                                      ?>
+                                      <tr class="gradeX">
+                                        <td style = "vertical-align: middle;"><?php echo $number ?></td>
+                                        <td style = "vertical-align: middle;"><?php echo $penjualan['nama'] ?></td>
+                                        <td style = "vertical-align: middle;"><?php echo $penjualan["kode"] ?></td>
+                                        <td style = "vertical-align: middle;"><?php echo $penjualan['harga'] ?></td>
+                                        <td style = "vertical-align: middle;"><?php echo $penjualan['jumlah'] ?></td>
+                                        <td style = "vertical-align: middle;"><?php echo $penjualan['subTotal'] ?></td>
+                                        <td class="center">
+                                          <a href="<?php echo base_url();?>penjualan/hapusPenjualan/<?php echo $number ?>" class="btn btn-warning btn-mini" role="button">Edit</a>
+                                          <a href="#deleteData<?php echo $number ?>" data-toggle="modal" class="btn btn-danger btn-mini" role="button">Hapus</a>
+
+                                          <div id="deleteData<?php echo $number ?>" class="modal hide" aria-hidden="true" style="display: none;">
+                                            <div class="modal-header">
+                                              <button data-dismiss="modal" class="close" type="button">×</button>
+                                                <h3>Hapus Data</h3>
+                                            </div>
+                                            <div class="modal-body">
+                                              <p>Apakah kamu ingin menghapus data <?php echo $number ?>?</p>
+                                            </div>
+                                            <div class="modal-footer"> 
+                                              <a class="btn btn-primary" href="<?php echo base_url();?>penjualan/hapusPenjualan/<?php echo $number ?>" name="btnHapus">Hapus</a> 
+                                              <a data-dismiss="modal" class="btn" href="#">Cancel</a> 
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                      <?php 
+                                    $number++;
+                                  }
+                                }
+                            ?>
+                          </tbody>
+                        </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <div id="divDetailBarang">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-github" data-dismiss="modal">Kembali</button>
+                <button class="btn btn-github" data-dismiss="modal">Update</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal-->
+
 <!--Footer-part-->
 <div class="row-fluid">
   <div id="footer" class="span12"> 2017 &copy; Ferrscreen Admin</div>
@@ -181,5 +296,44 @@ T<div id="content">
 <script src="<?php echo asset_url();?>js/jquery.dataTables.min.js"></script> 
 <script src="<?php echo asset_url();?>js/matrix.js"></script> 
 <script src="<?php echo asset_url();?>js/matrix.tables.js"></script>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+
+    var dataBarang = <?php echo json_encode($dataBarang) ?>;
+    var dataSupplier = <?php echo json_encode($dataSupplier) ?>;
+    var dataType = <?php echo json_encode($dataType) ?>;
+    var dataMerk = <?php echo json_encode($dataMerk) ?>;
+
+    var optionBarang = "";
+    var optionSupplier = "";
+    var optionType = "";
+    var optionMerk = "";
+
+    optionBarang += "<select class='col-xs-3' name='pilihPopMerkBarang' id='pilihPopMerkBarang'>;";
+    for(var i = 0 ; i < dataBarang.length; i++){
+      optionBarang += "<option  value="+dataBarang[i]['id']+">"+dataBarang[i]['nama']+"</option>"; 
+    }
+    optionBarang +='</select>';
+
+    for(var i = 0 ; i < dataSupplier.length; i++){
+      optionSupplier += "<option  value="+dataSupplier[i]['id']+">"+dataSupplier[i]['nama']+"</option>"; 
+    }
+
+    optionType += "<select class='col-xs-3' name='pilihPopTypePenjualan' id='pilihPopTypePenjualan'>;";
+    for(var i = 0 ; i < dataType.length; i++){
+      optionType += "<option  value="+dataType[i]['id']+">"+dataType[i]['nama']+"</option>"; 
+    }
+    optionType +='</select>';
+    $("#tempatPopListTypePenjualan").html(optionType);
+
+    optionMerk += "<select class='col-xs-3' name='pilihPopMerkPenjualan' id='pilihPopMerkPenjualan'>;";
+    for(var i = 0 ; i < dataMerk.length; i++){
+      optionMerk += "<option  value="+dataMerk[i]['id']+">"+dataMerk[i]['nama']+"</option>"; 
+    }
+    optionMerk +='</select>';
+    $("#tempatPopListMerkPenjualan").html(optionMerk);
+
+  });
+</script>
 </body>
 </html>

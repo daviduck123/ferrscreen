@@ -1,10 +1,10 @@
 <tr class="gradeX">
   <td></td>
   <td>
-    <a href="#popKodeTabelPenjualan" data-toggle="modal" class="btn btn-success btn-mini" role="button">Input Kode</a>
+    <a href="#popTabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>
   </td>
   <td>
-    <a href="#popNamaTabelPenjualan" data-toggle="modal" class="btn btn-success btn-mini" role="button">Input Nama</a>
+    <a href="#popTabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>
   </td>
   <td>
     <input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">
@@ -32,8 +32,8 @@
           ?>
           <tr class="gradeX">
             <td style = "vertical-align: middle;"><?php echo $number ?></td>
-            <td style = "vertical-align: middle;"><?php echo $penjualan["kode"] ?></td>
             <td style = "vertical-align: middle;"><?php echo $penjualan['nama'] ?></td>
+            <td style = "vertical-align: middle;"><?php echo $penjualan["kode"] ?></td>
             <td style = "vertical-align: middle;"><?php echo $penjualan['harga'] ?></td>
             <td style = "vertical-align: middle;"><?php echo $penjualan['jumlah'] ?></td>
             <td style = "vertical-align: middle;"><?php echo $penjualan['subTotal'] ?></td>
@@ -62,3 +62,7 @@
       }
     }
 ?>
+
+
+
+
