@@ -104,8 +104,35 @@ T<div id="content">
                       <th>Jumlah</th>
                       <th>Sub Total</th>
                       <th>Keterangan</th>
+                      <th></th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th></th>
+                      <th>
+                        <a href="#popKodeTabelPenjualan" data-toggle="modal" class="btn btn-success btn-mini" role="button">Input Kode</a>
+                      </th>
+                      <th>
+                        <a href="#popNamaTabelPenjualan" data-toggle="modal" class="btn btn-success btn-mini" role="button">Input Nama</a>
+                      </th>
+                      <th>
+                        <input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">
+                      </th>
+                      <th>
+                        <input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">
+                      </th>
+                      <th>
+                        <input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>
+                      </th>
+                      <th>
+                        <textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>
+                      </th>
+                      <th class="center">
+                        <a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>
+                      </th>
+                    </tr>
+                  </tfoot>
                   <tbody id='tBodyPenjualan'>
                     <?php $this->load->view('Penjualan/v_tablePenjualan', $dataPenjualan); ?>
                   </tbody>
