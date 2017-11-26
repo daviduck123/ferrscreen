@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
 	
-	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
+	//$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
 	
 	$('select').select2();
     $('.colorpicker').colorpicker();
@@ -40,15 +40,15 @@ $(document).ready(function() {
 
 	//------------- Toggle button  -------------//
 
-	$('.normal-toggle-button').toggleButtons();
-	$('.text-toggle-button').toggleButtons({
+	$('.normal-toggle-button').toggle();
+	$('.text-toggle-button').toggle({
 	    width: 140,
 	    label: {
 	        enabled: "ONLINE",
 	        disabled: "OFFLINE"
 	    }
 	});
-	$('.iToggle-button').toggleButtons({
+	$('.iToggle-button').toggle({
 	    width: 70,
 	    label: {
 	        enabled: "<span class='icon16 icomoon-icon-checkmark-2 white'></span>",
@@ -57,24 +57,22 @@ $(document).ready(function() {
 	});
 
 	//------------- Spinners with steps  -------------//
+	/*
 	$( "#spinner1" ).spinner();
 
-	/*Demacial*/
 	$( "#spinner2" ).spinner({
       step: 0.01,
       numberFormat: "n"
     });
 
-	/*Custom step size*/
     $( "#spinner3" ).spinner({
       step: 5
     });
 
-    /*Currency spinner*/
     $( "#spinner4" ).spinner({ 
     	numberFormat: "C" 
     });
-
+	`*/
 	//------------- Colorpicker -------------//
 	if($('div').hasClass('picker')){
 		$('.picker').farbtastic('#color');
@@ -98,20 +96,22 @@ $(document).ready(function() {
 	}
 	
     //------------- Time entry (picker) -------------//
+    /*
 	$('#timepicker').timeEntry({
 		show24Hours: true,
 		spinnerImage: ''
 	});
 	$('#timepicker').timeEntry('setTime', '22:15')
-
+	*/
 	//------------- Select plugin -------------//
 	$("#select1").select2();
 	$("#select2").select2();
 
 	//--------------- Dual multi select ------------------//
-	$.configureBoxes();
+	//$.configureBoxes();
 
 	//--------------- Tinymce ------------------//
+	/*
 	$('textarea.tinymce').tinymce({
 		// Location of TinyMCE script
 		script_url : 'plugins/forms/tiny_mce/tiny_mce.js',
@@ -145,6 +145,7 @@ $(document).ready(function() {
 			staffid : "991234"
 		}
 	});
+	*/
 
 	//Boostrap modal
 	$('#myModal').modal({ show: false});
@@ -161,6 +162,7 @@ var positive = [1,5,3,7,8,6,10];
 var negative = [10,6,8,7,3,5,1]
 var negative1 = [7,6,8,7,6,5,4]
 
+/*
 $('#stat1').sparkline(positive,{
 	height:15,
 	spotRadius: 0,
@@ -205,3 +207,4 @@ $('#stat6').sparkline(positive, {
 	lineWidth: 2//In pixels (default: 1) - Integer
 });
 
+*/

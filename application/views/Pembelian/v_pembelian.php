@@ -5,17 +5,11 @@ T<div id="content">
         <i class="icon-dashbard"></i> 
         Dashboard
       </a>
-      <a href="#" class="">
-        Master Data
-      </a>
-      <a href="<?php echo base_url();?>supplier" class="">
-        Supplier
-      </a>
       <a href="#" class="current">
-        Tambah Supplier
+        Pembelian
       </a>
     </div>
-    <h1>Tambah Supplier</h1>
+    <h1>Pembelian</h1>
   </div>
   <div class="container-fluid">
      <?php
@@ -40,7 +34,7 @@ T<div id="content">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>Tambah Supplier</h5>
+            <h5>Data Pembelian</h5>
           </div>
           <div class="widget-content nopadding">
              <?php 
@@ -55,23 +49,23 @@ T<div id="content">
             ?>
             <div class="control-group">
               <div class="span6">
-                  <label class="control-label">Customer</label>
-                  <div class="controls">
-                    <input type="text" name="customerPenjualan" id="customerPenjualan">
-                  </div>
                   <label class="control-label">Nomor Nota</label>
                   <div class="controls">
-                    <input type="text" name="nomorNotaPenjualan" id="nomorNotaPenjualan">
+                    <input type="text" name="nomorNotaPembelian" id="nomorNotaPembelian">
+                  </div>
+                  <label class="control-label">Supplier</label>
+                  <div class="controls">
+                    <div id="supplierPembelian"></div>
                   </div>
                   <label class="control-label">Jatuh Tempo</label>
                   <div class="controls">
-                    <input type="text" name="jatuhTempoPenjualan" id="jatuhTempoPenjualan">
+                    <input type="text" name="jatuhTempoPembelian" id="jatuhTempoPembelian">
                   </div>
                 </div>
                 <div class="span6">
                   <label class="control-label">Sales</label>
                   <div class="controls">
-                    <textarea rows="4" cols="50" name="salesPenjualan" id="salesPenjualan"></textarea>
+                    <textarea rows="4" cols="50" name="salesPembelian" id="salesPembelian"></textarea>
                   </div>
                   <label class="control-label">Tanggal</label>
                   <div class="controls">
@@ -103,53 +97,57 @@ T<div id="content">
                     <tr>
                       <th></th>
                       <th>
-                        <a href="#popKodeTabelPenjualan" data-toggle="modal" class="btn btn-success btn-mini" role="button">Input Kode</a>
+                        <a href="#popKodeTabelPembelian" data-toggle="modal" class="btn btn-success btn-mini" role="button">Input Kode</a>
                       </th>
                       <th>
-                        <a href="#popNamaTabelPenjualan" data-toggle="modal" class="btn btn-success btn-mini" role="button">Input Nama</a>
+                        <a href="#popNamaTabelPembelian" data-toggle="modal" class="btn btn-success btn-mini" role="button">Input Nama</a>
                       </th>
                       <th>
-                        <input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">
+                        <input type="text" name="hargaTabelPembelian" id="hargaTabelPembelian" placeholder="Masukkan harga">
                       </th>
                       <th>
-                        <input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">
+                        <input type="text" name="jumlahTabelPembelian" id="jumlahTabelPembelian" placeholder="Masukkan jumlah">
                       </th>
                       <th>
-                        <input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>
+                        <input type="text" name="subTotalTabelPembelian" id="subTotalTabelPembelian" placeholder="Subtotal" disabled>
                       </th>
                       <th>
-                        <textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>
+                        <textarea rows="4" cols="50" name="keteranganTabelPembelian" id="keteranganTabelPembelian" placeholder="Masukkan keterangan"></textarea>
                       </th>
                       <th class="center">
-                        <a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>
+                        <a href="<?php echo base_url();?>Pembelian/tambahTabelPembelian/" class="btn btn-success btn-mini" role="button">Tambah</a>
                       </th>
                     </tr>
                   </tfoot>-->
-                  <tbody id='tBodyPenjualan'>
-                    <?php $this->load->view('Penjualan/v_tablePenjualan', $dataPenjualan); ?>
+                  <tbody id='tBodyPembelian'>
+                    <?php $this->load->view('Pembelian/v_tablePembelian', $dataPembelian); ?>
                   </tbody>
                 </table>
             </div>
             <div class="control-group row-fluid">
               <div class="span6">
-                  <label class="control-label">Keterangan</label>
-                  <div class="controls">
-                    <textarea rows="4" cols="50" name="keteranganPenjualan" id="keteranganPenjualan"></textarea>
-                  </div>
+                <label class="control-label">Keterangan</label>
+                <div class="controls">
+                  <textarea rows="4" cols="50" name="keteranganPembelian" id="keteranganPembelian"></textarea>
                 </div>
-                <div class="span6">
-                  <label class="control-label">Total</label>
-                  <div class="controls">
-                    <input type="number" name="totalPenjualan" id="totalPenjualan">
-                  </div>
-                  <label class="control-label">Biaya Kirim</label>
-                  <div class="controls">
-                    <input type="number" name="biayaKirim" id="biayaKirim">
-                  </div>
-                  <label class="control-label">Grand Total</label>
-                  <div class="controls">
-                    <input type="number" name="grandTotal" id="grandTotal">
-                  </div>
+              </div>
+              <div class="span6">
+                <label class="control-label">Total</label>
+                <div class="controls">
+                  <input type="number" name="totalPenjualan" id="totalPenjualan">
+                </div>
+                <label class="control-label">PPN</label>
+                <div class="controls">
+                  <input type="number" name="biayaKirim" id="biayaKirim">
+                </div>
+                <label class="control-label">DU</label>
+                <div class="controls">
+                  <input type="number" name="du" id="du">
+                </div>
+                <label class="control-label">Grand Total</label>
+                <div class="controls">
+                  <input type="number" name="grandTotal" id="grandTotal">
+                </div>
               </div>
             </div>
             <?php echo form_close();?>
@@ -161,7 +159,7 @@ T<div id="content">
 </div>
 
 <!--modal Detail data-->
-<div class="modal fade"  id="popTabelPenjualan" style="width:50%; left:30%; " role="dialog" aria-labelledby="popKodeTabelPenjualan" aria-hidden="true" >
+<div class="modal fade"  id="popTabelPembelian" style="width:50%; left:30%; " role="dialog" aria-labelledby="popKodeTabelPembelian" aria-hidden="true" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -181,21 +179,21 @@ T<div id="content">
                       <div class="span6">
                           <label class="control-label">Kode</label>
                           <div class="controls">
-                            <input type="number" name="kodePopPenjualan" id="kodePopPenjualan">
+                            <input type="number" name="kodePopPembelian" id="kodePopPembelian">
                           </div>
                           <label class="control-label">Nama</label>
                           <div class="controls">
-                            <input type="number" name="namaPopPenjualan" id="namaPopPenjualan">
+                            <input type="number" name="namaPopPembelian" id="namaPopPembelian">
                           </div>
                       </div>
                       <div class="span6">
                           <label class="control-label">Type</label>
                           <div class="controls">
-                            <div id="tempatPopListTypePenjualan"></div>
+                            <div id="tempatPopListTypePembelian"></div>
                           </div>
                           <label class="control-label">Merk</label>
                           <div class="controls">
-                            <div id="tempatPopListMerkPenjualan"></div>
+                            <div id="tempatPopListMerkPembelian"></div>
                           </div>
                           <div class="controls">
                             <input type="submit" name="btnTambah" value="Cari" class="btn btn-info">
@@ -215,24 +213,24 @@ T<div id="content">
                               <th></th>
                             </tr>
                           </thead>
-                          <tbody id='tBodyPenjualan'>
+                          <tbody id='tBodyPembelian'>
                            <?php 
-                              if(isset($dataPenjualan))
+                              if(isset($dataPembelian))
                               {
                                   $number=1;
-                                  foreach ($dataPenjualan as $penjualan) 
+                                  foreach ($dataPembelian as $pembelian) 
                                   {
                                       $btn = false;
                                       ?>
                                       <tr class="gradeX">
                                         <td style = "vertical-align: middle;"><?php echo $number ?></td>
-                                        <td style = "vertical-align: middle;"><?php echo $penjualan['nama'] ?></td>
-                                        <td style = "vertical-align: middle;"><?php echo $penjualan["kode"] ?></td>
-                                        <td style = "vertical-align: middle;"><?php echo $penjualan['harga'] ?></td>
-                                        <td style = "vertical-align: middle;"><?php echo $penjualan['jumlah'] ?></td>
-                                        <td style = "vertical-align: middle;"><?php echo $penjualan['subTotal'] ?></td>
+                                        <td style = "vertical-align: middle;"><?php echo $pembelian['nama'] ?></td>
+                                        <td style = "vertical-align: middle;"><?php echo $pembelian["kode"] ?></td>
+                                        <td style = "vertical-align: middle;"><?php echo $pembelian['harga'] ?></td>
+                                        <td style = "vertical-align: middle;"><?php echo $pembelian['jumlah'] ?></td>
+                                        <td style = "vertical-align: middle;"><?php echo $pembelian['subTotal'] ?></td>
                                         <td class="center">
-                                          <a href="<?php echo base_url();?>penjualan/hapusPenjualan/<?php echo $number ?>" class="btn btn-warning btn-mini" role="button">Edit</a>
+                                          <a href="<?php echo base_url();?>Pembelian/hapusPembelian/<?php echo $number ?>" class="btn btn-warning btn-mini" role="button">Edit</a>
                                           <a href="#deleteData<?php echo $number ?>" data-toggle="modal" class="btn btn-danger btn-mini" role="button">Hapus</a>
 
                                           <div id="deleteData<?php echo $number ?>" class="modal hide" aria-hidden="true" style="display: none;">
@@ -244,7 +242,7 @@ T<div id="content">
                                               <p>Apakah kamu ingin menghapus data <?php echo $number ?>?</p>
                                             </div>
                                             <div class="modal-footer"> 
-                                              <a class="btn btn-primary" href="<?php echo base_url();?>penjualan/hapusPenjualan/<?php echo $number ?>" name="btnHapus">Hapus</a> 
+                                              <a class="btn btn-primary" href="<?php echo base_url();?>Pembelian/hapusPenjualan/<?php echo $number ?>" name="btnHapus">Hapus</a> 
                                               <a data-dismiss="modal" class="btn" href="#">Cancel</a> 
                                             </div>
                                           </div>
@@ -293,6 +291,7 @@ T<div id="content">
 <script src="<?php echo asset_url();?>js/masked.js"></script> 
 <script src="<?php echo asset_url();?>js/matrix.form_common.js"></script> 
 <script src="<?php echo asset_url();?>js/jquery.peity.min.js"></script> 
+
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function(){
 
@@ -312,23 +311,27 @@ T<div id="content">
     }
     optionBarang +='</select>';
 
+    optionSupplier += "<select class='col-xs-3' name='pilihPopTypePembelian' id='pilihPopTypePembelian'>;";
     for(var i = 0 ; i < dataSupplier.length; i++){
       optionSupplier += "<option  value="+dataSupplier[i]['id']+">"+dataSupplier[i]['nama']+"</option>"; 
     }
+    optionSupplier +='</select>';
+    $("#supplierPembelian").html(optionSupplier);
+    
 
-    optionType += "<select class='col-xs-3' name='pilihPopTypePenjualan' id='pilihPopTypePenjualan'>;";
+    optionType += "<select class='col-xs-3' name='pilihPopTypePembelian' id='pilihPopTypePembelian'>;";
     for(var i = 0 ; i < dataType.length; i++){
       optionType += "<option  value="+dataType[i]['id']+">"+dataType[i]['nama']+"</option>"; 
     }
     optionType +='</select>';
-    $("#tempatPopListTypePenjualan").html(optionType);
+    $("#tempatPopListTypePembelian").html(optionType);
 
-    optionMerk += "<select class='col-xs-3' name='pilihPopMerkPenjualan' id='pilihPopMerkPenjualan'>;";
+    optionMerk += "<select class='col-xs-3' name='pilihPopMerkPembelian' id='pilihPopMerkPembelian'>;";
     for(var i = 0 ; i < dataMerk.length; i++){
       optionMerk += "<option  value="+dataMerk[i]['id']+">"+dataMerk[i]['nama']+"</option>"; 
     }
     optionMerk +='</select>';
-    $("#tempatPopListMerkPenjualan").html(optionMerk);
+    $("#tempatPopListMerkPembelian").html(optionMerk);
 
   });
 </script>
