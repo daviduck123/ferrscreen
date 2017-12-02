@@ -159,7 +159,7 @@ T<div id="content">
 </div>
 
 <!--modal Detail data-->
-<div class="modal fade"  id="popTabelPembelian" style="width:50%; left:30%; " role="dialog" aria-labelledby="popKodeTabelPembelian" aria-hidden="true" >
+<div class="modal fade"  id="popTabelPembelian" style="width:80%; left:30%; " role="dialog" aria-labelledby="popKodeTabelPembelian" aria-hidden="true" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -175,7 +175,7 @@ T<div id="content">
                     <span class="icon"><b>Data</b></span>
                   </div>
                   <div class="widget-content nopadding">
-                    <div class="control-group">
+                    <div class="container control-group" style="margin-bottom:10px; margin-top:10px;">
                       <div class="span6">
                           <label class="control-label">Kode</label>
                           <div class="controls">
@@ -186,7 +186,7 @@ T<div id="content">
                             <input type="number" name="namaPopPembelian" id="namaPopPembelian">
                           </div>
                       </div>
-                      <div class="span6">
+                      <div class="span3">
                           <label class="control-label">Type</label>
                           <div class="controls">
                             <div id="tempatPopListTypePembelian"></div>
@@ -200,7 +200,7 @@ T<div id="content">
                           </div>
                       </div>
                     </div>
-                    <div class="form-actions">
+                    <div class="control-group">
                       <table class="table table-bordered  scrollable " cellspacing="0" width="100%">
                           <thead>
                             <tr>

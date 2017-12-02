@@ -1,9 +1,11 @@
 <tr class="gradeX">
   <td></td>
   <td>
+    <input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled>
     <a href="#popTabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>
   </td>
   <td>
+    <input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled>
     <a href="#popTabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>
   </td>
   <td>
