@@ -181,4 +181,8 @@ class Barang_Model extends CI_Model {
         $sql = "UPDATE barang SET is_aktif= ? WHERE id = ?";
         return $this->db->query($sql, array("0", $id));
     }
+
+    public function get_barangBySearch($kode, $nama, $type, $merk){
+        $sql = "";
+    }
 }
