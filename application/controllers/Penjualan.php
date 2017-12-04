@@ -26,6 +26,8 @@ class Penjualan extends CI_Controller {
 	 	$this->load->model('Merk_Model');
 	 	$this->load->model('Type_Model');
 	 	$this->load->model('Supplier_Model');
+	 	$this->load->model('Toko_Model');
+	 	$this->load->model('User_Model');
     }
 
 	public function index()
@@ -40,6 +42,11 @@ class Penjualan extends CI_Controller {
 		$dataMerk = $this->Merk_Model->get_allMerk();
 		$dataType = $this->Type_Model->get_allType();
 		$dataSupplier = $this->Supplier_Model->get_allSupplier();
+		$dataToko = $this->Toko_Model->get_allToko();
+		$dataUser = $this->User_Model->get_allUser();
+
+		//print_r($dataUser);
+		//exit();
 
 		$kumpulanData=array();
 		 
@@ -61,7 +68,9 @@ class Penjualan extends CI_Controller {
 	        'dataSupplier' => $dataSupplier,
 	        'dataBarang' => $dataBarang,
 	        'dataType' => $dataType,
-	        'dataMerk' => $dataMerk
+	        'dataMerk' => $dataMerk,
+	        'dataToko' => $dataToko,
+	        'dataUser' => $dataUser
 		);
 
 		$this->load->view('header');
@@ -69,5 +78,57 @@ class Penjualan extends CI_Controller {
 		//$this->load->view('penjualan');
 		$this->load->view('Penjualan/v_penjualan',$data);
 		//$this->load->view('footer');
+	}
+
+	public function prosesTambahPenjualan()
+	{
+		//isi data diisi array post
+		$isiData = $this->input->post();
+		//print_r($isiData);
+		$isLow=FALSE;
+
+		if($this->input->post('btnTambah'))
+		{
+			$this->form_validation->set_rules('pilihCustomerPenjualan', 'Nama Costumer', 'required');
+			$this->form_validation->set_rules('nomorNotaPenjualan', 'Nomor Nota', 'required');
+			$this->form_validation->set_rules('jatuhTempoPenjualan', 'Jatuh Tempo', 'required');
+			$this->form_validation->set_rules('pilihSalesPenjualan', 'Nama Sales', 'required');
+			$this->form_validation->set_rules('tanggalPenjualan', 'Tanggal Penjualan', 'required');
+			
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$this->session->set_flashdata('error', 'Data tidak lengkap');
+				redirect('penjualan');
+           	}
+           	else
+           	{
+				$idToko	= $this->input->post('pilihCustomerPenjualan');
+				$nomorNotaPenjualan	= $this->input->post('nomorNotaPenjualan');
+				$jatuhTempo	= $this->input->post('jatuhTempoPenjualan');
+				$idSales	= $this->input->post('pilihSalesPenjualan');
+				$tanggalPenjualan	= $this->input->post('tanggalPenjualan');
+
+				$result = $this->Penjualan_Model->insert_notaJual($alamatEmailSupplier, $namaSupplier, $contactPersonSupplier, $alamatSupplier, $kodePosSupplier, $teleponSupplier, $hpSupplier, $faximileSupplier, $limitPiutangSupplier, $jatuhTempoSupplier, $pilihKotaSupplier);
+
+
+				if(count($result) > 0)
+				{
+
+					$this->session->set_flashdata('sukses', 'Berhasil simpan Supplier');
+					redirect('supplier');
+				} 
+				else 
+				{
+					$this->session->set_flashdata('error', 'Gagal simpan Supplier');
+					redirect('supplier');
+				}
+         	}
+		}
+		else
+		{
+			echo "jangan lakukan refresh saat pengiriman data";
+			redirect(base_url()."supplier", 'refresh');
+		}
 	}
 }

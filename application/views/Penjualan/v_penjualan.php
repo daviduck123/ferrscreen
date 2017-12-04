@@ -1,21 +1,15 @@
-T<div id="content">
+<div id="content">
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<?php echo base_url();?>dashboard" title="Go to Home" class="tip-bottom">
         <i class="icon-dashbard"></i> 
         Dashboard
       </a>
-      <a href="#" class="">
-        Master Data
-      </a>
-      <a href="<?php echo base_url();?>supplier" class="">
-        Supplier
-      </a>
       <a href="#" class="current">
-        Tambah Supplier
+        Penjualan
       </a>
     </div>
-    <h1>Tambah Supplier</h1>
+    <h1>Nota Penjualan</h1>
   </div>
   <div class="container-fluid">
      <?php
@@ -40,11 +34,11 @@ T<div id="content">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-            <h5>Tambah Supplier</h5>
+            <h5>Data Penjualan</h5>
           </div>
           <div class="widget-content nopadding">
              <?php 
-            echo form_open("supplier/prosesTambahSupplier",  
+            echo form_open("penjualan/prosesTambahPenjualan",  
               array(
                 'name' => 'basic_validate', 
                 'id' => 'basic_validate',
@@ -57,7 +51,17 @@ T<div id="content">
               <div class="span6">
                   <label class="control-label">Customer</label>
                   <div class="controls">
-                    <input type="text" name="customerPenjualan" id="customerPenjualan">
+                    <select name="pilihCustomerPenjualan" id="pilihCustomerPenjualan">
+                      <?php
+                        if(isset($dataToko))
+                        {
+                          foreach ($dataToko as $toko) 
+                          {
+                            echo "<option value='".$toko['id']."'>".$toko['nama']."</option>";
+                          }
+                        }
+                      ?>
+                    </select>
                   </div>
                   <label class="control-label">Nomor Nota</label>
                   <div class="controls">
@@ -71,12 +75,22 @@ T<div id="content">
                 <div class="span6">
                   <label class="control-label">Sales</label>
                   <div class="controls">
-                    <textarea rows="4" cols="50" name="salesPenjualan" id="salesPenjualan"></textarea>
+                    <select name="pilihSalesPenjualan" id="pilihSalesPenjualan">
+                      <?php
+                        if(isset($dataUser))
+                        {
+                          foreach ($dataUser as $user) 
+                          {
+                            echo "<option value='".$user['id']."'>".$user['nama']."</option>";
+                          }
+                        }
+                      ?>
+                    </select>
                   </div>
                   <label class="control-label">Tanggal</label>
                   <div class="controls">
                     <div  data-date="13-01-018" class="input-append date datepicker">
-                      <input type="text" value=""  data-date-format="dd-mm-yyyy" class="span11" name='tglMasuk' id='tglMasuk'>
+                      <input type="text" value=""  data-date-format="dd-mm-yyyy" class="span11" name='tanggalPenjualan' id='tanggalPenjualan'>
                       <span class="add-on"><i class="icon-th"></i></span> </div>
                   </div>
                   <div class="controls">
@@ -86,7 +100,7 @@ T<div id="content">
               </div>
             </div>
             <div class="form-actions">
-              <table class="table table-bordered  scrollable " cellspacing="0" width="100%">
+              <table class="table scrollable nowrap" cellspacing="0" width="100%">
                   <thead>
                     <tr>
                       <th>Nomor</th>
@@ -99,32 +113,6 @@ T<div id="content">
                       <th></th>
                     </tr>
                   </thead>
-                  <!--<tfoot>
-                    <tr>
-                      <th></th>
-                      <th>
-                        <a href="#popKodeTabelPenjualan" data-toggle="modal" class="btn btn-success btn-mini" role="button">Input Kode</a>
-                      </th>
-                      <th>
-                        <a href="#popNamaTabelPenjualan" data-toggle="modal" class="btn btn-success btn-mini" role="button">Input Nama</a>
-                      </th>
-                      <th>
-                        <input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">
-                      </th>
-                      <th>
-                        <input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">
-                      </th>
-                      <th>
-                        <input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>
-                      </th>
-                      <th>
-                        <textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>
-                      </th>
-                      <th class="center">
-                        <a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>
-                      </th>
-                    </tr>
-                  </tfoot>-->
                   <tbody id='tBodyPenjualan'>
                     <?php $this->load->view('Penjualan/v_tablePenjualan', $dataPenjualan); ?>
                   </tbody>
@@ -161,7 +149,7 @@ T<div id="content">
 </div>
 
 <!--modal Detail data-->
-<div class="modal fade"  id="popTabelPenjualan" style="width:80%; left:30%; " role="dialog" aria-labelledby="popKodeTabelPenjualan" aria-hidden="true" >
+<div class="modal hide"  id="popTabelPenjualan" style="width:80%; left:30%; " role="dialog" aria-labelledby="popKodeTabelPenjualan" aria-hidden="true" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

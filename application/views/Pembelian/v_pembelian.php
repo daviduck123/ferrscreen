@@ -93,32 +93,6 @@ T<div id="content">
                       <th></th>
                     </tr>
                   </thead>
-                  <!--<tfoot>
-                    <tr>
-                      <th></th>
-                      <th>
-                        <a href="#popKodeTabelPembelian" data-toggle="modal" class="btn btn-success btn-mini" role="button">Input Kode</a>
-                      </th>
-                      <th>
-                        <a href="#popNamaTabelPembelian" data-toggle="modal" class="btn btn-success btn-mini" role="button">Input Nama</a>
-                      </th>
-                      <th>
-                        <input type="text" name="hargaTabelPembelian" id="hargaTabelPembelian" placeholder="Masukkan harga">
-                      </th>
-                      <th>
-                        <input type="text" name="jumlahTabelPembelian" id="jumlahTabelPembelian" placeholder="Masukkan jumlah">
-                      </th>
-                      <th>
-                        <input type="text" name="subTotalTabelPembelian" id="subTotalTabelPembelian" placeholder="Subtotal" disabled>
-                      </th>
-                      <th>
-                        <textarea rows="4" cols="50" name="keteranganTabelPembelian" id="keteranganTabelPembelian" placeholder="Masukkan keterangan"></textarea>
-                      </th>
-                      <th class="center">
-                        <a href="<?php echo base_url();?>Pembelian/tambahTabelPembelian/" class="btn btn-success btn-mini" role="button">Tambah</a>
-                      </th>
-                    </tr>
-                  </tfoot>-->
                   <tbody id='tBodyPembelian'>
                     <?php $this->load->view('Pembelian/v_tablePembelian', $dataPembelian); ?>
                   </tbody>
@@ -159,7 +133,7 @@ T<div id="content">
 </div>
 
 <!--modal Detail data-->
-<div class="modal fade"  id="popTabelPembelian" style="width:80%; left:30%; " role="dialog" aria-labelledby="popKodeTabelPembelian" aria-hidden="true" >
+<div class="modal hide"  id="popTabelPembelian" style="width:80%; left:30%; " role="dialog" aria-labelledby="popKodeTabelPembelian" aria-hidden="true" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
