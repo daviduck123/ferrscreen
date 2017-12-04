@@ -29,6 +29,15 @@ class Karyawan extends CI_Controller {
 		//$this->load->view('footer');
 	}
 
+	public function get_userByIdKategori($id_kategori){
+		$dataKaryawan = $this->User_Model->get_userByIdKategori($id_kategori);
+		$data = array(
+			"dataKaryawan" => $dataKaryawan
+		);
+		print_r($data);
+		exit();
+	}
+
 	public function tambahKaryawan()
 	{
 		$dataMenu = array(

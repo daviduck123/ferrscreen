@@ -85,4 +85,24 @@ class User_Model extends CI_Model {
         }
         return $users2;
     }
+
+    public function get_userByIdKategori($id_kategori){
+        $sql = "SELECT u.*, k.nama as nama_kota
+                FROM user u, kota k, user_jabatan uj
+                WHERE u.id_kota = k.id AND uj.id_user = u.id AND uj.id_jabatan = ?
+                ORDER BY u.nama ASC";
+        $result = $this->db->query($sql, array($id_kategori));
+        $users = $result->result_array();
+        $users2 = [];
+        foreach($users as $user){
+            $jabatans = $this->Jabatan_Model->get_jabatanByIdUser($user['id']);
+            if(count($jabatans) > 0){
+                $user["jabatan"] = $jabatans;
+            }else{
+                $user["jabatan"] = [];
+            }
+            array_push($users2, $user);
+        }
+        return $users2;
+    }
 }
