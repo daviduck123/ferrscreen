@@ -199,7 +199,7 @@ class Barang_Model extends CI_Model {
         }
         if(isset($merk)){
             if(!isset($kode) || !isset($nama)){
-                $sql .= " AND merk = ?"
+                $sql .= " AND merk = ?";
             }else{
                 $sql .= " WHERE merk = ?";
             }
