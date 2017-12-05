@@ -182,7 +182,31 @@ class Barang_Model extends CI_Model {
         return $this->db->query($sql, array("0", $id));
     }
 
-    public function get_barangBySearch($kode, $nama, $type, $merk){
-        $sql = "";
+    public function get_barangBySearch($kode, $nama, $merk){
+        $sql = "SELECT * FROM barang ";
+        $array = array($);
+        if(isset($kode)){
+            $sql .= " WHERE kode = ? ";
+            array_push($array, $kode);
+        }
+        if(isset($nama)){
+            if(!isset($kode)){
+                $sql .= " AND nama = ?"
+            }else{
+                $sql .= " WHERE nama = ?";
+            }
+            array_push($array, $nama);
+        }
+        if(isset($merk)){
+            if(!isset($kode) || !isset($nama)){
+                $sql .= " AND merk = ?"
+            }else{
+                $sql .= " WHERE merk = ?";
+            }
+            array_push($array, $merk);
+        }
+        $result = $this->db->query($sql, $array);
+        $hasil = $result->result_array();
+        return $hasil;
     }
 }
