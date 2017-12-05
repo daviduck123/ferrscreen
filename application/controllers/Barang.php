@@ -397,4 +397,11 @@ class Barang extends CI_Controller {
 			echo json_encode($data);
 		}
 	}
+
+	public function cariBarangBySearch()
+	{
+		$kodeBarang	= $this->input->post('kodeBarang');
+       	$namaBarang	= $this->input->post('namaBarang');
+		$id_merk	= $this->input->post('id_merk');
+	}
 }

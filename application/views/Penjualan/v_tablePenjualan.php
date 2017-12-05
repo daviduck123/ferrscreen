@@ -2,11 +2,11 @@
   <td></td>
   <td>
     <input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled>
-    <a href="#popTabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>
+    <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>
   </td>
   <td>
     <input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled>
-    <a href="#popTabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>
+    <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>
   </td>
   <td>
     <input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">

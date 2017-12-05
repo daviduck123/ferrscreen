@@ -149,7 +149,7 @@
 </div>
 
 <!--modal Detail data-->
-<div class="modal hide"  id="popTabelPenjualan" style="width:80%; left:30%; " role="dialog" aria-labelledby="popKodeTabelPenjualan" aria-hidden="true" >
+<div class="modal hide"  id="pop1TabelPenjualan" style="width:80%; left:30%; " role="dialog" aria-labelledby="pop1KodeTabelPenjualan" aria-hidden="true" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -168,29 +168,38 @@
                       <div class="span6">
                           <label class="control-label">Kode</label>
                           <div class="controls">
-                            <input type="number" name="kodePopPenjualan" id="kodePopPenjualan">
+                            <input type="text" name="kodePop1Penjualan" id="kodePop1Penjualan">
                           </div>
-                          <label class="control-label">Nama</label>
+                          <label class="control-label">Nama Barang</label>
                           <div class="controls">
-                            <input type="number" name="namaPopPenjualan" id="namaPopPenjualan">
+                            <input type="text" name="namaBarangPop1Penjualan" id="namaBarangPop1Penjualan">
                           </div>
                       </div>
                       <div class="span3">
-                          <label class="control-label">Type</label>
+                          <label class="control-label">Merk<?php echo print_r($dataMerk) ?></label>
                           <div class="controls">
-                            <div id="tempatPopListTypePenjualan"></div>
+                            <select class='col-xs-3' name='pilihPop1MerkPenjualan2' id='pilihPop1MerkPenjualan2'>
+                              <?php
+                                print_r($dataMerk);
+                                for($i = 0 ; $i < count($dataMerk); $i++){
+                                  echo "<option value='".$dataMerk[0]["id"]."'>".$dataMerk[0]["nama"]."</option>";
+                                  echo "<option value='".$dataMerk[0]["id"]."'>".$dataMerk[0]["nama"]."</option>";
+                                }
+                              ?>
+                            </select>
+                            <select class='col-xs-3' name='pilihPop1MerkPenjualan2' id='pilihPop1MerkPenjualan2'>
+                              <option>asdasdasd</option>
+                              <option>asdasdasd</option>
+                            </select>
+                            <div id="tempatPop1ListMerkPenjualan"></div>
                           </div>
-                          <label class="control-label">Merk</label>
                           <div class="controls">
-                            <div id="tempatPopListMerkPenjualan"></div>
-                          </div>
-                          <div class="controls">
-                            <input type="submit" name="btnTambah" value="Cari" class="btn btn-info">
+                            <input onclick="cariBarang();" type="submit" name="btnTambah" value="Cari" class="btn btn-info">
                           </div>
                       </div>
                     </div>
                     <div class="control-group">
-                      <table class="table table-bordered  scrollable " cellspacing="0" width="100%">
+                      <table id="tablePop1Penjualan" class="table table-bordered  scrollable " cellspacing="0" width="100%">
                           <thead>
                             <tr>
                               <th>Nomor</th>
@@ -281,8 +290,54 @@
 <script src="<?php echo asset_url();?>js/matrix.form_common.js"></script> 
 <script src="<?php echo asset_url();?>js/jquery.peity.min.js"></script> 
 <script type="text/javascript" charset="utf-8">
-  $(document).ready(function(){
+  var urlnya = "localhost";
 
+  function cariBarang()
+  {
+    var kodeBarang = document.getElementById('kodePop1Penjualan').value;
+
+    console.log(kodeBarang);
+    var namaBarang = document.getElementById('namaBarangPop1Penjualan').value;
+    var e = document.getElementById('pilihPop1MerkPenjualan').value;
+    var id_merk = e.options[e.selectedIndex].value;
+
+    var formData=JSON.stringify({
+      kodeBarang:kodeBarang,
+      namaBarang:namaBarang,
+      id_merk:id_merk,
+    });
+
+    //var link=urlnya+'/Barang/cariBarangBySearch?kodeBarang='+kodeBarang+'&namaBarang='+namaBarang+'&id_merk='+id_merk;
+    var link=urlnya+'/Barang/cariBarangBySearch?kodeBarang';
+    $(document).ready(function(){
+      $.ajax({ 
+        url: link,
+        data: formData,
+        type: 'POST',
+        contentType: false,
+        processData: false
+      }).done(function(dataBarang){
+
+        console.log(dataBarang);
+        /*
+        $('#tablePop1Penjualan').DataTable( {
+            data: dataSet,
+            columns: [
+                { title: "Nomor" },
+                { title: "Nama Barang" },
+                { title: "Kode" },
+                { title: "Merk" },
+                { title: "Aksi" }
+            ]
+        } );
+        */
+      }).fail(function(x){
+        console.log("Pengambilan data barang gagal", 'Perhatian!');
+      });                 
+    });
+  }
+
+  $(document).ready(function(){
     var dataBarang = <?php echo json_encode($dataBarang) ?>;
     var dataSupplier = <?php echo json_encode($dataSupplier) ?>;
     var dataType = <?php echo json_encode($dataType) ?>;
@@ -293,7 +348,7 @@
     var optionType = "";
     var optionMerk = "";
 
-    optionBarang += "<select class='col-xs-3' name='pilihPopMerkBarang' id='pilihPopMerkBarang'>;";
+    optionBarang += "<select class='col-xs-3' name='pilihPop1MerkBarang' id='pilihPop1MerkBarang'>;";
     for(var i = 0 ; i < dataBarang.length; i++){
       optionBarang += "<option  value="+dataBarang[i]['id']+">"+dataBarang[i]['nama']+"</option>"; 
     }
@@ -303,19 +358,23 @@
       optionSupplier += "<option  value="+dataSupplier[i]['id']+">"+dataSupplier[i]['nama']+"</option>"; 
     }
 
-    optionType += "<select class='col-xs-3' name='pilihPopTypePenjualan' id='pilihPopTypePenjualan'>;";
+    optionType += "<select class='col-xs-3' name='pilihPop1TypePenjualan' id='pilihPop1TypePenjualan'>;";
     for(var i = 0 ; i < dataType.length; i++){
       optionType += "<option  value="+dataType[i]['id']+">"+dataType[i]['nama']+"</option>"; 
     }
     optionType +='</select>';
-    $("#tempatPopListTypePenjualan").html(optionType);
+    $("#tempatPop1ListTypePenjualan").html(optionType);
 
-    optionMerk += "<select class='col-xs-3' name='pilihPopMerkPenjualan' id='pilihPopMerkPenjualan'>;";
+    optionMerk += "<select class='col-xs-3' name='pilihPop1MerkPenjualan' id='pilihPop1MerkPenjualan'>;";
     for(var i = 0 ; i < dataMerk.length; i++){
       optionMerk += "<option  value="+dataMerk[i]['id']+">"+dataMerk[i]['nama']+"</option>"; 
+      var option = document.createElement("option");
+      option.value = dataMerk[i]['id'];
+      option.text = dataMerk[i]['nama'];
+      document.getElementById('pilihPop1MerkPenjualan2').appendChild(option);
     }
     optionMerk +='</select>';
-    $("#tempatPopListMerkPenjualan").html(optionMerk);
+    $("#tempatPop1ListMerkPenjualan").html(optionMerk);
 
   });
 </script>

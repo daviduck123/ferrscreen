@@ -131,4 +131,5 @@ class Penjualan extends CI_Controller {
 			redirect(base_url()."supplier", 'refresh');
 		}
 	}
+
 }
