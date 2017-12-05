@@ -184,7 +184,7 @@ class Barang_Model extends CI_Model {
 
     public function get_barangBySearch($kode, $nama, $merk){
         $sql = "SELECT * FROM barang ";
-        $array = array($);
+        $array = array();
         if(isset($kode)){
             $sql .= " WHERE kode = ? ";
             array_push($array, $kode);
