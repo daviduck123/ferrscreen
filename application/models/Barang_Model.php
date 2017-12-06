@@ -190,7 +190,7 @@ class Barang_Model extends CI_Model {
             array_push($array, $kode);
         }
         if(isset($nama)){
-            if(!isset($kode)){
+            if(isset($kode)){
                 $sql .= " AND nama = ?";
             }else{
                 $sql .= " WHERE nama = ?";
@@ -198,7 +198,7 @@ class Barang_Model extends CI_Model {
             array_push($array, $nama);
         }
         if(isset($merk)){
-            if(!isset($kode) || !isset($nama)){
+            if(isset($kode) || isset($nama)){
                 $sql .= " AND merk = ?";
             }else{
                 $sql .= " WHERE merk = ?";
