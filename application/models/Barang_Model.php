@@ -196,7 +196,7 @@ class Barang_Model extends CI_Model {
             $sql .= " AND b.nama  ". $strNama;
         }
         if(isset($merk)){
-            $sql .= " AND m.merk = ?";
+            $sql .= " AND m.id = ? ";
             array_push($array, $merk);
         }
         $result = $this->db->query($sql, $array);
