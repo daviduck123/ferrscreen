@@ -187,14 +187,14 @@ class Barang_Model extends CI_Model {
         $array = array();
         if(isset($kode)){
             $strKode = " LIKE '%".$kode."%'";
-            $sql .= " WHERE kode = ".$strKode;
+            $sql .= " WHERE kode  ".$strKode;
         }
         if(isset($nama)){
-             $strNama = " LIKE '%".$strNama."%'";
+             $strNama = " LIKE '%".$nama."%'";
             if(isset($kode)){
-                $sql .= " AND nama = ". $strNama;
+                $sql .= " AND nama  ". $strNama;
             }else{
-                $sql .= " WHERE nama = ". $strNama;
+                $sql .= " WHERE nama  ". $strNama;
             }
         }
         if(isset($merk)){
