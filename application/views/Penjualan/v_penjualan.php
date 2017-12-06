@@ -339,7 +339,10 @@
     optionMerk += "<select onchange='selectPop1MerkPenjualan(this.value)' class='col-xs-3' name='pilihPop1MerkPenjualan' id='pilihPop1MerkPenjualan'>;";
     for(var i = 0 ; i < dataMerk.length; i++){
       if(i==0)
+      {
         optionMerk += "<option  value=''>Semua Merk</option>"; 
+        optionMerk += "<option  value="+dataMerk[i]['id']+">"+dataMerk[i]['nama']+"</option>"; 
+      }
       else
         optionMerk += "<option  value="+dataMerk[i]['id']+">"+dataMerk[i]['nama']+"</option>"; 
     }
