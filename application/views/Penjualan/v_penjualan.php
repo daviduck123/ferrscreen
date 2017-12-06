@@ -176,25 +176,10 @@
                           </div>
                       </div>
                       <div class="span3">
-                          <label class="control-label">Merk<?php echo print_r($dataMerk) ?></label>
-                          <div class="controls">
-                            <select class='col-xs-3' name='pilihPop1MerkPenjualan2' id='pilihPop1MerkPenjualan2'>
-                              <?php
-                                print_r($dataMerk);
-                                for($i = 0 ; $i < count($dataMerk); $i++){
-                                  echo "<option value='".$dataMerk[0]["id"]."'>".$dataMerk[0]["nama"]."</option>";
-                                  echo "<option value='".$dataMerk[0]["id"]."'>".$dataMerk[0]["nama"]."</option>";
-                                }
-                              ?>
-                            </select>
-                            <select class='col-xs-3' name='pilihPop1MerkPenjualan2' id='pilihPop1MerkPenjualan2'>
-                              <option>asdasdasd</option>
-                              <option>asdasdasd</option>
-                            </select>
-                            <div id="tempatPop1ListMerkPenjualan"></div>
-                          </div>
-                          <div class="controls">
-                            <input onclick="cariBarang();" type="submit" name="btnTambah" value="Cari" class="btn btn-info">
+                          <label class="control-label">Merk</label>
+                          <div id="tempatPop1ListMerkPenjualan"></div>
+                            <input type="hidden" id="hiddenTempatPop1ListMerkPenjualan" name="hiddenTempatPop1ListMerkPenjualan" value="">
+                            <input onclick="cariBarang(this.value);" type="submit" name="btnCari" value="btnCari" class="btn btn-info">
                           </div>
                       </div>
                     </div>
@@ -290,47 +275,33 @@
 <script src="<?php echo asset_url();?>js/matrix.form_common.js"></script> 
 <script src="<?php echo asset_url();?>js/jquery.peity.min.js"></script> 
 <script type="text/javascript" charset="utf-8">
-  var urlnya = "localhost";
 
-  function cariBarang()
+  function selectPop1MerkPenjualan(id_merk)
+  {
+
+    document.getElementById('hiddenTempatPop1ListMerkPenjualan').value=id_merk;
+  }
+
+  function cariBarang(button)
   {
     var kodeBarang = document.getElementById('kodePop1Penjualan').value;
-
-    console.log(kodeBarang);
     var namaBarang = document.getElementById('namaBarangPop1Penjualan').value;
-    var e = document.getElementById('pilihPop1MerkPenjualan').value;
-    var id_merk = e.options[e.selectedIndex].value;
-
-    var formData=JSON.stringify({
-      kodeBarang:kodeBarang,
-      namaBarang:namaBarang,
-      id_merk:id_merk,
-    });
+    var id_merk = document.getElementById('hiddenTempatPop1ListMerkPenjualan').value;
 
     //var link=urlnya+'/Barang/cariBarangBySearch?kodeBarang='+kodeBarang+'&namaBarang='+namaBarang+'&id_merk='+id_merk;
-    var link=urlnya+'/Barang/cariBarangBySearch?kodeBarang';
+    var link='barang/cariBarangBySearch';
     $(document).ready(function(){
       $.ajax({ 
         url: link,
-        data: formData,
-        type: 'POST',
-        contentType: false,
-        processData: false
+        data:{ kodeBarang:kodeBarang,  
+                namaBarang:namaBarang,
+                id_merk:id_merk,
+                button:button }, 
+        type: 'POST'
       }).done(function(dataBarang){
 
         console.log(dataBarang);
-        /*
-        $('#tablePop1Penjualan').DataTable( {
-            data: dataSet,
-            columns: [
-                { title: "Nomor" },
-                { title: "Nama Barang" },
-                { title: "Kode" },
-                { title: "Merk" },
-                { title: "Aksi" }
-            ]
-        } );
-        */
+
       }).fail(function(x){
         console.log("Pengambilan data barang gagal", 'Perhatian!');
       });                 
@@ -365,13 +336,12 @@
     optionType +='</select>';
     $("#tempatPop1ListTypePenjualan").html(optionType);
 
-    optionMerk += "<select class='col-xs-3' name='pilihPop1MerkPenjualan' id='pilihPop1MerkPenjualan'>;";
+    optionMerk += "<select onchange='selectPop1MerkPenjualan(this.value)' class='col-xs-3' name='pilihPop1MerkPenjualan' id='pilihPop1MerkPenjualan'>;";
     for(var i = 0 ; i < dataMerk.length; i++){
-      optionMerk += "<option  value="+dataMerk[i]['id']+">"+dataMerk[i]['nama']+"</option>"; 
-      var option = document.createElement("option");
-      option.value = dataMerk[i]['id'];
-      option.text = dataMerk[i]['nama'];
-      document.getElementById('pilihPop1MerkPenjualan2').appendChild(option);
+      if(i==0)
+        optionMerk += "<option  value=''>Semua Merk</option>"; 
+      else
+        optionMerk += "<option  value="+dataMerk[i]['id']+">"+dataMerk[i]['nama']+"</option>"; 
     }
     optionMerk +='</select>';
     $("#tempatPop1ListMerkPenjualan").html(optionMerk);

@@ -393,15 +393,35 @@ class Barang extends CI_Controller {
 		}
 		else
 		{
-			$data = array('status' => 0, 'deskripsi' => "Gunakan hanya website ini");
+			$data = array('status' => 0, 'deskripsi' => "Gunakan aksi hanya dari website ini");
 			echo json_encode($data);
 		}
 	}
 
 	public function cariBarangBySearch()
 	{
-		$kodeBarang	= $this->input->post('kodeBarang');
-       	$namaBarang	= $this->input->post('namaBarang');
-		$id_merk	= $this->input->post('id_merk');
+		if($this->input->post('button'))
+		{
+			$kodeBarang	= $this->input->post('kodeBarang');
+	       	$namaBarang	= $this->input->post('namaBarang');
+			$id_merk	= $this->input->post('id_merk');
+
+			$result = $this->Barang_Model->get_barangBySearch($kodeBarang, $namaBarang, $id_merk);
+
+			if(count($result) > 0)
+			{
+				echo json_encode($result);
+			} 
+			else 
+			{
+				$data = array('status' => 0, 'deskripsi' => "Gagal tambah data");
+				echo json_encode($data);
+			}
+		}
+		else
+		{
+			$data = array('status' => 0, 'deskripsi' => "Gunakan aksi hanyadari website ini");
+			echo json_encode($data);
+		}
 	}
 }
