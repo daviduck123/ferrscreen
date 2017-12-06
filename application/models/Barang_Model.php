@@ -183,26 +183,20 @@ class Barang_Model extends CI_Model {
     }
 
     public function get_barangBySearch($kode, $nama, $merk){
-        $sql = "SELECT * FROM barang ";
+        $sql = "SELECT b.*, db.kode as kode, m.nama as nama_merk 
+                FROM barang b, detail_barang db, merk m 
+                WHERE b.id = db.id_barang AND db.id_merk = m.id ";
         $array = array();
         if(isset($kode)){
             $strKode = " LIKE '%".$kode."%'";
-            $sql .= " WHERE kode  ".$strKode;
+            $sql .= " AND db.kode  ".$strKode;
         }
         if(isset($nama)){
-             $strNama = " LIKE '%".$nama."%'";
-            if(isset($kode)){
-                $sql .= " AND nama  ". $strNama;
-            }else{
-                $sql .= " WHERE nama  ". $strNama;
-            }
+            $strNama = " LIKE '%".$nama."%'";
+            $sql .= " AND b.nama  ". $strNama;
         }
         if(isset($merk)){
-            if(isset($kode) || isset($nama)){
-                $sql .= " AND merk = ?";
-            }else{
-                $sql .= " WHERE merk = ?";
-            }
+            $sql .= " AND m.merk = ?";
             array_push($array, $merk);
         }
         $result = $this->db->query($sql, $array);
