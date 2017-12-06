@@ -100,23 +100,8 @@
               </div>
             </div>
             <div class="form-actions">
-              <table class="table scrollable nowrap" cellspacing="0" width="100%">
-                  <thead>
-                    <tr>
-                      <th>Nomor</th>
-                      <th>Nama</th>
-                      <th>Kode</th>
-                      <th>Harga</th>
-                      <th>Jumlah</th>
-                      <th>Sub Total</th>
-                      <th>Keterangan</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody id='tBodyPenjualan'>
-                    <?php $this->load->view('Penjualan/v_tablePenjualan', $dataPenjualan); ?>
-                  </tbody>
-                </table>
+              <table id ="mainTabelPenjualan" class="table nowrap" cellspacing="0" width="100%">
+              </table>
             </div>
             <div class="control-group row-fluid">
               <div class="span6">
@@ -184,59 +169,7 @@
                       </div>
                     </div>
                     <div class="control-group">
-                      <table id="tablePop1Penjualan" class="table table-bordered  scrollable " cellspacing="0" width="100%">
-                          <thead>
-                            <tr>
-                              <th>Nomor</th>
-                              <th>Nama</th>
-                              <th>Kode</th>
-                              <th>Merk</th>
-                              <th>Supplier</th>
-                              <th>Stok</th>
-                              <th></th>
-                            </tr>
-                          </thead>
-                          <tbody id='tBodyPenjualan'>
-                           <?php 
-                              if(isset($dataPenjualan))
-                              {
-                                  $number=1;
-                                  foreach ($dataPenjualan as $penjualan) 
-                                  {
-                                      $btn = false;
-                                      ?>
-                                      <tr class="gradeX">
-                                        <td style = "vertical-align: middle;"><?php echo $number ?></td>
-                                        <td style = "vertical-align: middle;"><?php echo $penjualan['nama'] ?></td>
-                                        <td style = "vertical-align: middle;"><?php echo $penjualan["kode"] ?></td>
-                                        <td style = "vertical-align: middle;"><?php echo $penjualan['harga'] ?></td>
-                                        <td style = "vertical-align: middle;"><?php echo $penjualan['jumlah'] ?></td>
-                                        <td style = "vertical-align: middle;"><?php echo $penjualan['subTotal'] ?></td>
-                                        <td class="center">
-                                          <a href="<?php echo base_url();?>penjualan/hapusPenjualan/<?php echo $number ?>" class="btn btn-warning btn-mini" role="button">Edit</a>
-                                          <a href="#deleteData<?php echo $number ?>" data-toggle="modal" class="btn btn-danger btn-mini" role="button">Hapus</a>
-
-                                          <div id="deleteData<?php echo $number ?>" class="modal hide" aria-hidden="true" style="display: none;">
-                                            <div class="modal-header">
-                                              <button data-dismiss="modal" class="close" type="button">×</button>
-                                                <h3>Hapus Data</h3>
-                                            </div>
-                                            <div class="modal-body">
-                                              <p>Apakah kamu ingin menghapus data <?php echo $number ?>?</p>
-                                            </div>
-                                            <div class="modal-footer"> 
-                                              <a class="btn btn-primary" href="<?php echo base_url();?>penjualan/hapusPenjualan/<?php echo $number ?>" name="btnHapus">Hapus</a> 
-                                              <a data-dismiss="modal" class="btn" href="#">Cancel</a> 
-                                            </div>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                      <?php 
-                                    $number++;
-                                  }
-                                }
-                            ?>
-                          </tbody>
+                      <table id="tablePop1Penjualan" class="table table-bordered" cellspacing="0" width="100%">
                       </table>
                     </div>
                   </div>
@@ -246,8 +179,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-github" data-dismiss="modal">Kembali</button>
-                <button class="btn btn-github" data-dismiss="modal">Update</button>
+                <button class="btn btn-github" onClick="batalPop1" data-dismiss="modal">Kembali</button>
+                <button class="btn btn-github" onClick="updatePop1" data-dismiss="modal">Update</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -275,11 +208,157 @@
 <script src="<?php echo asset_url();?>js/matrix.form_common.js"></script> 
 <script src="<?php echo asset_url();?>js/jquery.peity.min.js"></script> 
 <script type="text/javascript" charset="utf-8">
+  var dataBarangPilihan=[];
+  var dataBarangPop1Dipilih=[];
+
+  $('#mainTabelPenjualan').DataTable( {
+              destroy: true,
+              data: [],
+              columns: [
+                  { title: "Nomor" },
+                  { title: "Nama Barang" },
+                  { title: "Kode" },
+                  { title: "Harga" },
+                  { title: "Jumlah" },
+                  { title: "Sub Total" },
+                  { title: "keterangan" }
+              ]
+          });
+  
+
+  function refreshMainTable()
+  {
+    $tempHapus=[];
+    $tempTambah=[];
+    //CEK APAKAH ADA DATA DIHAPUS
+    for (var i=0;i<dataBarangPilihan.length;i++)
+    {
+      var cek=false;
+
+      for(var x=0; x<dataBarangPilihan.length; x++)
+      {
+        if(dataBarangPilihan[i]==dataBarangPop1Dipilih[x])
+          cek=true
+      }
+
+      if(!cek)
+      {
+        $tempHapus.push(dataBarangPilihan[i])
+      }
+    }
+    //hapus data, karena diupdatean baru nggak ada
+    for (var i=0;i<tempHapus.length;i++)
+    {
+      var index = dataBarangPilihan.indexOf(tempHapus[i]);
+      dataBarangPilihan.splice(index, 1);
+    }
+
+    //CEK APAKAH ADA DATA YANG BERTAMBAH
+    for (var i=0;i<dataBarangPop1Dipilih.length;i++)
+    {
+      var cek=false;
+
+      for(var x=0; x<dataBarangPop1Dipilih.length; x++)
+      {
+        if(dataBarangPop1Dipilih[i]==dataBarangPilihan[x])
+          cek=true
+      }
+
+      if(!cek)
+      {
+        $tempTambah.push(dataBarangPop1Dipilih[i])
+      }
+    }
+    //tambah data, karena diupdatean ada data baru
+    for (var i=0;i<tempTambah.length;i++)
+    {
+      dataBarangPilihan.push(tempTambah[i]);
+    }
+
+    //AMBIL DETAIL BARANG
+    for(var i=0; i<dataBarangPilihan.length;i++)
+    {
+      var link="detailBarang/allDetailBarangByIdBarang";
+      $(document).ready(function(){
+        $.ajax({ 
+          url: link,
+          data:{ id:dataBarangPilihan[i]}, 
+          type: 'POST'
+        }).done(function(dataDetailBarang){
+
+          console.log(dataDetailBarang);
+
+          /*
+          $('#mainTabelPenjualan').DataTable( {
+              destroy: true,
+              data: dataSet,
+              columns: [
+                  { title: "Nomor" },
+                  { title: "Nama Barang" },
+                  { title: "Kode" },
+                  { title: "Harga" },
+                  { title: "Jumlah" },
+                  { title: "Sub Total" },
+                  { title: "keterangan" }
+              ]
+          });
+
+          $('#mainTabelPenjualan').addClass("scrollable");
+          */
+
+        }).fail(function(x){
+          console.log("Pengambilan data barang gagal", 'Perhatian!');
+        });                 
+      });
+
+    }
+    
+
+    
+  }
+
+  function batalPop1()
+  {
+    dataBarangPop1Dipilih=dataBarangPilihan;
+  }
+
+  function updatePop1()
+  {
+    dataBarangPop1Dipilih=dataBarangPilihan;
+
+    //refresh MAIN datatables
+  }
 
   function selectPop1MerkPenjualan(id_merk)
   {
-
     document.getElementById('hiddenTempatPop1ListMerkPenjualan').value=id_merk;
+  }
+
+  function tambahBarangPop1(id)
+  {
+    var cek=false;
+    for(var x=0; x<dataBarangPop1Dipilih.length; x++)
+    {
+      console.log(id+"|"+dataBarangPop1Dipilih[x]);
+      if(id==dataBarangPop1Dipilih[x])
+        cek=true
+    }
+
+    if(!cek)
+      dataBarangPop1Dipilih.push(id);
+
+    console.log(dataBarangPop1Dipilih);
+    //refresh datatables
+    cariBarang("refresh");
+  }
+
+  function hapusBarangPop1(id)
+  {
+    var index = dataBarangPop1Dipilih.indexOf(id);
+    dataBarangPop1Dipilih.splice(index, 1);
+
+    //refresh datatables
+    cariBarang("refresh");
   }
 
   function cariBarang(button)
@@ -288,7 +367,6 @@
     var namaBarang = document.getElementById('namaBarangPop1Penjualan').value;
     var id_merk = document.getElementById('hiddenTempatPop1ListMerkPenjualan').value;
 
-    //var link=urlnya+'/Barang/cariBarangBySearch?kodeBarang='+kodeBarang+'&namaBarang='+namaBarang+'&id_merk='+id_merk;
     var link='barang/cariBarangBySearch';
     $(document).ready(function(){
       $.ajax({ 
@@ -300,7 +378,41 @@
         type: 'POST'
       }).done(function(dataBarang){
 
-        console.log(dataBarang);
+        var parsedDataBarang = JSON.parse(dataBarang);
+
+        var dataSet=[];
+
+        for (var i=0;i<parsedDataBarang.length;i++)
+        {
+          var ii=i+1;
+          var cek=false;
+          for(var x=0; x<dataBarangPop1Dipilih.length; x++)
+          {
+            if(parsedDataBarang[i]["id"]==dataBarangPop1Dipilih[x])
+              cek=true
+          }
+
+          if(cek)
+            var temp=[ii,parsedDataBarang[i]["nama"],parsedDataBarang[i]["kode"],parsedDataBarang[i]["nama_merk"],'<a class="btn btn-danger btn-mini" onclick="hapusBarangPop1('+parsedDataBarang[i]["id"]+')" name="btnHapus">Hapus</a>'];
+          else
+            var temp=[ii,parsedDataBarang[i]["nama"],parsedDataBarang[i]["kode"],parsedDataBarang[i]["nama_merk"],'<a class="btn btn-success btn-mini" onclick="tambahBarangPop1('+parsedDataBarang[i]["id"]+')" name="btnTambah">Tambah</a>'];
+
+          dataSet.push(temp);
+        }
+
+        $('#tablePop1Penjualan').DataTable( {
+            destroy: true,
+            data: dataSet,
+            columns: [
+                { title: "Nomor" },
+                { title: "Nama Barang" },
+                { title: "Kode" },
+                { title: "Merk" },
+                { title: "Aksi" }
+            ]
+        });
+
+        $('#tablePop1Penjualan').addClass("scrollable");
 
       }).fail(function(x){
         console.log("Pengambilan data barang gagal", 'Perhatian!');

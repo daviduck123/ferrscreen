@@ -28,6 +28,7 @@ class Penjualan extends CI_Controller {
 	 	$this->load->model('Supplier_Model');
 	 	$this->load->model('Toko_Model');
 	 	$this->load->model('User_Model');
+	 	$this->load->model('DetailBarang_Model');
     }
 
 	public function index()
@@ -44,7 +45,6 @@ class Penjualan extends CI_Controller {
 		$dataSupplier = $this->Supplier_Model->get_allSupplier();
 		$dataToko = $this->Toko_Model->get_allToko();
 		$dataUser = $this->User_Model->get_allUser();
-
 		//print_r($dataUser);
 		//exit();
 
