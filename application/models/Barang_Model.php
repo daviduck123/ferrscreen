@@ -186,16 +186,16 @@ class Barang_Model extends CI_Model {
         $sql = "SELECT * FROM barang ";
         $array = array();
         if(isset($kode)){
-            $sql .= " WHERE kode = ? ";
-            array_push($array, $kode);
+            $strKode = " LIKE '%".$kode."%'";
+            $sql .= " WHERE kode = ".$strKode;
         }
         if(isset($nama)){
+             $strNama = " LIKE '%".$strNama."%'";
             if(isset($kode)){
-                $sql .= " AND nama = ?";
+                $sql .= " AND nama = ". $strNama;
             }else{
-                $sql .= " WHERE nama = ?";
+                $sql .= " WHERE nama = ". $strNama;
             }
-            array_push($array, $nama);
         }
         if(isset($merk)){
             if(isset($kode) || isset($nama)){
