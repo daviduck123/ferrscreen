@@ -406,8 +406,17 @@ class Barang extends CI_Controller {
 	       	$namaBarang	= $this->input->post('namaBarang');
 			$id_merk	= $this->input->post('id_merk');
 
-			$result = $this->Barang_Model->get_barangBySearch($kodeBarang, $namaBarang, $id_merk);
+			if($kodeBarang == null || $kodeBarang == ""){
+				$kodeBarang = null;
+			}
+			if($namaBarang == null || $namaBarang == ""){
+				$namaBarang = null;
+			}
+			if($id_merk == null || $id_merk == ""){
+				$id_merk = null;
+			}
 
+			$result = $this->Barang_Model->get_barangBySearch($kodeBarang, $namaBarang, $id_merk);
 			if(count($result) > 0)
 			{
 				echo json_encode($result);
