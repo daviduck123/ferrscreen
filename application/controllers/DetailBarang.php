@@ -24,7 +24,7 @@ class DetailBarang extends CI_Controller {
         parent::__construct();
 	 	$this->load->model('DetailBarang_Model');
 	 	$this->load->model('Supplier_Model');
-	 	$this->load->model('SupplierDetailBarang_Model');
+	 	//$this->load->model('SupplierDetailBarang_Model');
 	 	$this->load->model('Merk_Model');
 	 	$this->load->model('Type_Model');
     }

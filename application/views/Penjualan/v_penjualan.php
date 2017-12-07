@@ -100,7 +100,73 @@
               </div>
             </div>
             <div class="form-actions">
-              <table id ="mainTabelPenjualan" class="table nowrap" cellspacing="0" width="100%">
+              <table id ="mainTabelPenjualan" class="table scrollable nowrap" cellspacing="0" width="100%">
+                <thead>
+                      <tr>
+                        <th>Nomor</th>
+                        <th>Nama</th>
+                        <th>Kode</th>
+                        <th>Harga</th>
+                        <th>Jumlah</th>
+                        <th>Sub Total</th>
+                        <th>Keterangan</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="gradeX">
+                      <td></td>
+                      <td>
+                        <input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled>
+                        <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>
+                      </td>
+                      <td>
+                        <input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled>
+                        <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>
+                      </td>
+                      <td>
+                        <input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">
+                      </td>
+                      <td>
+                        <input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">
+                      </td>
+                      <td>
+                        <input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>
+                      </td>
+                      <td>
+                        <textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>
+                      </td>
+                      <td class="center">
+                        <a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>
+                      </td>
+                    </tr>
+                    <tr class="gradeX">
+                      <td></td>
+                      <td>
+                        <input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled>
+                        <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>
+                      </td>
+                      <td>
+                        <input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled>
+                        <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>
+                      </td>
+                      <td>
+                        <input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">
+                      </td>
+                      <td>
+                        <input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">
+                      </td>
+                      <td>
+                        <input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>
+                      </td>
+                      <td>
+                        <textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>
+                      </td>
+                      <td class="center">
+                        <a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>
+                      </td>
+                    </tr>
+                    </tbody>
               </table>
             </div>
             <div class="control-group row-fluid">
@@ -179,8 +245,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-github" onClick="batalPop1" data-dismiss="modal">Kembali</button>
-                <button class="btn btn-github" onClick="updatePop1" data-dismiss="modal">Update</button>
+                <button class="btn btn-github" onClick="" data-dismiss="modal">Kembali</button>
+                <button class="btn btn-github" onClick="refreshMainTable();" data-dismiss="modal">Update</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -208,28 +274,43 @@
 <script src="<?php echo asset_url();?>js/matrix.form_common.js"></script> 
 <script src="<?php echo asset_url();?>js/jquery.peity.min.js"></script> 
 <script type="text/javascript" charset="utf-8">
+  var dataMainTable=[];
   var dataBarangPilihan=[];
   var dataBarangPop1Dipilih=[];
 
-  $('#mainTabelPenjualan').DataTable( {
-              destroy: true,
-              data: [],
-              columns: [
-                  { title: "Nomor" },
-                  { title: "Nama Barang" },
-                  { title: "Kode" },
-                  { title: "Harga" },
-                  { title: "Jumlah" },
-                  { title: "Sub Total" },
-                  { title: "keterangan" }
-              ]
-          });
-  
+  $(document).ready(function() 
+  {
+    $('#mainTabelPenjualan').DataTable( {
+                destroy: true,
+                "scrollX": true,
+                data: [ 
+                        [ '',
+                        '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
+                        '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
+                        '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
+                        '<input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">',
+                        '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>',
+                        '<textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>',
+                        '<a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>'
+                      ]
+                      ],
+                columns: [
+                    { title: "Nomor" },
+                    { title: "Nama Barang" },
+                    { title: "Kode" },
+                    { title: "Harga" },
+                    { title: "Jumlah" },
+                    { title: "Sub Total" },
+                    { title: "keterangan" },
+                    { title: "aksi" }
+                ]
+    });
+  });
 
   function refreshMainTable()
   {
-    $tempHapus=[];
-    $tempTambah=[];
+    var tempHapus=[];
+    var tempTambah=[];
     //CEK APAKAH ADA DATA DIHAPUS
     for (var i=0;i<dataBarangPilihan.length;i++)
     {
@@ -243,7 +324,7 @@
 
       if(!cek)
       {
-        $tempHapus.push(dataBarangPilihan[i])
+        tempHapus.push(dataBarangPilihan[i])
       }
     }
     //hapus data, karena diupdatean baru nggak ada
@@ -266,7 +347,7 @@
 
       if(!cek)
       {
-        $tempTambah.push(dataBarangPop1Dipilih[i])
+        tempTambah.push(dataBarangPop1Dipilih[i])
       }
     }
     //tambah data, karena diupdatean ada data baru
@@ -286,35 +367,87 @@
           type: 'POST'
         }).done(function(dataDetailBarang){
 
-          console.log(dataDetailBarang);
+          var parseDataDetailBarang = JSON.parse(dataDetailBarang);
+          console.log(parseDataDetailBarang);
+          console.log(parseDataDetailBarang["dataDetailBarang"]);
+          console.log(parseDataDetailBarang["dataDetailBarang"][0]);
 
-          /*
-          $('#mainTabelPenjualan').DataTable( {
+          /* MACET DISINI
+          console.log(parseDataDetailBarang["dataDetailBarang"][0]["id_barang"]);
+
+          var dataSet=[];
+
+          for (var i=0;i<parseDataDetailBarang["dataDetailBarang"].length;i++)
+          {
+
+            //LOOPING CEK APAKAH BARANG ADA DI MAIN TABLES
+            var dataBarang = <?php echo json_encode($dataBarang) ?>;
+
+            var cekBarangMainTable=false;
+            for(var iDataMainTable=0; iDataMainTable<dataMainTable.length; iDataMainTable++)
+            {
+              if(dataMainTable[iDataMainTable]["id"]==parseDataDetailBarang["dataDetailBarang"][i]["id"])
+              {
+                cekBarangMainTable=true;
+              }
+            }
+
+            if(cekBarangMainTable==false)
+            {
+              //JIKA BARANG TIDAK ADA, AMBIL NAMA BARANG
+              for (var iDataBarang=0;iDataBarang<dataBarang.length;iDataBarang++)
+              {
+                if(dataBarang[iDataBarang]["id"]==parseDataDetailBarang["dataDetailBarang"][i]["id"])
+                {
+                  cekBarangMainTable=true;
+                  dataMainTable.push(parseDataDetailBarang["dataDetailBarang"][i]);
+                }
+              }
+            }
+
+            if(cek)
+              var temp=[ii,parsedDataBarang[i]["nama"],parsedDataBarang[i]["kode"],parsedDataBarang[i]["nama_merk"],'<a class="btn btn-danger btn-mini" onclick="hapusBarangPop1('+parsedDataBarang[i]["id"]+')" name="btnHapus">Hapus</a>'];
+            else
+              var temp=[ii,parsedDataBarang[i]["nama"],parsedDataBarang[i]["kode"],parsedDataBarang[i]["nama_merk"],'<a class="btn btn-success btn-mini" onclick="tambahBarangPop1('+parsedDataBarang[i]["id"]+')" name="btnTambah">Tambah</a>'];
+
+            dataSet.push(temp);
+          }
+
+          $(document).ready(function() 
+          {
+            $('#mainTabelPenjualan').DataTable( {
               destroy: true,
-              data: dataSet,
-              columns: [
-                  { title: "Nomor" },
-                  { title: "Nama Barang" },
-                  { title: "Kode" },
-                  { title: "Harga" },
-                  { title: "Jumlah" },
-                  { title: "Sub Total" },
-                  { title: "keterangan" }
-              ]
-          });
-
-          $('#mainTabelPenjualan').addClass("scrollable");
-          */
+              "scrollX": true,
+              data: [ 
+                      [ 
+                          '',
+                                '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
+                                '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
+                                '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
+                                '<input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">',
+                                '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>',
+                                '<textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>',
+                                '<a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>'
+                      ]
+                    ],
+                        columns: [
+                            { title: "Nomor" },
+                            { title: "Nama Barang" },
+                            { title: "Kode" },
+                            { title: "Harga" },
+                            { title: "Jumlah" },
+                            { title: "Sub Total" },
+                            { title: "keterangan" },
+                            { title: "aksi" }
+                        ]
+            });
+          });*/
 
         }).fail(function(x){
           console.log("Pengambilan data barang gagal", 'Perhatian!');
         });                 
       });
-
     }
-    
-
-    
   }
 
   function batalPop1()
