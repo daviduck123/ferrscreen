@@ -274,180 +274,107 @@
 <script src="<?php echo asset_url();?>js/matrix.form_common.js"></script> 
 <script src="<?php echo asset_url();?>js/jquery.peity.min.js"></script> 
 <script type="text/javascript" charset="utf-8">
-  var dataMainTable=[];
-  var dataBarangPilihan=[];
+  Array.prototype.remove = function(from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+  };
+
   var dataBarangPop1Dipilih=[];
 
   $(document).ready(function() 
   {
     $('#mainTabelPenjualan').DataTable( {
-                destroy: true,
-                "scrollX": true,
-                data: [ 
-                        [ '',
-                        '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
-                        '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
-                        '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
-                        '<input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">',
-                        '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>',
-                        '<textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>',
-                        '<a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>'
-                      ]
-                      ],
-                columns: [
-                    { title: "Nomor" },
-                    { title: "Nama Barang" },
-                    { title: "Kode" },
-                    { title: "Harga" },
-                    { title: "Jumlah" },
-                    { title: "Sub Total" },
-                    { title: "keterangan" },
-                    { title: "aksi" }
+      destroy: true,
+      "scrollX": true,
+      data: [ 
+                [ 
+                  '',
+                  '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
+                  '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
+                  '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
+                  '<input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">',
+                  '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>',
+                  '<textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>',
+                  '<a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>'
+               ]
+              ],
+      columns: [
+                  { title: "Nomor" },
+                  { title: "Nama Barang" },
+                  { title: "Kode" },
+                  { title: "Harga" },
+                  { title: "Jumlah" },
+                  { title: "Sub Total" },
+                  { title: "keterangan" },
+                  { title: "aksi" }
                 ]
-    });
+      });
   });
 
   function refreshMainTable()
   {
-    var tempHapus=[];
-    var tempTambah=[];
-    //CEK APAKAH ADA DATA DIHAPUS
-    for (var i=0;i<dataBarangPilihan.length;i++)
-    {
-      var cek=false;
-
-      for(var x=0; x<dataBarangPilihan.length; x++)
-      {
-        if(dataBarangPilihan[i]==dataBarangPop1Dipilih[x])
-          cek=true
-      }
-
-      if(!cek)
-      {
-        tempHapus.push(dataBarangPilihan[i])
-      }
-    }
-    //hapus data, karena diupdatean baru nggak ada
-    for (var i=0;i<tempHapus.length;i++)
-    {
-      var index = dataBarangPilihan.indexOf(tempHapus[i]);
-      dataBarangPilihan.splice(index, 1);
-    }
-
-    //CEK APAKAH ADA DATA YANG BERTAMBAH
+    var dataSet = [
+              [ 
+                  '',
+                  '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
+                  '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
+                  '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
+                  '<input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">',
+                  '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>',
+                  '<textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>',
+                  '<a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>'
+               ]
+    ];
     for (var i=0;i<dataBarangPop1Dipilih.length;i++)
     {
-      var cek=false;
-
-      for(var x=0; x<dataBarangPop1Dipilih.length; x++)
+      var ii=i+1;
+      var nama_barang = dataBarangPop1Dipilih[i][0][1]["nama"];
+      var kode="";
+      //var nama_merk;
+      
+      for (var x=0;x<dataBarangPop1Dipilih[i].length;x++)
       {
-        if(dataBarangPop1Dipilih[i]==dataBarangPilihan[x])
-          cek=true
+        console.log(dataBarangPop1Dipilih[i][x][0]["kode"]);
+        if(dataBarangPop1Dipilih[i].length>1 && x==0)
+        {
+          kode += dataBarangPop1Dipilih[i][x][0]["kode"]+"<br>";
+          //nama_merk = dataBarangPop1Dipilih[i][x][0]["nama_merk"];
+        }
+        else
+        {
+          kode += dataBarangPop1Dipilih[i][x][0]["kode"];
+        }
       }
 
-      if(!cek)
-      {
-        tempTambah.push(dataBarangPop1Dipilih[i])
-      }
+      var temp =  [
+                    ii, 
+                    nama_barang,
+                    kode,
+                    '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
+                    '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
+                    '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled="">',
+                    '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled="">',
+                    '<a href="http://localhost/ferrscreen/penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah Harga</a>'
+                  ];
+      dataSet.push(temp);
     }
-    //tambah data, karena diupdatean ada data baru
-    for (var i=0;i<tempTambah.length;i++)
-    {
-      dataBarangPilihan.push(tempTambah[i]);
-    }
 
-    //AMBIL DETAIL BARANG
-    for(var i=0; i<dataBarangPilihan.length;i++)
-    {
-      var link="detailBarang/allDetailBarangByIdBarang";
-      $(document).ready(function(){
-        $.ajax({ 
-          url: link,
-          data:{ id:dataBarangPilihan[i]}, 
-          type: 'POST'
-        }).done(function(dataDetailBarang){
-
-          var parseDataDetailBarang = JSON.parse(dataDetailBarang);
-          console.log(parseDataDetailBarang);
-          console.log(parseDataDetailBarang["dataDetailBarang"]);
-          console.log(parseDataDetailBarang["dataDetailBarang"][0]);
-
-          /* MACET DISINI
-          console.log(parseDataDetailBarang["dataDetailBarang"][0]["id_barang"]);
-
-          var dataSet=[];
-
-          for (var i=0;i<parseDataDetailBarang["dataDetailBarang"].length;i++)
-          {
-
-            //LOOPING CEK APAKAH BARANG ADA DI MAIN TABLES
-            var dataBarang = <?php echo json_encode($dataBarang) ?>;
-
-            var cekBarangMainTable=false;
-            for(var iDataMainTable=0; iDataMainTable<dataMainTable.length; iDataMainTable++)
-            {
-              if(dataMainTable[iDataMainTable]["id"]==parseDataDetailBarang["dataDetailBarang"][i]["id"])
-              {
-                cekBarangMainTable=true;
-              }
-            }
-
-            if(cekBarangMainTable==false)
-            {
-              //JIKA BARANG TIDAK ADA, AMBIL NAMA BARANG
-              for (var iDataBarang=0;iDataBarang<dataBarang.length;iDataBarang++)
-              {
-                if(dataBarang[iDataBarang]["id"]==parseDataDetailBarang["dataDetailBarang"][i]["id"])
-                {
-                  cekBarangMainTable=true;
-                  dataMainTable.push(parseDataDetailBarang["dataDetailBarang"][i]);
-                }
-              }
-            }
-
-            if(cek)
-              var temp=[ii,parsedDataBarang[i]["nama"],parsedDataBarang[i]["kode"],parsedDataBarang[i]["nama_merk"],'<a class="btn btn-danger btn-mini" onclick="hapusBarangPop1('+parsedDataBarang[i]["id"]+')" name="btnHapus">Hapus</a>'];
-            else
-              var temp=[ii,parsedDataBarang[i]["nama"],parsedDataBarang[i]["kode"],parsedDataBarang[i]["nama_merk"],'<a class="btn btn-success btn-mini" onclick="tambahBarangPop1('+parsedDataBarang[i]["id"]+')" name="btnTambah">Tambah</a>'];
-
-            dataSet.push(temp);
-          }
-
-          $(document).ready(function() 
-          {
-            $('#mainTabelPenjualan').DataTable( {
-              destroy: true,
-              "scrollX": true,
-              data: [ 
-                      [ 
-                          '',
-                                '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
-                                '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
-                                '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
-                                '<input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">',
-                                '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>',
-                                '<textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>',
-                                '<a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>'
-                      ]
-                    ],
-                        columns: [
-                            { title: "Nomor" },
-                            { title: "Nama Barang" },
-                            { title: "Kode" },
-                            { title: "Harga" },
-                            { title: "Jumlah" },
-                            { title: "Sub Total" },
-                            { title: "keterangan" },
-                            { title: "aksi" }
-                        ]
-            });
-          });*/
-
-        }).fail(function(x){
-          console.log("Pengambilan data barang gagal", 'Perhatian!');
-        });                 
-      });
-    }
+    $('#mainTabelPenjualan').DataTable( {
+      destroy: true,
+      "scrollX": true,
+      data: dataSet,
+      columns: [
+        { title: "Nomor" },
+        { title: "Nama Barang" },
+        { title: "Kode" },
+        { title: "Harga" },
+        { title: "Jumlah" },
+        { title: "Sub Total" },
+        { title: "keterangan" },
+        { title: "aksi" }
+      ]
+    });
   }
 
   function batalPop1()
@@ -472,21 +399,64 @@
     var cek=false;
     for(var x=0; x<dataBarangPop1Dipilih.length; x++)
     {
-      console.log(id+"|"+dataBarangPop1Dipilih[x]);
+      //console.log(id+"|"+dataBarangPop1Dipilih[x]);
       if(id==dataBarangPop1Dipilih[x])
-        cek=true
+        cek=true;
     }
 
     if(!cek)
-      dataBarangPop1Dipilih.push(id);
+    {
+      var link="detailBarang/allDetailBarangByIdBarang";
+      $(document).ready(function(){
+        $.ajax({ 
+          url: link,
+          data:{ id:id}, 
+          type: 'POST'
+        }).done(function(dataDetailBarang){
 
-    console.log(dataBarangPop1Dipilih);
-    //refresh datatables
-    cariBarang("refresh");
+          var parseDataDetailBarang = JSON.parse(dataDetailBarang);
+          //console.log(parseDataDetailBarang);
+          //console.log(parseDataDetailBarang["dataDetailBarang"]);
+          //console.log(parseDataDetailBarang["dataDetailBarang"][0]);
+          //console.log(parseDataDetailBarang["dataDetailBarang"][0]["id_barang"]);
+
+          var text;
+          var cek=0;
+          var dataPerId=[];
+          for (var i=0;i<parseDataDetailBarang["dataDetailBarang"].length;i++)
+          {
+            text = '{"'+id+'":[';
+            //AMBIL DATA BARANG
+            var dataBarang = <?php echo json_encode($dataBarang) ?>;
+            var temp =[];
+            for (var x=0;x<dataBarang.length;x++)
+            {
+              if(dataBarang[x]["id"]==parseDataDetailBarang["dataDetailBarang"][i]["id_barang"])
+              {
+                temp.push(parseDataDetailBarang["dataDetailBarang"][i]);
+                temp.push(dataBarang[x]);
+              }
+            }
+            dataPerId.push(temp);
+            text += ']';
+          }
+          text += '}';
+          dataBarangPop1Dipilih.push(dataPerId);
+          //console.log(dataBarangPop1Dipilih.length);
+          console.log(dataBarangPop1Dipilih);
+          //console.log(dataBarangPop1Dipilih[0][0][0]["id"]);
+          cariBarang("refresh");
+
+        }).fail(function(x){
+          console.log("Pengambilan data barang gagal", 'Perhatian!');
+        });  
+      }); 
+    }
   }
 
   function hapusBarangPop1(id)
   {
+    //DISINI MASIH RANCU
     var index = dataBarangPop1Dipilih.indexOf(id);
     dataBarangPop1Dipilih.splice(index, 1);
 
@@ -521,8 +491,12 @@
           var cek=false;
           for(var x=0; x<dataBarangPop1Dipilih.length; x++)
           {
-            if(parsedDataBarang[i]["id"]==dataBarangPop1Dipilih[x])
-              cek=true
+            if(parsedDataBarang[i]["id"]==dataBarangPop1Dipilih[x][0][0]["id_barang"])
+            {
+              cek=true;
+              //console.log(parsedDataBarang[i]["id"]);
+              //console.log(dataBarangPop1Dipilih[x][0][0]["id_barang"]);
+            }
           }
 
           if(cek)
@@ -544,8 +518,6 @@
                 { title: "Aksi" }
             ]
         });
-
-        $('#tablePop1Penjualan').addClass("scrollable");
 
       }).fail(function(x){
         console.log("Pengambilan data barang gagal", 'Perhatian!');
