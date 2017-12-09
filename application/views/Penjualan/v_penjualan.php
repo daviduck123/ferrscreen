@@ -675,21 +675,37 @@
         var nama_barang = "";
         var nama_merk = "";
         var kode = "";
+        var pilihSupplierPop2 = "";
         for (var x=0;x<dataBarangPopDipilih[i].length;x++)
         {
           if(dataBarangPopDipilih[i][x][0]["id_barang"]==id_barang)
           {
+            var namaList = "selectPop2Supplier"+dataBarangPopDipilih[i][x][0]["id"];
+            pilihSupplierPop2 = renderSelectOption(dataBarangPopDipilih[i][x][0]["id"],namaList,i,x);
             var ii=i+1;
             nama_barang = dataBarangPopDipilih[i][x][1]["nama"];
             nama_merk = dataBarangPopDipilih[i][x][0]["nama_merk"];
             kode = dataBarangPopDipilih[i][x][0]["kode"];
+            var  dataSupplier = "";
+
+            if(dataBarangPopDipilih[i][x].length>2)
+            {
+              for (var y=0;y<dataBarangPopDipilih[i][x].length;y++)
+              {
+                if(y>1)
+                {
+                  dataSupplier += '<br><input type="text" value="'+dataBarangPopDipilih[i][x][y]["nama_supplier"]+'" placeholder="" disabled><input type="text" value="'+dataBarangPopDipilih[i][x][y]["jumlah_barang"]+'" placeholder="" disabled>';
+                }
+              }
+            }
+
             var temp =  [
                       ii, 
                       nama_barang,
                       kode,
                       nama_merk,
-                      nama_merk,
-                      '<center><a href="#pop2TabelPenjualan" onclick="openSecondTable('+id_barang+')" data-toggle="modal" data-id="'+id_barang+'" title="Add this item" class="btn btn-info btn-mini" role="button">Tambah Harga</a></center>'
+                      pilihSupplierPop2+'<input type="text" name= "jumlahBarangPop2'+dataBarangPopDipilih[i][x][0]["id"]+'" id="jumlahBarangPop'+dataBarangPopDipilih[i][x][0]["id"]+'" placeholder="Jumlah"></center>'+dataSupplier,
+                      '<center><a href="#pop2TabelPenjualan" onclick="tambahSupplier('+dataBarangPopDipilih[i][x][0]["id"]+','+i+','+x+','+id_barang+')" class="btn btn-info btn-mini" role="button">Tambah</a></center>'
                     ];
             dataSet.push(temp);
           }
@@ -705,12 +721,63 @@
           { title: "Nama Barang" },
           { title: "Kode" },
           { title: "Merk" },
-          { title: "Merk" },
+          { title: "Status" },
           { title: "Aksi" }
         ]
       });
     });
   }
+
+  function renderSelectOption(id,nama_tempat,depan,belakang)
+  {
+    var selectOption = "";
+    selectOption += "<select name='"+nama_tempat+"' id='"+nama_tempat+"' class='selectPop2Supplier'>;";
+    selectOption += "<option >Pilih Supplier</option>"; 
+    for(var i = 0 ; i < dataBarangPopDipilih[depan][belakang][1]["supplier_barang"].length; i++){
+       selectOption += "<option  value="+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][0]["id_supplier"]+">"+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][0]["nama_supplier"]+"</option>";
+    }
+    selectOption +='</select>';
+    return selectOption;
+  }
+
+  function tambahSupplier(id,depan,belakang,id_barang)
+  {
+    var id_supplier = $('#selectPop2Supplier'+id).val();
+    var nama_supplier = $('#selectPop2Supplier'+id+' option:selected').text();
+    var jumlah = $('#jumlahBarangPop'+id).val();
+
+    var data = {id_supplier:id_supplier, nama_supplier:nama_supplier, jumlah_barang:jumlah};
+
+    if(jumlah=="" || jumlah==null)
+      jumlah=0;
+
+    if(id_supplier!='' || id_supplier!= null)
+    {
+      for (var x=0;x<dataBarangPopDipilih[depan][belakang].length;x++)
+      {
+        if(dataBarangPopDipilih[depan][belakang][x][id_supplier]!=id_supplier)
+          dataBarangPopDipilih[depan][belakang].push(data);
+        else
+          dataBarangPopDipilih[depan][belakang]["jumlah"]=jumlah;
+      
+        openPop2(id_barang);
+      }
+    }
+    else
+      alert("Mohon pilih supplier barang");
+  }
+
+  /*
+  $('body').on('change', '.selectPop2Supplier', function() {
+
+    var nama_selector = this.id;
+    var id = nama_selector.replace('selectPop2Supplier','');
+    var id_supplier = $('.test')
+    var jumlah = $('#jumlahBarangPop'+id).val();
+    alert('#jumlahBarangPop'+id);
+    alert(jumlah);
+  });
+  */
 </script>
 </body>
 </html>
