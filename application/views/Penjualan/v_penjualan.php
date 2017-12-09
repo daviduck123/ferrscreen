@@ -427,6 +427,7 @@
       var id_barang = dataBarangPopDipilih[i][0][0]["id_barang"];
       //var nama_merk;
       
+      var jumlah = 0;
       for (var x=0;x<dataBarangPopDipilih[i].length;x++)
       {
         //console.log(dataBarangPopDipilih[i][x][0]["kode"]);
@@ -439,6 +440,9 @@
         {
           kode += dataBarangPopDipilih[i][x][0]["kode"];
         }
+
+        if( dataBarangPopDipilih[i][x].length>2)
+          jumlah += parseInt(dataBarangPopDipilih[i][x][2]["jumlah_barang"]);
       }
 
       var temp =  [
@@ -446,10 +450,10 @@
                     nama_barang,
                     kode,
                     '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
-                    '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
-                    '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled="">',
-                    '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled="">',
-                    '<a href="#pop2TabelPenjualan" onclick="openPop2('+id_barang+')" data-toggle="modal" data-id="'+id_barang+'" title="Add this item" class="btn btn-info btn-mini" role="button">Tambah Harga</a>'
+                    '<input type="text" name="jumlahBarangTabelPenjualan" id="jumlahBarangTabelPenjualan" placeholder="Masukkan jumlah" value="'+jumlah+'" disabled>',
+                    '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" value="0" disabled>',
+                    '<textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>',
+                    '<a href="#pop2TabelPenjualan" onclick="openPop2('+id_barang+')" data-toggle="modal" data-id="'+id_barang+'" title="Add this item" class="btn btn-warning btn-mini" role="button">Tambah Jumlah</a>'
                   ];
       dataSet.push(temp);
     }
@@ -746,25 +750,33 @@
     var nama_supplier = $('#selectPop2Supplier'+id+' option:selected').text();
     var jumlah = $('#jumlahBarangPop'+id).val();
 
-    var data = {id_supplier:id_supplier, nama_supplier:nama_supplier, jumlah_barang:jumlah};
-
-    if(jumlah=="" || jumlah==null)
-      jumlah=0;
-
-    if(id_supplier!='' || id_supplier!= null)
+    if(id_supplier == 'Pilih Supplier')
+      alert("Mohon pilih supplier barang");
+    else
     {
+      if(jumlah=="" || jumlah==null)
+        alert("Mohon isi jumlah barang");
+
+      var data = {id_supplier:id_supplier, nama_supplier:nama_supplier, jumlah_barang:jumlah};
+
+      var cek = false;
       for (var x=0;x<dataBarangPopDipilih[depan][belakang].length;x++)
       {
-        if(dataBarangPopDipilih[depan][belakang][x][id_supplier]!=id_supplier)
-          dataBarangPopDipilih[depan][belakang].push(data);
-        else
-          dataBarangPopDipilih[depan][belakang]["jumlah"]=jumlah;
-      
-        openPop2(id_barang);
+        if(dataBarangPopDipilih[depan][belakang][x]["id_supplier"]==id_supplier)
+        {
+          cek = true;
+        }
       }
+
+      if(cek==true)
+      {
+        dataBarangPopDipilih[depan][belakang][2]["jumlah_barang"]=jumlah;
+      }
+      else
+        dataBarangPopDipilih[depan][belakang].push(data);
+
+      openPop2(id_barang);
     }
-    else
-      alert("Mohon pilih supplier barang");
   }
 
   /*
