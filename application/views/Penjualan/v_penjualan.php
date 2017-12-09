@@ -215,7 +215,7 @@
                     <span class="icon"><b>Data</b></span>
                   </div>
                   <div class="widget-content nopadding">
-                    <div class="container control-group" style="margin-bottom:10px; margin-top:10px">
+                    <div class="container control-group" style="margin-bottom:10px; margin-top:10px;">
                       <div class="span6">
                           <label class="control-label">Kode</label>
                           <div class="controls">
@@ -265,7 +265,7 @@
                 <button class="btn btn-github" onClick="refreshMainTable();" data-dismiss="modal">Update</button>
             </div>
         </div>
-        <!-- /.modal-content -->
+        <!-- /.modal-content -->  
     </div>
     <!-- /.modal-dialog -->
 </div>
@@ -288,10 +288,28 @@
                   </div>
                   <div class="widget-content nopadding">
                     <div class="control-group">
-                      <table id="tablepop2Penjualan" class="table table-bordered" cellspacing="0" width="100%">
+                      <table id="tablepop2Penjualan" class="table table-bordered display" cellspacing="0" width="100%">
+                        <thead>
+                          <tr>
+                            <th>Nomor</th>
+                            <th>Nama Barang</th>
+                            <th>Kode</th>
+                            <th>Merk</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tbody>
                       </table>
                     </div> 
-                    <div class="container control-group" style="margin-bottom:10px; margin-top:10px">
+                    <!--<div class="container control-group" style="margin-bottom:10px; margin-top:10px">
                       <div class="span6">
                           <label class="control-label">Kode</label>
                           <div class="controls">
@@ -309,7 +327,7 @@
                             <input onclick="cariBarang(this.value);" type="submit" name="btnCari" value="btnCari" class="btn btn-info">
                           </div>
                       </div>
-                    </div>
+                    </div>-->
                   </div>
                 </div>
               </div>
@@ -337,7 +355,7 @@
 <script src="<?php echo asset_url();?>js/bootstrap.min.js"></script> 
 <script src="<?php echo asset_url();?>js/jquery.uniform.js"></script> 
 <script src="<?php echo asset_url();?>js/select2.min.js"></script> 
-<script src="<?php echo asset_url();?>js/jquery.dataTables.min.js"></script> 
+<script src="<?php echo asset_url();?>js/datatables.min.js"></script>
 <script src="<?php echo asset_url();?>js/matrix.js"></script> 
 <script src="<?php echo asset_url();?>js/matrix.tables.js"></script>
 <script src="<?php echo asset_url();?>js/bootstrap-datepicker.js"></script> 
@@ -352,7 +370,9 @@
     return this.push.apply(this, rest);
   };
 
-  var dataBarangPop1Dipilih=[];
+  var dataBarangPopDipilih=[];
+
+  //SCRIPT MAIN TABLE
 
   $(document).ready(function() 
   {
@@ -368,7 +388,7 @@
                   '<input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">',
                   '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>',
                   '<textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>',
-                  '<a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>'
+                  ''
                ]
               ],
       columns: [
@@ -378,15 +398,15 @@
                   { title: "Harga" },
                   { title: "Jumlah" },
                   { title: "Sub Total" },
-                  { title: "keterangan" },
-                  { title: "aksi" }
+                  { title: "Keterangan" },
+                  { title: "Aksi" }
                 ]
       });
   });
 
   function refreshMainTable()
   {
-    console.log(dataBarangPop1Dipilih);
+    console.log(dataBarangPopDipilih);
     var dataSet = [
               [ 
                   '',
@@ -396,28 +416,28 @@
                   '<input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">',
                   '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>',
                   '<textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>',
-                  '<a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>'
+                  ''
                ]
     ];
-    for (var i=0;i<dataBarangPop1Dipilih.length;i++)
+    for (var i=0;i<dataBarangPopDipilih.length;i++)
     {
       var ii=i+1;
-      var nama_barang = dataBarangPop1Dipilih[i][0][1]["nama"];
+      var nama_barang = dataBarangPopDipilih[i][0][1]["nama"];
       var kode="";
-      var id_barang = dataBarangPop1Dipilih[i][0][0]["id_barang"];
+      var id_barang = dataBarangPopDipilih[i][0][0]["id_barang"];
       //var nama_merk;
       
-      for (var x=0;x<dataBarangPop1Dipilih[i].length;x++)
+      for (var x=0;x<dataBarangPopDipilih[i].length;x++)
       {
-        //console.log(dataBarangPop1Dipilih[i][x][0]["kode"]);
-        if(dataBarangPop1Dipilih[i].length>1 && x==0)
+        //console.log(dataBarangPopDipilih[i][x][0]["kode"]);
+        if(dataBarangPopDipilih[i].length>1 && x==0)
         {
-          kode += dataBarangPop1Dipilih[i][x][0]["kode"]+"<br>";
-          //nama_merk = dataBarangPop1Dipilih[i][x][0]["nama_merk"];
+          kode += dataBarangPopDipilih[i][x][0]["kode"]+"<br>";
+          //nama_merk = dataBarangPopDipilih[i][x][0]["nama_merk"];
         }
         else
         {
-          kode += dataBarangPop1Dipilih[i][x][0]["kode"];
+          kode += dataBarangPopDipilih[i][x][0]["kode"];
         }
       }
 
@@ -429,7 +449,7 @@
                     '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
                     '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled="">',
                     '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled="">',
-                    '<a href="#pop2TabelPenjualan" onclick="openSecondTable('+id_barang+')" data-toggle="modal" data-id="'+id_barang+'" title="Add this item" class="btn btn-info btn-mini" role="button">Tambah Harga</a>'
+                    '<a href="#pop2TabelPenjualan" onclick="openPop2('+id_barang+')" data-toggle="modal" data-id="'+id_barang+'" title="Add this item" class="btn btn-info btn-mini" role="button">Tambah Harga</a>'
                   ];
       dataSet.push(temp);
     }
@@ -445,20 +465,22 @@
         { title: "Harga" },
         { title: "Jumlah" },
         { title: "Sub Total" },
-        { title: "keterangan" },
-        { title: "aksi" }
+        { title: "Keterangan" },
+        { title: "Aksi" }
       ]
     });
   }
 
+  //SCRIPT POP 1 TABLE
+
   function batalPop1()
   {
-    dataBarangPop1Dipilih=dataBarangPilihan;
+    dataBarangPopDipilih=dataBarangPilihan;
   }
 
   function updatePop1()
   {
-    dataBarangPop1Dipilih=dataBarangPilihan;
+    dataBarangPopDipilih=dataBarangPilihan;
 
     //refresh MAIN datatables
   }
@@ -471,10 +493,10 @@
   function tambahBarangPop1(id)
   {
     var cek=false;
-    for(var x=0; x<dataBarangPop1Dipilih.length; x++)
+    for(var x=0; x<dataBarangPopDipilih.length; x++)
     {
-      //console.log(id+"|"+dataBarangPop1Dipilih[x]);
-      if(id==dataBarangPop1Dipilih[x])
+      //console.log(id+"|"+dataBarangPopDipilih[x]);
+      if(id==dataBarangPopDipilih[x])
         cek=true;
     }
 
@@ -515,10 +537,10 @@
             text += ']';
           }
           text += '}';
-          dataBarangPop1Dipilih.push(dataPerId);
-          //console.log(dataBarangPop1Dipilih.length);
-          console.log(dataBarangPop1Dipilih);
-          //console.log(dataBarangPop1Dipilih[0][0][0]["id"]);
+          dataBarangPopDipilih.push(dataPerId);
+          //console.log(dataBarangPopDipilih.length);
+          console.log(dataBarangPopDipilih);
+          //console.log(dataBarangPopDipilih[0][0][0]["id"]);
           cariBarang("refresh");
 
         }).fail(function(x){
@@ -531,8 +553,8 @@
   function hapusBarangPop1(id)
   {
     //DISINI MASIH RANCU
-    var index = dataBarangPop1Dipilih.indexOf(id);
-    dataBarangPop1Dipilih.splice(index, 1);
+    var index = dataBarangPopDipilih.indexOf(id);
+    dataBarangPopDipilih.splice(index, 1);
 
     //refresh datatables
     cariBarang("refresh");
@@ -563,13 +585,13 @@
         {
           var ii=i+1;
           var cek=false;
-          for(var x=0; x<dataBarangPop1Dipilih.length; x++)
+          for(var x=0; x<dataBarangPopDipilih.length; x++)
           {
-            if(parsedDataBarang[i]["id"]==dataBarangPop1Dipilih[x][0][0]["id_barang"])
+            if(parsedDataBarang[i]["id"]==dataBarangPopDipilih[x][0][0]["id_barang"])
             {
               cek=true;
               //console.log(parsedDataBarang[i]["id"]);
-              //console.log(dataBarangPop1Dipilih[x][0][0]["id_barang"]);
+              //console.log(dataBarangPopDipilih[x][0][0]["id_barang"]);
             }
           }
 
@@ -641,6 +663,54 @@
     $("#tempatPop1ListMerkPenjualan").html(optionMerk);
 
   });
+
+
+  //SCRIPT POP 2 TABLE
+  function openPop2(id_barang)
+  {
+    $(document).ready(function(){
+      var dataSet = [];
+      for (var i=0;i<dataBarangPopDipilih.length;i++)
+      {
+        var nama_barang = "";
+        var nama_merk = "";
+        var kode = "";
+        for (var x=0;x<dataBarangPopDipilih[i].length;x++)
+        {
+          if(dataBarangPopDipilih[i][x][0]["id_barang"]==id_barang)
+          {
+            var ii=i+1;
+            nama_barang = dataBarangPopDipilih[i][x][1]["nama"];
+            nama_merk = dataBarangPopDipilih[i][x][0]["nama_merk"];
+            kode = dataBarangPopDipilih[i][x][0]["kode"];
+            var temp =  [
+                      ii, 
+                      nama_barang,
+                      kode,
+                      nama_merk,
+                      nama_merk,
+                      '<center><a href="#pop2TabelPenjualan" onclick="openSecondTable('+id_barang+')" data-toggle="modal" data-id="'+id_barang+'" title="Add this item" class="btn btn-info btn-mini" role="button">Tambah Harga</a></center>'
+                    ];
+            dataSet.push(temp);
+          }
+        }      
+      }
+
+      $('#tablepop2Penjualan').DataTable( {
+        destroy: true,
+        "scrollX": true,
+        data: dataSet,
+        columns: [
+          { title: "Nomor" },
+          { title: "Nama Barang" },
+          { title: "Kode" },
+          { title: "Merk" },
+          { title: "Merk" },
+          { title: "Aksi" }
+        ]
+      });
+    });
+  }
 </script>
 </body>
 </html>
