@@ -382,12 +382,12 @@
       data: [ 
                 [ 
                   '',
-                  '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
-                  '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
-                  '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
-                  '<input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">',
-                  '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>',
-                  '<textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>',
+                  '<a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Tambah</a>',
+                  '<a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Tambah</a>',
+                  '',
+                  '',
+                  '',
+                  '',
                   ''
                ]
               ],
@@ -410,12 +410,12 @@
     var dataSet = [
               [ 
                   '',
-                  '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
-                  '<input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled> <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>',
-                  '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
-                  '<input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">',
-                  '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>',
-                  '<textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>',
+                  '<a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Tambah</a>',
+                  '<a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Tambah</a>',
+                  '',
+                  '',
+                  '',
+                  '',
                   ''
                ]
     ];
@@ -445,13 +445,18 @@
           jumlah += parseInt(dataBarangPopDipilih[i][x][2]["jumlah_barang"]);
       }
 
+      var harga = $('#hargaTabelPenjualan'+id_barang).val();
+      if(harga == null)
+        harga=0;
+      var subTotal = jumlah*harga;
+
       var temp =  [
                     ii, 
                     nama_barang,
                     kode,
-                    '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
-                    '<input type="text" name="jumlahBarangTabelPenjualan" id="jumlahBarangTabelPenjualan" placeholder="Masukkan jumlah" value="'+jumlah+'" disabled>',
-                    '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" value="0" disabled>',
+                    '<input type="text" class="hargaMainTable" name="hargaTabelPenjualan'+id_barang+'" id="hargaTabelPenjualan'+id_barang+'" placeholder="Masukkan harga" value ="'+harga+'">',
+                    '<input type="text" name="jumlahBarangTabelPenjualan'+id_barang+'" id="jumlahBarangTabelPenjualan'+id_barang+'" placeholder="Masukkan jumlah" value="'+jumlah+'" disabled>',
+                    '<input type="text" name="subTotalTabelPenjualan'+id_barang+'" id="subTotalTabelPenjualan'+id_barang+'" placeholder="Subtotal" value="'+subTotal+'" disabled>',
                     '<textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>',
                     '<a href="#pop2TabelPenjualan" onclick="openPop2('+id_barang+')" data-toggle="modal" data-id="'+id_barang+'" title="Add this item" class="btn btn-warning btn-mini" role="button">Tambah Jumlah</a>'
                   ];
@@ -779,17 +784,18 @@
     }
   }
 
-  /*
-  $('body').on('change', '.selectPop2Supplier', function() {
+  
+  $('body').on("change paste keyup", '.hargaMainTable', function() {
 
-    var nama_selector = this.id;
-    var id = nama_selector.replace('selectPop2Supplier','');
-    var id_supplier = $('.test')
-    var jumlah = $('#jumlahBarangPop'+id).val();
-    alert('#jumlahBarangPop'+id);
-    alert(jumlah);
+    var nama = this.id;
+    var id = nama.replace('hargaTabelPenjualan','');
+
+    var harga = $('#hargaTabelPenjualan'+id).val();
+    var jumlah = $('#jumlahBarangTabelPenjualan'+id).val();
+    var subTotal = parseInt(jumlah)*parseInt(harga);
+
+    $('#subTotalTabelPenjualan'+id).val(subTotal);
   });
-  */
 </script>
 </body>
 </html>
