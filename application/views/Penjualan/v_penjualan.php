@@ -235,8 +235,80 @@
                       </div>
                     </div>
                     <div class="control-group">
-                      <table id="tablePop1Penjualan" class="table table-bordered" cellspacing="0" width="100%">
+                      <table id="tablePop1Penjualan" class="table table-bordered display" cellspacing="0" width="100%">
+                        <thead>
+                          <tr>
+                            <th>Nomor</th>
+                            <th>Nama Barang</th>
+                            <th>Kode</th>
+                            <th>Merk</th>
+                            <th>Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tbody>
                       </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <div id="divDetailBarang">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-github" onClick="" data-dismiss="modal">Kembali</button>
+                <button class="btn btn-github" onClick="refreshMainTable();" data-dismiss="modal">Update</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal-->
+
+<!--modal Detail data-->
+<div class="modal hide"  id="pop2TabelPenjualan" style="width:80%; left:30%; " role="dialog" aria-labelledby="pop2KodeTabelPenjualan" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Masukkan Supplier & Jumlah</h4>
+            </div>
+            <div class = "modal-body">
+             <div class="container-fluid">
+                <div class="widget-box">
+                  <div class="widget-title"> 
+                    <span class="icon"><i class="icon-th"></i></span>
+                    <span class="icon"><b>Data Barang Penjualan</b></span>
+                  </div>
+                  <div class="widget-content nopadding">
+                    <div class="control-group">
+                      <table id="tablepop2Penjualan" class="table table-bordered" cellspacing="0" width="100%">
+                      </table>
+                    </div> 
+                    <div class="container control-group" style="margin-bottom:10px; margin-top:10px">
+                      <div class="span6">
+                          <label class="control-label">Kode</label>
+                          <div class="controls">
+                            <input type="text" name="kodepop2Penjualan" id="kodepop2Penjualan">
+                          </div>
+                          <label class="control-label">Nama Barang</label>
+                          <div class="controls">
+                            <input type="text" name="namaBarangpop2Penjualan" id="namaBarangpop2Penjualan">
+                          </div>
+                      </div>
+                      <div class="span3">
+                          <label class="control-label">Merk</label>
+                          <div id="tempatpop2ListMerkPenjualan"></div>
+                            <input type="hidden" id="hiddenTempatpop2ListMerkPenjualan" name="hiddenTempatpop2ListMerkPenjualan" value="">
+                            <input onclick="cariBarang(this.value);" type="submit" name="btnCari" value="btnCari" class="btn btn-info">
+                          </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -314,6 +386,7 @@
 
   function refreshMainTable()
   {
+    console.log(dataBarangPop1Dipilih);
     var dataSet = [
               [ 
                   '',
@@ -331,11 +404,12 @@
       var ii=i+1;
       var nama_barang = dataBarangPop1Dipilih[i][0][1]["nama"];
       var kode="";
+      var id_barang = dataBarangPop1Dipilih[i][0][0]["id_barang"];
       //var nama_merk;
       
       for (var x=0;x<dataBarangPop1Dipilih[i].length;x++)
       {
-        console.log(dataBarangPop1Dipilih[i][x][0]["kode"]);
+        //console.log(dataBarangPop1Dipilih[i][x][0]["kode"]);
         if(dataBarangPop1Dipilih[i].length>1 && x==0)
         {
           kode += dataBarangPop1Dipilih[i][x][0]["kode"]+"<br>";
@@ -355,7 +429,7 @@
                     '<input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">',
                     '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled="">',
                     '<input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled="">',
-                    '<a href="http://localhost/ferrscreen/penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah Harga</a>'
+                    '<a href="#pop2TabelPenjualan" onclick="openSecondTable('+id_barang+')" data-toggle="modal" data-id="'+id_barang+'" title="Add this item" class="btn btn-info btn-mini" role="button">Tambah Harga</a>'
                   ];
       dataSet.push(temp);
     }
