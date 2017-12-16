@@ -41,4 +41,12 @@ class DetailBarang extends CI_Controller {
 		);
 		echo json_encode($data);
 	}
+
+		public function get_detailBarangById($id_detail){
+		$detail = $this->DetailBarang_Model->get_detailBarangById($id_detail);
+		$data = array(
+	        'dataDetailBarang' => $detail
+		);
+		echo json_encode($data);
+	}
 }

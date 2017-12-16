@@ -51,4 +51,12 @@ class DetailBarang_Model extends CI_Model {
         $hasil = $this->db->query($sql, array($id_barang, "1"));
         return $hasil->result_array();
     }
+
+    public function get_detailBarangById($id_detail){
+        $sql = "SELECT db.*, m.nama as nama_merk 
+                FROM detail_barang db, merk m, barang b
+                WHERE db.id = ? AND db.id_merk = m.id AND db.is_aktif = ? AND db.id_barang = b.id";
+        $hasil = $this->db->query($sql, array($id_detail, "1"));
+        return $hasil->result_array();
+    }
 }

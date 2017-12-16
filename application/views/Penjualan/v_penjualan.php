@@ -511,14 +511,11 @@
 
     if(!cek)
     {
-      var link="detailBarang/allDetailBarangByIdBarang";
+      var link="detailBarang/get_detailBarangById/"+id;
       $(document).ready(function(){
         $.ajax({ 
-          url: link,
-          data:{ id:id}, 
-          type: 'POST'
+          url: link
         }).done(function(dataDetailBarang){
-
           var parseDataDetailBarang = JSON.parse(dataDetailBarang);
           //console.log(parseDataDetailBarang);
           //console.log(parseDataDetailBarang["dataDetailBarang"]);
@@ -605,9 +602,9 @@
           }
 
           if(cek)
-            var temp=[ii,parsedDataBarang[i]["nama"],parsedDataBarang[i]["kode"],parsedDataBarang[i]["nama_merk"],'<a class="btn btn-danger btn-mini" onclick="hapusBarangPop1('+parsedDataBarang[i]["id"]+')" name="btnHapus">Hapus</a>'];
+            var temp=[ii,parsedDataBarang[i]["nama"],parsedDataBarang[i]["kode"],parsedDataBarang[i]["nama_merk"],'<a class="btn btn-danger btn-mini" onclick="hapusBarangPop1('+parsedDataBarang[i]["id_detail"]+')" name="btnHapus">Hapus</a>'];
           else
-            var temp=[ii,parsedDataBarang[i]["nama"],parsedDataBarang[i]["kode"],parsedDataBarang[i]["nama_merk"],'<a class="btn btn-success btn-mini" onclick="tambahBarangPop1('+parsedDataBarang[i]["id"]+')" name="btnTambah">Tambah</a>'];
+            var temp=[ii,parsedDataBarang[i]["nama"],parsedDataBarang[i]["kode"],parsedDataBarang[i]["nama_merk"],'<a class="btn btn-success btn-mini" onclick="tambahBarangPop1('+parsedDataBarang[i]["id_detail"]+')" name="btnTambah">Tambah</a>'];
 
           dataSet.push(temp);
         }
