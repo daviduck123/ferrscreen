@@ -516,16 +516,13 @@
 
     if(!cek)
     {
-      var link="detailBarang/allDetailBarangByIdBarang";
+      var link="detailBarang/get_detailBarangById/"+id;
       $(document).ready(function(){
         $.ajax({ 
-          url: link,
-          data:{ id:id}, 
-          type: 'POST'
+          url: link
         }).done(function(dataDetailBarang){
-
           var parseDataDetailBarang = JSON.parse(dataDetailBarang);
-          //console.log(parseDataDetailBarang);
+          console.log(parseDataDetailBarang);
           //console.log(parseDataDetailBarang["dataDetailBarang"]);
           //console.log(parseDataDetailBarang["dataDetailBarang"][0]);
           //console.log(parseDataDetailBarang["dataDetailBarang"][0]["id_barang"]);
