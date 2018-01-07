@@ -289,7 +289,7 @@
                           <td></td>
                         </tbody>
                       </table>
-                    </div> 
+                    </div>
                     <!--<div class="container control-group" style="margin-bottom:10px; margin-top:10px">
                       <div class="span6">
                           <label class="control-label">Kode</label>
@@ -711,18 +711,17 @@
       }
 
       $('#tablepop2Penjualan').DataTable( {
-        destroy: true,
-        "scrollX": true,
-        data: dataSet,
-        columns: [
-          { title: "Nomor" },
+            destroy: true,
+            data: dataSet,
+            columns: [
+                { title: "Nomor" },
           { title: "Nama Barang" },
           { title: "Kode" },
           { title: "Merk" },
           { title: "Status" },
           { title: "Aksi" }
-        ]
-      });
+            ]
+        });
     });
   }
 
