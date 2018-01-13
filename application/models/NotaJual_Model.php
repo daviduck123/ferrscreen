@@ -7,11 +7,11 @@ class notaJual_Model extends CI_Model {
         $this->load->model("NotaJualBarang_Model");
     }
 
-    public function insert_notaJual($kota, $id_user, $id_customer, $waktu_kirim, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id_barangs, $id_suppliers, $id_types $hargas, $jumlahs, $deskripsis){
+    public function insert_notaJual($kode, $id_user, $id_customer, $waktu_kirim, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id_barangs, $id_suppliers, $id_types $hargas, $jumlahs, $deskripsis){
         $this->db->trans_start();
 
         $sql="INSERT INTO `nota_jual`(`kode`, `id_user`, `id_customer`, `waktu_kirim`, `total`, `ppn`, `diskon`, `biaya_kirim`, `grand_total`, `deskripsi`, `is_terkirim`, `created_at`) VALUES (?,?,?,?,?,?,?,?,?,?,0,NOW())";
-        $this->db->query($sql, array($kota, $id_user, $id_customer, $waktu_kirim, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi));
+        $this->db->query($sql, array($kode, $id_user, $id_customer, $waktu_kirim, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi));
         $id = $this->db->insert_id();
 
         //Insert Nota Barang

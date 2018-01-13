@@ -86,7 +86,8 @@ class Penjualan extends CI_Controller {
 		$isiData = $this->input->post();
 		//print_r($isiData);
 		$isLow=FALSE;
-
+		print_r($isiData);
+		exit();
 		if($this->input->post('btnTambah'))
 		{
 			$this->form_validation->set_rules('pilihCustomerPenjualan', 'Nama Costumer', 'required');
@@ -103,13 +104,26 @@ class Penjualan extends CI_Controller {
            	}
            	else
            	{
-				$idToko	= $this->input->post('pilihCustomerPenjualan');
-				$nomorNotaPenjualan	= $this->input->post('nomorNotaPenjualan');
-				$jatuhTempo	= $this->input->post('jatuhTempoPenjualan');
-				$idSales	= $this->input->post('pilihSalesPenjualan');
-				$tanggalPenjualan	= $this->input->post('tanggalPenjualan');
+           		//Data Nota
+				$kode = $this->input->post("noNotaJual");
+				$id_user = $this->input->post("id_sales");
+				$id_customer = $this->input->post("id_customer");
+				$waktu_kirim = $this->input->post("waktu_kirim");
+				$ppn = $this->input->post("ppn");
+				$diskon = $this->input->post("diskon");
+				$biaya_kirim = $this->input->post("biaya_kirim");
+				$grand_total = $this->input->post("grand_total");
+				$deskripsi = $this->input->post("deskripsi");
 
-				$result = $this->Penjualan_Model->insert_notaJual($alamatEmailSupplier, $namaSupplier, $contactPersonSupplier, $alamatSupplier, $kodePosSupplier, $teleponSupplier, $hpSupplier, $faximileSupplier, $limitPiutangSupplier, $jatuhTempoSupplier, $pilihKotaSupplier);
+				//List Barang berupa array tiap data
+				$id_barangs = $this->input->post("id_barangs");
+				$id_suppliers = $this->input->post("id_suppliers");
+				$id_types = $this->input->post("id_types");
+				$hargas = $this->input->post("hargas");
+				$jumlahs = $this->input->post("jumlahs");
+				$deskripsis = $this->input->post("deskripsis");
+
+				$result = $this->NotaJual_Model->insert_notaJual($kode, $id_user, $id_customer, null, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id_barangs, $id_suppliers, $id_types $hargas, $jumlahs, $deskripsis);
 
 
 				if(count($result) > 0)
@@ -132,4 +146,16 @@ class Penjualan extends CI_Controller {
 		}
 	}
 
+
+	function showAllNotaJual(){
+		$nota = $this->NotaJual_Model->get_allnotaJual();
+		$data = {
+			"nota" => $nota
+		};
+
+		$this->load->view('header');
+		$this->load->view('sidebar',$dataMenu);
+		//$this->load->view('penjualan');
+		$this->load->view('Penjualan/v_listPenjualan',$data);
+	}
 }

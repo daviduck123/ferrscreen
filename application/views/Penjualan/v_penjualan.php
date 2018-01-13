@@ -95,7 +95,8 @@
                   </div>
                   <div class="controls">
                     <input type="submit" name="btnBatal" value="Batal" class="btn btn-info"/>
-                    <input type="submit" name="btnTambah" value="Tambah" class="btn btn-success"/>
+                    <input type="button" name="btnTambah2" value="Tambah" class="btn btn-success" onclick="addData()" />
+                    <input type="hidden" name="btnTambah" value="Tambah"/>
                   </div>
               </div>
             </div>
@@ -140,32 +141,6 @@
                         <a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>
                       </td>
                     </tr>
-                    <tr class="gradeX">
-                      <td></td>
-                      <td>
-                        <input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled>
-                        <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>
-                      </td>
-                      <td>
-                        <input type="text" name="disableBukaTabelPenjualan" id="disableBukaTabelPembelian" placeholder="disableBukaTabelPembelian" disabled>
-                        <a href="#pop1TabelPenjualan" data-toggle="modal" class="btn btn-info btn-mini" role="button">Buka</a>
-                      </td>
-                      <td>
-                        <input type="text" name="hargaTabelPenjualan" id="hargaTabelPenjualan" placeholder="Masukkan harga">
-                      </td>
-                      <td>
-                        <input type="text" name="jumlahTabelPenjualan" id="jumlahTabelPenjualan" placeholder="Masukkan jumlah">
-                      </td>
-                      <td>
-                        <input type="text" name="subTotalTabelPenjualan" id="subTotalTabelPenjualan" placeholder="Subtotal" disabled>
-                      </td>
-                      <td>
-                        <textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>
-                      </td>
-                      <td class="center">
-                        <a href="<?php echo base_url();?>penjualan/tambahTabelPenjualan/" class="btn btn-success btn-mini" role="button">Tambah</a>
-                      </td>
-                    </tr>
                     </tbody>
               </table>
             </div>
@@ -181,6 +156,10 @@
                   <div class="controls">
                     <input type="number" name="totalPenjualan" id="totalPenjualan">
                   </div>
+                  <label class="control-label">PPN</label>
+                  <div class="controls">
+                    <input type="number" name="ppn" id="ppn">
+                  </div>
                   <label class="control-label">Biaya Kirim</label>
                   <div class="controls">
                     <input type="number" name="biayaKirim" id="biayaKirim">
@@ -190,6 +169,8 @@
                     <input type="number" name="grandTotal" id="grandTotal">
                   </div>
               </div>
+            </div>
+            <div style='display: none;' id="baranglist">
             </div>
             <?php echo form_close();?>
           </div>
@@ -371,6 +352,17 @@
   };
 
   var dataBarangPopDipilih=[];
+
+  var dataBarangSelected=[];
+  /*{
+    id_barang : x,
+    id_supplier : x,
+    id_type: x,
+    harga: x,
+    jumlah: x,
+    deskripsi: x
+  }
+  */
 
   //SCRIPT MAIN TABLE
 
@@ -779,6 +771,9 @@
 
       openPop2(id_barang);
     }
+  }
+  function addData(){
+
   }
 
   
