@@ -86,8 +86,17 @@ class notaJual_Model extends CI_Model {
     }
 
     public function delete_notaJual($id){
-        $sql = "UPDATE notaJual SET is_aktif=? WHERE id = ?";
+        $sql = "UPDATE nota_jual SET is_aktif=? WHERE id = ?";
         return $this->db->query($sql, array("0", $id));
+    }
+
+    public function update_statusTerkirim($id_notaJual, $status){
+        $this->db->trans_start();
+
+        $sql = "UPDATE nota_jual SET is_terkirim = ? WHERE id = ?";
+        $this->db->query($sql,array($status, $id_notaJual));
+
+        $this->db->trans_complete();
     }
 
 }
