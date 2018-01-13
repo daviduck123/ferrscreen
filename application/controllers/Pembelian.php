@@ -70,4 +70,83 @@ class Pembelian extends CI_Controller {
 		$this->load->view('pembelian/v_pembelian',$data);
 		//$this->load->view('footer');
 	}
+
+	public function prosesTambahPenjualan()
+	{
+		//isi data diisi array post
+		$isiData = $this->input->post();
+		//print_r($isiData);
+		$isLow=FALSE;
+		print_r($isiData);
+		exit();
+		if($this->input->post('btnTambah'))
+		{
+			$this->form_validation->set_rules('pilihCustomerPenjualan', 'Nama Costumer', 'required');
+			$this->form_validation->set_rules('nomorNotaPenjualan', 'Nomor Nota', 'required');
+			$this->form_validation->set_rules('jatuhTempoPenjualan', 'Jatuh Tempo', 'required');
+			$this->form_validation->set_rules('pilihSalesPenjualan', 'Nama Sales', 'required');
+			$this->form_validation->set_rules('tanggalPenjualan', 'Tanggal Penjualan', 'required');
+			
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$this->session->set_flashdata('error', 'Data tidak lengkap');
+				redirect('penjualan');
+           	}
+           	else
+           	{
+           		//Data Nota
+				$kode = $this->input->post("noNotaJual");
+				$id_user = $this->input->post("id_sales");
+				$id_customer = $this->input->post("id_customer");
+				$waktu_kirim = $this->input->post("waktu_kirim");
+				$ppn = $this->input->post("ppn");
+				$diskon = $this->input->post("diskon");
+				$biaya_kirim = $this->input->post("biaya_kirim");
+				$grand_total = $this->input->post("grand_total");
+				$deskripsi = $this->input->post("deskripsi");
+
+				//List Barang berupa array tiap data
+				$id_barangs = $this->input->post("id_barangs");
+				$id_suppliers = $this->input->post("id_suppliers");
+				$id_types = $this->input->post("id_types");
+				$hargas = $this->input->post("hargas");
+				$jumlahs = $this->input->post("jumlahs");
+				$deskripsis = $this->input->post("deskripsis");
+
+				$result = $this->NotaJual_Model->insert_notaJual($kode, $id_user, $id_customer, null, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id_barangs, $id_suppliers, $id_types $hargas, $jumlahs, $deskripsis);
+
+
+				if(count($result) > 0)
+				{
+
+					$this->session->set_flashdata('sukses', 'Berhasil simpan Supplier');
+					redirect('supplier');
+				} 
+				else 
+				{
+					$this->session->set_flashdata('error', 'Gagal simpan Supplier');
+					redirect('supplier');
+				}
+         	}
+		}
+		else
+		{
+			echo "jangan lakukan refresh saat pengiriman data";
+			redirect(base_url()."supplier", 'refresh');
+		}
+	}
+
+
+	function showAllNotaBeli(){
+		$nota = $this->NotaBeli_Model->get_allnotaBeli();
+		$data = {
+			"nota" => $nota
+		};
+
+		$this->load->view('header');
+		$this->load->view('sidebar',$dataMenu);
+		//$this->load->view('penjualan');
+		$this->load->view('Penjualan/v_listPembelian',$data);
+	}
 }
