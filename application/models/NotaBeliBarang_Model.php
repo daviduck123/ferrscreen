@@ -1,5 +1,5 @@
 <?php
-class notaBeliBarang_Model extends CI_Model {
+class NotaBeliBarang_Model extends CI_Model {
 
     public function __construct()
     {
@@ -26,7 +26,7 @@ class notaBeliBarang_Model extends CI_Model {
     public function update_notaBeliBarang($id_notaBeli, $id_barang, $jumlah, $harga, $deskripsi){
         $this->db->trans_start();
 
-    	$sql = "UPDATE `nota_jual_barang` 
+    	$sql = "UPDATE `nota_beli_barang` 
     			SET `jumlah`=?,`harga`=?, `deskripsi` = ?
     			WHERE id_notaBeli = ? AND id_barang = ? ";
     	$result=$this->db->query($sql, array($stok, $harga, $deskripsi, $id_notaBeli, $id_barang));
@@ -46,7 +46,7 @@ class notaBeliBarang_Model extends CI_Model {
     public function delete_notaBeliBarang($id_notaBeli, $id_barang){
         $this->db->trans_start();
 
-        $sql = "DELETE notaBeli_barang 
+        $sql = "DELETE nota_beli_barang 
                 WHERE id_notaBeli = ? AND id_barang = ?";
         $result=$this->db->query($sql, array("0", $id_notaBeli, $id_barang));
 

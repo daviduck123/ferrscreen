@@ -1,5 +1,5 @@
 <?php
-class notaJual_Model extends CI_Model {
+class NotaJual_Model extends CI_Model {
 
     public function __construct()
     {
@@ -47,7 +47,7 @@ class notaJual_Model extends CI_Model {
     public function get_allnotaJual(){
         $sql = "SELECT *
                 FROM nota_jual";
-        $result = $this->db->query($sql;
+        $result = $this->db->query($sql);
        $notaJual = $result->result_array();
         $notaJual2 = [];
         foreach($notaJual as $barang){

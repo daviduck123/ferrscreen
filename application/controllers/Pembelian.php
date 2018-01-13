@@ -26,6 +26,8 @@ class Pembelian extends CI_Controller {
 	 	$this->load->model('Merk_Model');
 	 	$this->load->model('Type_Model');
 	 	$this->load->model('Supplier_Model');
+	 	$this->load->model('NotaJual_Model');
+	 	$this->load->model('NotaBeli_Model');
     }
 
 	public function index()
@@ -114,7 +116,7 @@ class Pembelian extends CI_Controller {
 				$jumlahs = $this->input->post("jumlahs");
 				$deskripsis = $this->input->post("deskripsis");
 
-				$result = $this->NotaJual_Model->insert_notaJual($kode, $id_user, $id_customer, null, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id_barangs, $id_suppliers, $id_types $hargas, $jumlahs, $deskripsis);
+				$result = $this->NotaJual_Model->insert_notaJual($kode, $id_user, $id_customer, NULL, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id_barangs, $id_suppliers, $id_types, $hargas, $jumlahs, $deskripsis);
 
 
 				if(count($result) > 0)
@@ -140,9 +142,9 @@ class Pembelian extends CI_Controller {
 
 	function showAllNotaBeli(){
 		$nota = $this->NotaBeli_Model->get_allnotaBeli();
-		$data = {
+		$data = array(
 			"nota" => $nota
-		};
+		);
 
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);

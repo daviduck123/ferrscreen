@@ -123,7 +123,7 @@ class Penjualan extends CI_Controller {
 				$jumlahs = $this->input->post("jumlahs");
 				$deskripsis = $this->input->post("deskripsis");
 
-				$result = $this->NotaJual_Model->insert_notaJual($kode, $id_user, $id_customer, null, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id_barangs, $id_suppliers, $id_types $hargas, $jumlahs, $deskripsis);
+				$result = $this->NotaJual_Model->insert_notaJual($kode, $id_user, $id_customer, null, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id_barangs, $id_suppliers, $id_types, $hargas, $jumlahs, $deskripsis);
 
 
 				if(count($result) > 0)
@@ -149,9 +149,9 @@ class Penjualan extends CI_Controller {
 
 	function showAllNotaJual(){
 		$nota = $this->NotaJual_Model->get_allnotaJual();
-		$data = {
+		$data = array(
 			"nota" => $nota
-		};
+		);
 
 		$this->load->view('header');
 		$this->load->view('sidebar',$dataMenu);
