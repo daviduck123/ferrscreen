@@ -183,7 +183,7 @@ class Barang_Model extends CI_Model {
     }
 
     public function get_barangBySearch($kode, $nama, $merk){
-        $sql = "SELECT b.*, db.id as id_detail, db.kode as kode, m.nama as nama_merk 
+        $sql = "SELECT b.*, db.id as id_detail, db.kode as kode, m.nama as nama_merk , db.id_barang as id_barang
                 FROM barang b, detail_barang db, merk m 
                 WHERE b.id = db.id_barang AND db.id_merk = m.id ";
         $array = array();

@@ -211,7 +211,7 @@
                           <label class="control-label">Merk</label>
                           <div id="tempatPop1ListMerkPenjualan"></div>
                             <input type="hidden" id="hiddenTempatPop1ListMerkPenjualan" name="hiddenTempatPop1ListMerkPenjualan" value="">
-                            <input onclick="cariBarang(this.value);" type="submit" name="btnCari" value="btnCari" class="btn btn-info">
+                            <input onclick="cariBarang(this.value);" type="submit" name="btnCari" value="Cari" class="btn btn-info">
                           </div>
                       </div>
                     </div>
@@ -398,6 +398,7 @@
 
   function refreshMainTable()
   {
+
     console.log(dataBarangPopDipilih);
     var dataSet = [
               [ 
@@ -493,6 +494,15 @@
 
   function tambahBarangPop1(id)
   {
+     var temp_kumpulan_data =[];
+
+     var temp_id_barang =[];
+     var temp_id_supplier =[];
+     var temp_id_type =[];
+     var temp_harga =0;
+     var temp_jumlah =0;
+     var temp_deskripsi ='';
+
     var cek=false;
     for(var x=0; x<dataBarangPopDipilih.length; x++)
     {
@@ -522,13 +532,27 @@
             text = '{"'+id+'":[';
             //AMBIL DATA BARANG
             var dataBarang = <?php echo json_encode($dataBarang) ?>;
+            //console.log(dataBarang);
             var temp =[];
             for (var x=0;x<dataBarang.length;x++)
             {
               if(dataBarang[x]["id"]==parseDataDetailBarang["dataDetailBarang"][i]["id_barang"])
               {
+                temp_id_barang = dataBarang[x]['detail_barang'][0]['id_barang'];
+                for (var y=0;y<dataBarang[x]['supplier_barang'].length;y++)
+                {
+                  temp_id_supplier.push(dataBarang[x]['supplier_barang'][y]['id_supplier']);
+                }
+                for (var y=0;y<dataBarang[x]['supplier_barang'].length;y++)
+                {
+                  temp_id_type.push(dataBarang[x]['supplier_barang'][y]['id_type']);
+                }
+                var object={id_barang:temp_id_barang, id_supplier:temp_id_supplier, id_type:temp_id_type, harga:temp_harga, jumlah:temp_jumlah, deskripsi:temp_deskripsi}
+                dataBarangSelected.push(object);
                 temp.push(parseDataDetailBarang["dataDetailBarang"][i]);
                 temp.push(dataBarang[x]);
+
+                console.log(dataBarangSelected);
               }
             }
             dataPerId.push(temp);
@@ -536,8 +560,8 @@
           }
           text += '}';
           dataBarangPopDipilih.push(dataPerId);
-          //console.log(dataBarangPopDipilih.length);
-          console.log(dataBarangPopDipilih);
+          //console.log(dataPerId);
+          //console.log(dataBarangPopDipilih);
           //console.log(dataBarangPopDipilih[0][0][0]["id"]);
           cariBarang("refresh");
 
@@ -553,7 +577,8 @@
     //DISINI MASIH RANCU
     var index = dataBarangPopDipilih.indexOf(id);
     dataBarangPopDipilih.splice(index, 1);
-
+    dataBarangSelected.splice(index, 1);
+    
     //refresh datatables
     cariBarang("refresh");
   }
@@ -576,7 +601,7 @@
       }).done(function(dataBarang){
 
         var parsedDataBarang = JSON.parse(dataBarang);
-
+        //console.log(parsedDataBarang);
         var dataSet=[];
 
         for (var i=0;i<parsedDataBarang.length;i++)
