@@ -418,6 +418,10 @@
       var nama_barang = dataBarangPopDipilih[i][0][1]["nama"];
       var kode="";
       var id_barang = dataBarangPopDipilih[i][0][0]["id_barang"];
+
+
+      var temp_id_supplier =[];
+      var temp_jumlah =[];
       //var nama_merk;
       
       var jumlah = 0;
@@ -434,9 +438,24 @@
           kode += dataBarangPopDipilih[i][x][0]["kode"];
         }
 
-        if( dataBarangPopDipilih[i][x].length>2)
-          jumlah += parseInt(dataBarangPopDipilih[i][x][2]["jumlah_barang"]);
+        if(dataBarangPopDipilih[i][x].length>2)
+        {
+          for (var j=0;j<dataBarangPopDipilih[i][x].length;j++)
+          {
+            if(j>1)
+            {
+              temp_id_supplier.push(dataBarangPopDipilih[i][x][j]["id_supplier"]);
+              temp_jumlah.push(dataBarangPopDipilih[i][x][j]["jumlah_barang"]);
+              jumlah += parseInt(dataBarangPopDipilih[i][x][j]["jumlah_barang"]);
+            }
+          }
+        }
       }
+
+      dataBarangSelected[i]['id_supplier']=temp_id_supplier;
+      dataBarangSelected[i]['jumlah']=temp_jumlah;
+
+      console.log(dataBarangSelected);
 
       var harga = $('#hargaTabelPenjualan'+id_barang).val();
       if(harga == null)
@@ -447,7 +466,7 @@
                     ii, 
                     nama_barang,
                     kode,
-                    '<input type="text" class="hargaMainTable" name="hargaTabelPenjualan'+id_barang+'" id="hargaTabelPenjualan'+id_barang+'" placeholder="Masukkan harga" value ="'+harga+'">',
+                    '<input type="number" class="hargaMainTable" name="hargaTabelPenjualan'+id_barang+'" id="hargaTabelPenjualan'+id_barang+'" placeholder="Masukkan harga" value ="'+harga+'">',
                     '<input type="text" name="jumlahBarangTabelPenjualan'+id_barang+'" id="jumlahBarangTabelPenjualan'+id_barang+'" placeholder="Masukkan jumlah" value="'+jumlah+'" disabled>',
                     '<input type="text" name="subTotalTabelPenjualan'+id_barang+'" id="subTotalTabelPenjualan'+id_barang+'" placeholder="Subtotal" value="'+subTotal+'" disabled>',
                     '<textarea rows="4" cols="50" name="keteranganTabelPenjualan" id="keteranganTabelPenjualan" placeholder="Masukkan keterangan"></textarea>',
@@ -552,7 +571,7 @@
                 temp.push(parseDataDetailBarang["dataDetailBarang"][i]);
                 temp.push(dataBarang[x]);
 
-                console.log(dataBarangSelected);
+                //console.log(dataBarangSelected);
               }
             }
             dataPerId.push(temp);
@@ -572,13 +591,21 @@
     }
   }
 
-  function hapusBarangPop1(id)
+  function hapusBarangPop1(id_barang)
   {
+    //console.log(dataBarangSelected);
+    var id_hapus=0;
+    for (var i=0;i<dataBarangSelected.length;i++)
+    {
+      if(dataBarangSelected[i]['id_barang']==id_barang)
+        id_hapus = i;
+    }
     //DISINI MASIH RANCU
-    var index = dataBarangPopDipilih.indexOf(id);
-    dataBarangPopDipilih.splice(index, 1);
-    dataBarangSelected.splice(index, 1);
+    dataBarangPopDipilih.splice(id_hapus, 1);
+    dataBarangSelected.splice(id_hapus, 1);
     
+
+    //console.log(dataBarangSelected);
     //refresh datatables
     cariBarang("refresh");
   }
@@ -604,28 +631,44 @@
         //console.log(parsedDataBarang);
         var dataSet=[];
 
+        var tempIdHapus=0;
+        var tempIdBarang=0;
         for (var i=0;i<parsedDataBarang.length;i++)
         {
           var ii=i+1;
           var cek=false;
-          for(var x=0; x<dataBarangPopDipilih.length; x++)
+          for(var x=0; x<dataBarangSelected.length; x++)
           {
-            if(parsedDataBarang[i]["id"]==dataBarangPopDipilih[x][0][0]["id_barang"])
+            if(parsedDataBarang[i]["id"]==dataBarangSelected[x]['id_barang'])
             {
               cek=true;
+
+              if(i==0)
+              {
+                tempIdHapus=dataBarangSelected[x]['id_barang'];
+                tempIdBarang=dataBarangSelected[x]['id_barang'];
+              }
+              else
+              {
+                if(tempIdBarang!=dataBarangSelected[x]['id_barang'])
+                {
+                  tempIdBarang=dataBarangSelected[x]['id_barang'];
+                  tempIdHapus=tempIdBarang;
+                }
+              }
               //console.log(parsedDataBarang[i]["id"]);
               //console.log(dataBarangPopDipilih[x][0][0]["id_barang"]);
             }
           }
 
           if(cek)
-            var temp=[ii,parsedDataBarang[i]["nama"],parsedDataBarang[i]["kode"],parsedDataBarang[i]["nama_merk"],'<a class="btn btn-danger btn-mini" onclick="hapusBarangPop1('+parsedDataBarang[i]["id_detail"]+')" name="btnHapus">Hapus</a>'];
+            var temp=[ii,parsedDataBarang[i]["nama"],parsedDataBarang[i]["kode"],parsedDataBarang[i]["nama_merk"],'<a class="btn btn-danger btn-mini" onclick="hapusBarangPop1('+tempIdHapus+')" name="btnHapus">Hapus</a>'];
           else
             var temp=[ii,parsedDataBarang[i]["nama"],parsedDataBarang[i]["kode"],parsedDataBarang[i]["nama_merk"],'<a class="btn btn-success btn-mini" onclick="tambahBarangPop1('+parsedDataBarang[i]["id_detail"]+')" name="btnTambah">Tambah</a>'];
-
+          
+          
           dataSet.push(temp);
         }
-
         $('#tablePop1Penjualan').DataTable( {
             destroy: true,
             data: dataSet,
@@ -727,7 +770,7 @@
                       nama_barang,
                       kode,
                       nama_merk,
-                      pilihSupplierPop2+'<input type="text" name= "jumlahBarangPop2'+dataBarangPopDipilih[i][x][0]["id"]+'" id="jumlahBarangPop'+dataBarangPopDipilih[i][x][0]["id"]+'" placeholder="Jumlah"></center>'+dataSupplier,
+                      pilihSupplierPop2+'<input type="number" name= "jumlahBarangPop2'+dataBarangPopDipilih[i][x][0]["id"]+'" id="jumlahBarangPop'+dataBarangPopDipilih[i][x][0]["id"]+'" placeholder="Jumlah"></center>'+dataSupplier,
                       '<center><a href="#pop2TabelPenjualan" onclick="tambahSupplier('+dataBarangPopDipilih[i][x][0]["id"]+','+i+','+x+','+id_barang+')" class="btn btn-info btn-mini" role="button">Tambah</a></center>'
                     ];
             dataSet.push(temp);
@@ -756,7 +799,7 @@
     selectOption += "<select name='"+nama_tempat+"' id='"+nama_tempat+"' class='selectPop2Supplier'>;";
     selectOption += "<option >Pilih Supplier</option>"; 
     for(var i = 0 ; i < dataBarangPopDipilih[depan][belakang][1]["supplier_barang"].length; i++){
-       selectOption += "<option  value="+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][0]["id_supplier"]+">"+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][0]["nama_supplier"]+"</option>";
+       selectOption += "<option  value="+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["id_supplier"]+">"+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["nama_supplier"]+"</option>";
     }
     selectOption +='</select>';
     return selectOption;
@@ -778,17 +821,25 @@
       var data = {id_supplier:id_supplier, nama_supplier:nama_supplier, jumlah_barang:jumlah};
 
       var cek = false;
+      var tempGanti=0;
       for (var x=0;x<dataBarangPopDipilih[depan][belakang].length;x++)
       {
-        if(dataBarangPopDipilih[depan][belakang][x]["id_supplier"]==id_supplier)
+        if(x>1)
         {
-          cek = true;
+          //console.log(dataBarangPopDipilih[depan][belakang].length)
+          //console.log(dataBarangPopDipilih[depan][belakang][x]["id_supplier"]);
+          if(dataBarangPopDipilih[depan][belakang][x]["id_supplier"]==id_supplier)
+          {
+            cek = true;
+            tempGanti=x;
+          }
+
         }
       }
 
       if(cek==true)
       {
-        dataBarangPopDipilih[depan][belakang][2]["jumlah_barang"]=jumlah;
+        dataBarangPopDipilih[depan][belakang][tempGanti]["jumlah_barang"]=jumlah;
       }
       else
         dataBarangPopDipilih[depan][belakang].push(data);
@@ -809,6 +860,16 @@
     var harga = $('#hargaTabelPenjualan'+id).val();
     var jumlah = $('#jumlahBarangTabelPenjualan'+id).val();
     var subTotal = parseInt(jumlah)*parseInt(harga);
+
+    for(var x=0; x<dataBarangSelected.length; x++)
+    {
+      if(dataBarangSelected[x]['id_barang']==id)
+      {
+        dataBarangSelected[x]['harga']=harga;
+      }
+    }
+
+    console.log(dataBarangSelected);
 
     $('#subTotalTabelPenjualan'+id).val(subTotal);
   });
