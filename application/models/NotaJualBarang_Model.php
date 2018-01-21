@@ -12,30 +12,13 @@ class NotaJualBarang_Model extends CI_Model {
     	$sql = "INSERT INTO `nota_jual_barang`(`id_nota_jual`, `id_barang`, `id_supplier`, `id_type`, `jumlah`, `harga`, `deskripsi`, `is_aktif`, `created_at`) VALUES (?,?,?,?,?,?,?,?,NOW())";
     	$result=$this->db->query($sql, array($id_notaJual, $id_barang, $id_supplier, $id_type, $jumlah, $harga, $deskripsi, "1"));
 
+        //Reduce Stok
+        $this->SupplierBarang_Model->update_kurangStokBarang($id_supplier, $id_barang, $id_type, $jumlah);
+
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE)
         {
-                // generate an error... or use the log_message() function to log your error
-        }
-        else
-        {
-            return $result;
-        }
-    }
 
-    public function update_notaJualBarang($id_notaJual, $id_barang, $id_supplier, $id_type, $jumlah, $harga, $deskripsi){
-        $this->db->trans_start();
-
-    	$sql = "UPDATE `nota_jual_barang` 
-    			SET `jumlah`=?,`harga`=?, `deskripsi` = ?
-    			WHERE id_notaJual = ? AND id_barang = ? AND id_type = ?, id_supplier=?";
-    	$result=$this->db->query($sql, array($stok, $harga, $deskripsi, $id_notaJual, $id_barang, $id_type, $id_supplier));
-
-        $this->db->trans_complete();
-
-        if ($this->db->trans_status() === FALSE)
-        {
-                // generate an error... or use the log_message() function to log your error
         }
         else
         {
@@ -81,26 +64,34 @@ class NotaJualBarang_Model extends CI_Model {
     }
 
     public function get_allnotaJualBarangByIdNotaJual($id_notaJual){
-            $sql = "SELECT njb.*, b.nama as nama_barang, t.nama as nama_type, s.nama as nama_supplier
-                    FROM nota_jual_barang njb, nota_jual nj, type t, barang b, supplier s
-                    WHERE njb.id_barang = b.id 
-                        AND njb.id_notaJual = nj.id 
-                        AND njb.id_type = t.id 
-                        AND njb.id_supplier = s.id
-                        AND njb.id_notaJual = ?";
+        $sql = "SELECT njb.*, b.nama as nama_barang, t.nama as nama_type, s.nama as nama_supplier
+                FROM nota_jual_barang njb, nota_jual nj, type t, barang b, supplier s
+                WHERE njb.id_barang = b.id 
+                    AND njb.id_notaJual = nj.id 
+                    AND njb.id_type = t.id 
+                    AND njb.id_supplier = s.id
+                    AND njb.id_notaJual = ?";
         $hasil = $this->db->query($sql, array($id_notaJual));
         return $hasil->result_array();
     }
 
     public function get_allnotaJualBarangByIdBarang($id_barang){
-           $sql = "SELECT njb.*, b.nama as nama_barang, t.nama as nama_type, s.nama as nama_supplier
-                    FROM nota_jual_barang njb, nota_jual nj, type t, barang b, supplier s
-                    WHERE njb.id_barang = b.id 
-                        AND njb.id_notaJual = nj.id 
-                        AND njb.id_type = t.id 
-                        AND njb.id_supplier = s.id
-                        AND njb.id_barang = ?";
+        $sql = "SELECT njb.*, b.nama as nama_barang, t.nama as nama_type, s.nama as nama_supplier
+                FROM nota_jual_barang njb, nota_jual nj, type t, barang b, supplier s
+                WHERE njb.id_barang = b.id 
+                    AND njb.id_notaJual = nj.id 
+                    AND njb.id_type = t.id 
+                    AND njb.id_supplier = s.id
+                    AND njb.id_barang = ?";
         $hasil = $this->db->query($sql, array($id_barang));
+        return $hasil->result_array();
+    }
+
+    public function get_barangByIdNotaAndIdBarang($id_notaJual, $id_barang){
+        $sql = "SELECT njb.*
+                FROM nota_jual_barang njb
+                WHERE njb.id_nota_jual = ? AND njb.id_barang = ?";
+        $hasil = $this->db->query($sql, array($id_notaJual, $id_barang));
         return $hasil->result_array();
     }
 }

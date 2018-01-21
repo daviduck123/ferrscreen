@@ -7,7 +7,7 @@ class NotaBeli_Model extends CI_Model {
         $this->load->model("NotaBeliBarang_Model");
     }
 
-    public function insert_notaBeli($kode, $id_user, $id_supplier, $waktu_kirim, $total, $ppn, $diskon, $grand_total, $deskripsi, $id_barangs, $id_suppliers, $hargas, $jumlahs, $deskripsis){
+    public function insert_notaBeli($kode, $id_user, $id_supplier, $waktu_kirim, $total, $ppn, $diskon, $grand_total, $deskripsi, $id_barangs, $hargas, $jumlahs, $deskripsis){
         $this->db->trans_start();
 
         $sql="INSERT INTO `nota_beli`(`kode`, `id_user`, `id_supplier`, `waktu_kirim`, `total`, `ppn`, `diskon`, `grand_total`, `deskripsi`, `is_terkirim`, `created_at`) VALUES (?,?,?,?,?,?,?,?,?,?,0,NOW())";
@@ -25,20 +25,23 @@ class NotaBeli_Model extends CI_Model {
         return $id;
     }
 
-    public function update_notaBeli($id, $kota, $id_user, $id_customer, $waktu_kirim, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id_barangs, $harga_barangs){
+    public function update_notaBeli($id, $kota, $id_user, $id_customer, $waktu_kirim, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id_barangs, $hargas, $jumlahs, $deskripsis){
         $this->db->trans_start();
 
         $sql="UPDATE `nota_beli` 
             SET `kode`=?,`id_user`=?,`id_customer`=?,`waktu_kirim`=?,`total`=?,`ppn`=?,`diskon`=?,`biaya_kirim`=?,`grand_total`=?,`deskripsi`=? 
             WHERE id=?";
         $this->db->query($sql, array($kota, $id_user, $id_customer, $waktu_kirim, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id));
+        
+        if(count($id_barangs) > 0){
+            for($i = 0; $i < count($id_barangs); $i++){
+                //Delete Nota Jual Barang
+                $this->NotaBeliBarang_Model->delete_notaBeliBarang($id, $id_barangs[$i]);
 
-        //Delete Barang
-
-        //Tambah Stok Barang
-
-        //Insert Barang Baru
-
+                //Insert Barang Baru
+               $this->NotaBeliBarang_Model->insert_notaBeliBarang($id, $id_barangs[$i], $jumlahs[$i], $hargas[$i], $deskripsis[$i]);
+            }
+        }
         $this->db->trans_complete();
 
         return $id;

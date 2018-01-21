@@ -103,13 +103,31 @@ class SupplierBarang_Model extends CI_Model {
 
     public function check_supplierBarangByIdSupplierAndIdBarangAndIdType($id_supplier, $id_barang, $id_type){
         $sql = "SELECT sb.*
-        FROM supplier_barang sb
-        WHERE sb.id_barang = ? AND sb.id_supplier = ? AND sb.id_type = ?";
+                FROM supplier_barang sb
+                WHERE sb.id_barang = ? AND sb.id_supplier = ? AND sb.id_type = ?";
         $hasil = $this->db->query($sql, array($id_supplier, $id_barang, $id_type));
         $result = $hasil->result_array();
         if(count($result) > 0)
             return true;
         else
             return false;
+    }
+
+    public function update_tambahStokBarang($id_supplier, $id_barang, $id_type, $jumlah){
+        $this->db->trans_start();
+
+        $sql = "UPDATE supplier_barang SET stok = stok + ? WHERE id_supplier = ? AND id_barang = ? AND id_type = ?";
+        $this->db->qiery($sql, array($jumlah, $id_supplier, $id_barang, $id_type));
+
+        $this->db->trans_complete();
+    }
+
+    public function update_kurangStokBarang($id_supplier, $id_barang, $id_type, $jumlah){
+        $this->db->trans_start();
+
+        $sql = "UPDATE supplier_barang SET stok = stok - ? WHERE id_supplier = ? AND id_barang = ? AND id_type = ?";
+        $this->db->qiery($sql, array($jumlah, $id_supplier, $id_barang, $id_type));
+
+        $this->db->trans_complete();
     }
 }

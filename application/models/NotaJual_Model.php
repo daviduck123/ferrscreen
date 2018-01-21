@@ -25,7 +25,7 @@ class NotaJual_Model extends CI_Model {
         return $id;
     }
 
-    public function update_notaJual($id, $kota, $id_user, $id_customer, $waktu_kirim, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id_barangs, $harga_barangs){
+    public function update_notaJual($id, $kode, $id_user, $id_customer, $waktu_kirim, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id_barangs, $id_suppliers, $id_types, $hargas, $jumlahs, $deskripsis){
         $this->db->trans_start();
 
         $sql="UPDATE `nota_jual` 
@@ -33,12 +33,22 @@ class NotaJual_Model extends CI_Model {
             WHERE id=?";
         $this->db->query($sql, array($kota, $id_user, $id_customer, $waktu_kirim, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id));
 
-        //Delete Barang
 
-        //Tambah Stok Barang
+        if(count($id_barangs) > 0){
+            for($i = 0; $i < count($id_barangs); $i++){
+                //Delete Nota Jual Barang
+                $this->NotaJualBarang_Model->delete_notaJualBarang($id, $id_barangs[$i], $id_types[$i], $id_supplier[$i]);
 
-        //Insert Barang Baru
+                //Tambah Stok Supplier Barang
+                $notaJualBarang = $this->NotaJualBarang_Model->get_barangByIdNotaAndIdBarang($id, $id_barangs[$i]);
+                if(count($notaJualBarang) > 0){
+                    $this->SupplierBarang_Model->update_tambahStokBarang($id_suppliers[$i], $id_barangs[$i], $id_types[$i], $notaJualBarang[0]["jumlah"]);
+                }
 
+                //Insert Barang Baru
+                $this->NotaJualBarang_Model->insert_notaJualBarang($id, $id_barangs[$i], $id_suppliers[$i], $id_types[$i], $jumlahs[$i], $hargas[$i], $deskripsis[$i]);
+            }
+        }
         $this->db->trans_complete();
 
         return $id;

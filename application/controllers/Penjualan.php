@@ -129,20 +129,20 @@ class Penjualan extends CI_Controller {
 				if(count($result) > 0)
 				{
 
-					$this->session->set_flashdata('sukses', 'Berhasil simpan Supplier');
-					redirect('supplier');
+					$this->session->set_flashdata('sukses', 'Berhasil simpan Nota Jual');
+					redirect('penjualan');
 				} 
 				else 
 				{
-					$this->session->set_flashdata('error', 'Gagal simpan Supplier');
-					redirect('supplier');
+					$this->session->set_flashdata('error', 'Gagal simpan Nota Jual');
+					redirect('penjualan');
 				}
          	}
 		}
 		else
 		{
 			echo "jangan lakukan refresh saat pengiriman data";
-			redirect(base_url()."supplier", 'refresh');
+			redirect(base_url()."penjualan", 'refresh');
 		}
 	}
 

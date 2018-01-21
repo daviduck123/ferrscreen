@@ -6,11 +6,11 @@ class NotaBeliBarang_Model extends CI_Model {
         $this->load->database();
     }
 
-    public function insert_notaBeliBarang($id_notaBeli, $id_barang, $id_supplier, $id_type, $jumlah, $harga, $deskripsi){
+    public function insert_notaBeliBarang($id_notaBeli, $id_barang, $jumlah, $harga, $deskripsi){
         $this->db->trans_start();
 
-    	$sql = "INSERT INTO `nota_beli_barang`(`id_nota_beli`, `id_barang`,`jumlah`, `harga`, `deskripsi`, `is_aktif`, `created_at`) VALUES (?,?,?,?,?,?,NOW())";
-    	$result=$this->db->query($sql, array($id_notaBeli, $id_barang, $jumlah, $harga, $deskripsi, "1"));
+    	$sql = "INSERT INTO `nota_beli_barang`(`id_nota_beli`, `id_barang`,`jumlah`, `harga`, `subtotal`, `deskripsi`, `created_at`) VALUES (?,?,?,?,?,?,NOW())";
+    	$result=$this->db->query($sql, array($id_notaBeli, $id_barang, $jumlah, $harga, 0, $deskripsi, "1"));
 
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE)
@@ -48,7 +48,7 @@ class NotaBeliBarang_Model extends CI_Model {
 
         $sql = "DELETE nota_beli_barang 
                 WHERE id_notaBeli = ? AND id_barang = ?";
-        $result=$this->db->query($sql, array("0", $id_notaBeli, $id_barang));
+        $result=$this->db->query($sql, array($id_notaBeli, $id_barang));
 
         $this->db->trans_complete();
 

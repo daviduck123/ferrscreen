@@ -100,7 +100,7 @@ class Pembelian extends CI_Controller {
            		//Data Nota
 				$kode = $this->input->post("noNotaJual");
 				$id_user = $this->input->post("id_sales");
-				$id_customer = $this->input->post("id_customer");
+				$id_supplier = $this->input->post("id_supplier");
 				$waktu_kirim = $this->input->post("waktu_kirim");
 				$ppn = $this->input->post("ppn");
 				$diskon = $this->input->post("diskon");
@@ -110,13 +110,11 @@ class Pembelian extends CI_Controller {
 
 				//List Barang berupa array tiap data
 				$id_barangs = $this->input->post("id_barangs");
-				$id_suppliers = $this->input->post("id_suppliers");
-				$id_types = $this->input->post("id_types");
 				$hargas = $this->input->post("hargas");
 				$jumlahs = $this->input->post("jumlahs");
 				$deskripsis = $this->input->post("deskripsis");
 
-				$result = $this->NotaJual_Model->insert_notaJual($kode, $id_user, $id_customer, NULL, $total, $ppn, $diskon, $biaya_kirim, $grand_total, $deskripsi, $id_barangs, $id_suppliers, $id_types, $hargas, $jumlahs, $deskripsis);
+				$result = $this->NotaBeli_Model->insert_notaBeli($kode, $id_user, $id_supplier, NULL, $total, $ppn, $diskon, $grand_total, $deskripsi, $id_barangs, $hargas, $jumlahs, $deskripsis);
 
 
 				if(count($result) > 0)
