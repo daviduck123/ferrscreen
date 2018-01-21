@@ -73,6 +73,12 @@
               </div>
             </div>
             <div class="control-group">
+              <label class="control-label">Komisi Premium</label>
+              <div class="controls">
+                <input type="text" name="komisiPremium" id="komisiPremium" value="<?php echo $general[0]["komisi_premium"] ?>">
+              </div>
+            </div>
+            <div class="control-group">
               <label class="control-label">Harga Plus Normal</label>
               <div class="controls">
                 <input type="text" name="plusNormal" id="plusNormal" value="<?php echo $general[0]["plus_normal"] ?>">
@@ -82,6 +88,12 @@
               <label class="control-label">Harga Plus Low</label>
               <div class="controls">
                 <input type="text" name="plusLow" id="plusLow" value="<?php echo $general[0]["plus_low"] ?>">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">Harga Plus Premium</label>
+              <div class="controls">
+                <input type="text" name="plusPremium" id="plusPremium" value="<?php echo $general[0]["plus_premium]"] ?>">
               </div>
             </div>
             <div class="form-actions">

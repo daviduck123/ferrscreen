@@ -46,8 +46,10 @@ class General extends CI_Controller {
 			$this->form_validation->set_rules('komisiLow', 'Komisi Low', 'required');
 			$this->form_validation->set_rules('komisiNormal', 'Komisi Normal', 'required');
 			$this->form_validation->set_rules('komisiDiskon', 'Komisi Diskon', 'required');
+			$this->form_validation->set_rules('komisiPremium', 'Komisi Premium', 'required');
 			$this->form_validation->set_rules('plusNormal', 'Harga Plus Normal', 'required');
 			$this->form_validation->set_rules('plusLow', 'Harga Plus Low', 'required');
+			$this->form_validation->set_rules('plusPremium', 'Harga Plus Premium', 'required');
 			if ($this->form_validation->run() == FALSE)
 			{
 				$this->session->set_flashdata('error', 'Data tidak lengkap');
@@ -58,10 +60,12 @@ class General extends CI_Controller {
 				$komisi_low = $this->input->post('komisiLow');
 				$komisi_normal = $this->input->post('komisiNormal');
 				$komisi_diskon = $this->input->post('komisiDiskon');
+				$komisi_premium = $this->input->post('komisiPremium');
 				$plus_normal = $this->input->post('plusNormal');
 				$plus_low = $this->input->post('plusLow');
+				$plus_premium = $this->input->post('plusPremium');
 
-				$result = $this->General_Model->update_general($komisi_low, $komisi_diskon, $komisi_normal, $plus_low, $plus_normal);
+				$result = $this->General_Model->update_general($komisi_low, $komisi_diskon, $komisi_normal, $komisi_premium, $plus_low, $plus_normal, $plus_premium);
 
 				if(count($result) > 0)
 				{

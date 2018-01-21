@@ -12,11 +12,11 @@ class General_Model extends CI_Model {
         return $hasil->result_array();
     }
 
-    public function update_general($komisi_low, $komisi_diskon, $komisi_normal, $plus_low, $plus_normal){
+    public function update_general($komisi_low, $komisi_diskon, $komisi_normal, $komisi_premium, $plus_low, $plus_normal, $plus_premium){
     	$this->db->trans_start();
 
-    	$sql = "UPDATE `general` SET `komisi_low`=?,`komisi_diskon`=?,`komisi_normal`=?,`plus_low`=?,`plus_normal`=? WHERE 1";
-    	$this->db->query($sql, array($komisi_low, $komisi_diskon, $komisi_normal, $plus_low, $plus_normal));
+    	$sql = "UPDATE `general` SET `komisi_low`=?,`komisi_diskon`=?,`komisi_normal`=?, `komisi_premium` = ?, `plus_low`=?,`plus_normal`=?, `plus_premium` WHERE 1";
+    	$this->db->query($sql, array($komisi_low, $komisi_diskon, $komisi_normal, $komisi_premium, $plus_low, $plus_normal, $plus_premium));
 
     	$this->db->trans_complete();
 
