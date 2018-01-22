@@ -747,7 +747,10 @@
           if(dataBarangPopDipilih[i][x][0]["id_barang"]==id_barang)
           {
             var namaList = "selectPop2Supplier"+dataBarangPopDipilih[i][x][0]["id"];
-            pilihSupplierPop2 = renderSelectOption(dataBarangPopDipilih[i][x][0]["id"],namaList,i,x);
+            var tipeList = "selectPop2Type"+dataBarangPopDipilih[i][x][0]["id"];
+
+            pilihSupplierPop2 = renderSelectOption(dataBarangPopDipilih[i][x][0]["id"],namaList,tipeList,i,x);
+
             var ii=i+1;
             nama_barang = dataBarangPopDipilih[i][x][1]["nama"];
             nama_merk = dataBarangPopDipilih[i][x][0]["nama_merk"];
@@ -793,16 +796,54 @@
     });
   }
 
-  function renderSelectOption(id,nama_tempat,depan,belakang)
+  function renderSelectOption(id,nama_tempat,nama_tempat_type,depan,belakang)
   {
+  	console.log(dataBarangPopDipilih[depan][belakang][1]);
     var selectOption = "";
-    selectOption += "<select name='"+nama_tempat+"' id='"+nama_tempat+"' class='selectPop2Supplier'>;";
-    selectOption += "<option >Pilih Supplier</option>"; 
-    for(var i = 0 ; i < dataBarangPopDipilih[depan][belakang][1]["supplier_barang"].length; i++){
-       selectOption += "<option  value="+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["id_supplier"]+">"+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["nama_supplier"]+"</option>";
+    selectOption += "<select onchange='munculkanTypeSupplier("+depan+","+belakang+",this.value)' name='"+nama_tempat+"' id='"+nama_tempat+"' class='selectPop2Supplier'>";
+    selectOption += "<option>Pilih Supplier</option>"; 
+    var tempIdSupplier = 0;
+    for(var i = 0 ; i < dataBarangPopDipilih[depan][belakang][1]["supplier_barang"].length; i++)
+    {
+    	if(i==0)
+    	{
+    		tempIdSupplier = dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["id_supplier"];
+    		selectOption += "<option  value="+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["id_supplier"]+">"+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["nama_supplier"]+"</option>";
+    	}
+    	else
+    	{
+    		if(tempIdSupplier!=dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["id_supplier"])
+    		{
+    			selectOption += "<option  value="+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["id_supplier"]+">"+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["nama_supplier"]+"</option>";
+    			tempIdSupplier = dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["id_supplier"];
+    		}
+    	}
     }
     selectOption +='</select>';
+
+    selectOption += "<select name='"+nama_tempat_type+"' id='"+nama_tempat_type+"' class='selectPop2Type'>";
+    
+    selectOption +='</select>';
+
     return selectOption;
+  }
+
+  function munculkanTypeSupplier(depan,belakang,idSupplier)
+  {
+  	if(idSupplier != "Pilih Supplier")
+  	{
+  		var selectOption = "";
+	  	selectOption += "<option>Pilih Type</option>"; 
+	    var tempIdSupplier = 0;
+	    for(var i = 0 ; i < dataBarangPopDipilih[depan][belakang][1]["supplier_barang"].length; i++)
+	    {
+	    	if(dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["id_supplier"]==idSupplier)
+	    	{
+	    		selectOption += "<option  value="+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["nama_type"]+">"+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["nama_type"]+" ("+dataBarangPopDipilih[depan][belakang][1]["supplier_barang"][i]["stok"]+")</option>";
+	    	}
+	    }
+	  	$(".selectPop2Type").innerHTML = 'Hello World';
+	  }
   }
 
   function tambahSupplier(id,depan,belakang,id_barang)
@@ -816,35 +857,39 @@
     else
     {
       if(jumlah=="" || jumlah==null)
+      {
         alert("Mohon isi jumlah barang");
-
-      var data = {id_supplier:id_supplier, nama_supplier:nama_supplier, jumlah_barang:jumlah};
-
-      var cek = false;
-      var tempGanti=0;
-      for (var x=0;x<dataBarangPopDipilih[depan][belakang].length;x++)
-      {
-        if(x>1)
-        {
-          //console.log(dataBarangPopDipilih[depan][belakang].length)
-          //console.log(dataBarangPopDipilih[depan][belakang][x]["id_supplier"]);
-          if(dataBarangPopDipilih[depan][belakang][x]["id_supplier"]==id_supplier)
-          {
-            cek = true;
-            tempGanti=x;
-          }
-
-        }
-      }
-
-      if(cek==true)
-      {
-        dataBarangPopDipilih[depan][belakang][tempGanti]["jumlah_barang"]=jumlah;
       }
       else
-        dataBarangPopDipilih[depan][belakang].push(data);
+      {
+      	var data = {id_supplier:id_supplier, nama_supplier:nama_supplier, jumlah_barang:jumlah};
 
-      openPop2(id_barang);
+	      var cek = false;
+	      var tempGanti=0;
+	      for (var x=0;x<dataBarangPopDipilih[depan][belakang].length;x++)
+	      {
+	        if(x>1)
+	        {
+	          //console.log(dataBarangPopDipilih[depan][belakang].length)
+	          //console.log(dataBarangPopDipilih[depan][belakang][x]["id_supplier"]);
+	          if(dataBarangPopDipilih[depan][belakang][x]["id_supplier"]==id_supplier)
+	          {
+	            cek = true;
+	            tempGanti=x;
+	          }
+
+	        }
+	      }
+
+	      if(cek==true)
+	      {
+	        dataBarangPopDipilih[depan][belakang][tempGanti]["jumlah_barang"]=jumlah;
+	      }
+	      else
+	        dataBarangPopDipilih[depan][belakang].push(data);
+
+	      openPop2(id_barang);
+      }
     }
   }
   function addData(){
